@@ -1,0 +1,97 @@
+#  _    _      _        _____ _    _ _____  #
+# | |  | |    | |      / ____| |  | |_   _| #
+# | |__| | ___| |_ __ | |  __| |  | | | |   #
+# |  __  |/ _ \ | '_ \| | |_ | |  | | | |   #
+# | |  | |  __/ | |_) | |__| | |__| |_| |_  #
+# |_|  |_|\___|_| .__/ \_____|\____/|_____| #
+#               | |                         #
+#               |_|  By Andre_601           #
+
+Main:
+  #
+  # EnableStaffMode:   Enable/Disable, that only players with helpgui.admin are visible
+  # ChangeToWhitelist: Change DisabledPlayers to a whitelist
+  # DisabledPlayers:   List of players that shouldn't be in the HelpInv
+  # DisabledWorlds:    List of worlds in which you shouldn't be able to use /help
+  #
+  EnableStaffMode: false
+  ChangeToWhitelist: false
+  DisabledPlayers:
+  - player1
+  - player2
+  - player3
+  DisabledWorlds:
+  - Example_World
+  - Example_World_the_end
+  - Example_World_nether
+Languages:
+  HelpInv:
+    #
+    # Title:       The title of the inventory
+    # Description: The Displayname of the Item (Book)
+    # Search:      The Displayname of the Search-item (Compass)
+    #
+    Title: '&8[&aHelp&2GUI&8] '
+    Description: '&7Click on a playerhead!'
+    Search: '&bSearch Player!'
+  SearchInv:
+    #
+    # Title:        The title of the inventory
+    # PlayersFound: Displayname of the Item (Book)
+    #
+    # Placeholders:
+    # %count%    -> Will be replaced with the amount of players found
+    #
+    InvTitle: '&8[&aPlayer&2Search&8]'
+    PlayersFound: '&aFound &2%count% &aplayers!'
+  Messages:
+    #
+    # ConsolePluginLoadet: Message, that will be send on startup in the console (Colorcodes not supportet)
+    # ConsoleNoPlayer:     Message, that is used, if you use /help or /helpgui in the console (Colorcodes not supportet)
+    # ConsoleVaultEnabled: When Vault is found. (Colorcodes not supportet)
+    # HelpSend:            Message, that the player recieves, if a Help-request was send
+    # HelpRecieved:        Message, that the player recieves, that should get a help-request
+    # Disabled:            When the player has the permission helpgui.disablehelp
+    # NotOnline:           If the player is not online
+    # DisabledWorld:       If the player uses the command in a disabled world
+    # ReloadSuccess:       When the Reload of the files was successfull
+    # NoPlayersFpund:      If no player was found with /help [name]
+    # NoGroup:             If you only type /help group:
+    # NoGroupFound:        When there is no group
+    # PlayerSearch:        Description for /help [name]
+    #
+    ConsolePluginLoadet: HelpGUI successfully enabled!
+    ConsoleNoPlayer: This command is only for players!
+    ConsoleVaultEnabled: Found Vault! Group-Support enabled.
+    HelpSend: '&7Help send to player &b%player%&7!'
+    HelpRecieved: '&b%player% &7needs your help!'
+    Disabled: '&cYou are not allowed to use this command'
+    NotOnline: '&cThis player is not online!'
+    DisabledWorld: '&cYou cannot use HelpGUI in this world.'
+    ReloadSuccess: '&aFiles reloadet successfully!'
+    NoPlayersFound: '&cNo players found. :,('
+    NoGroup: '&cPlease add a groupname after group:'
+    PlayerSearch: '&7Type &b/help [Player] &7to search for players.'
+  Commands:
+    #
+    # FewArgs:            If no arg is given after /helpgui
+    # UnknownArg:         If a invalid arg is used
+    # NoPerm:             No permission message
+    # CommandDescription: Description of /helgui help
+    #
+    # Placeholders:
+    # %CommandHelp%    -> /hgui help
+    # %CommandReload%  -> /hgui reload
+    #
+    # Use Colorcodes without any text, to make empty lines
+    #
+    FewArgs: '&7To few arguments. Type &b/hgui help &7for commands.'
+    UnknownArg: '&7Unknown argument. Type &b/hgui help &7for commands.'
+    NoPerm: '&cSry. No Permission for that!'
+    CommandDescription: |-
+      &m----------{&a Help&2GUI
+      &b%CommandHelp%
+      &7Shows all /hgui commands
+      &7
+      &b%CommandReload%
+      &7Reloads the files.
