@@ -2,12 +2,15 @@ package net.Andre601.Managers;
 
 import net.Andre601.HelpGUIMain;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import static net.Andre601.HelpGUIMain.Config;
 
 public class InventoryManager {
 
@@ -40,14 +43,29 @@ public class InventoryManager {
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){
-                // Make the playerhead and add it to the Inv.
-                ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
-                SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
-                HeadMeta.setOwner(pl.getName());
-                HeadMeta.setDisplayName(pl.getName());
-                PlayerHead.setItemMeta(HeadMeta);
+                if(Config().getBoolean("Main.ChangeToWhitelist")){
+                    if(Config().getStringList("Main.DisabledPlayer").contains(pl.getName())){
+                        // Make the playerhead and add it to the Inv.
+                        ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
+                        SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
+                        HeadMeta.setOwner(pl.getName());
+                        HeadMeta.setDisplayName(pl.getName());
+                        PlayerHead.setItemMeta(HeadMeta);
 
-                HelpInv.addItem(PlayerHead);
+                        HelpInv.addItem(PlayerHead);
+                    }
+                }else{
+                    if(!Config().getStringList("Main.DisabledPlayer").contains(pl.getName())){
+                        // Make the playerhead and add it to the Inv.
+                        ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
+                        SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
+                        HeadMeta.setOwner(pl.getName());
+                        HeadMeta.setDisplayName(pl.getName());
+                        PlayerHead.setItemMeta(HeadMeta);
+
+                        HelpInv.addItem(PlayerHead);
+                    }
+                }
             }
         }
 
@@ -92,7 +110,7 @@ public class InventoryManager {
                             HelpInv.addItem(PlayerHead);
                         }
                     }else{
-                        p.sendMessage("Vault isn not installed/enabled on the server!");
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Config().getString("Languages.Messages.VaultNotEnabled")));
                     }
                 }else{
                     /*

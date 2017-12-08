@@ -71,6 +71,7 @@ Languages:
     ReloadSuccess: '&aFiles reloadet successfully!'
     NoPlayersFound: '&cNo players found. :,('
     NoGroup: '&cPlease add a groupname after group:'
+    VaultNotEnabled: '&cVault is not enabled/installed!'
     PlayerSearch: '&7Type &b/help [Player] &7to search for players.'
   Commands:
     #

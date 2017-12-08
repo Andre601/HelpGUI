@@ -1,7 +1,7 @@
 package net.Andre601;
 
 import com.google.common.io.ByteStreams;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.Andre601.Managers.VaultIntegrationManager;
@@ -21,10 +21,10 @@ public class HelpGUIMain extends JavaPlugin {
         VaultIntegrationManager.setupPermission();
 
         if(VaultIntegrationManager.perms != null){
-            VaultEnabled = false;
+            VaultEnabled = true;
             System.out.println("Found Vault. group-search enabled.");
         }else{
-            VaultEnabled = true;
+            VaultEnabled = false;
             System.out.println("No Vault found");
         }
         instance = this;
@@ -39,12 +39,11 @@ public class HelpGUIMain extends JavaPlugin {
     public static boolean getVaultStatus(){
         return VaultEnabled;
     }
-    HelpGUIMain main;
 
     public void setupFiles(){
-        if(!main.getInstance().getDataFolder().exists()) main.getInstance().getDataFolder().mkdir();
+        if(!getDataFolder().exists()) getDataFolder().mkdir();
 
-        File cfg = new File(main.getDataFolder(), "config.yml");
+        File cfg = new File(getDataFolder(), "config.yml");
 
         if(!cfg.exists()){
             try{
@@ -58,4 +57,10 @@ public class HelpGUIMain extends JavaPlugin {
             }
         }
     }
+
+    public static FileConfiguration Config() {
+        return HelpGUIMain.getInstance().getConfig();
+    }
+
+
 }
