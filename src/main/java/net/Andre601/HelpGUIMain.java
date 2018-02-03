@@ -20,6 +20,7 @@ public class HelpGUIMain extends JavaPlugin {
 
         VaultIntegrationManager.setupPermission();
 
+        // Checking, if the boolean in VaultIntegrationManager returns null or not.
         if(VaultIntegrationManager.perms != null){
             VaultEnabled = true;
             System.out.println("Found Vault. group-search enabled.");
@@ -41,17 +42,25 @@ public class HelpGUIMain extends JavaPlugin {
     }
 
     public void setupFiles(){
-        if(!getDataFolder().exists()) getDataFolder().mkdir();
+
+        //  Create Datafolder ("plugins/HelpGUI") if it doesn't exist.
+        if(!getDataFolder().exists())
+            getDataFolder().mkdir();
 
         File cfg = new File(getDataFolder(), "config.yml");
 
         if(!cfg.exists()){
             try{
+
+                // Creating new file and adding the default stuff to it.
                 cfg.createNewFile();
                 InputStream is = getClass().getResourceAsStream("config.yml");
                 OutputStream os = new FileOutputStream(cfg);
 
                 ByteStreams.copy(is, os);
+
+                // Closing for safety.
+                os.close();
             }catch (Exception e){
                 throw new RuntimeException("Unable to create config.yml", e);
             }

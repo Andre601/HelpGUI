@@ -10,9 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static net.Andre601.HelpGUIMain.Config;
 
 public class InventoryManager {
+
+    List<ItemStack> item = new ArrayList<ItemStack>();
 
     // The two inventories, that will be used.
     private Inventory HelpInv = null;
@@ -43,7 +48,10 @@ public class InventoryManager {
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){
-                if(Config().getBoolean("Main.ChangeToWhitelist")){
+                    /*
+                    *  Blacklist = only show players, that are NOT in "DisabledPlayer"
+                     */
+                if(Config().getString("Main.Mode").equalsIgnoreCase("blacklist")){
                     if(Config().getStringList("Main.DisabledPlayer").contains(pl.getName())){
                         // Make the playerhead and add it to the Inv.
                         ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
@@ -52,10 +60,15 @@ public class InventoryManager {
                         HeadMeta.setDisplayName(pl.getName());
                         PlayerHead.setItemMeta(HeadMeta);
 
-                        HelpInv.addItem(PlayerHead);
+                        item.add(PlayerHead);
                     }
-                }else{
+                }else
+                    /*
+                    *  Whitelist = Only show players, that ARE in "DisabledPlayers
+                     */
+                if(Config().getString("Main.Mode").equalsIgnoreCase("whitelist")){
                     if(!Config().getStringList("Main.DisabledPlayer").contains(pl.getName())){
+
                         // Make the playerhead and add it to the Inv.
                         ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
                         SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
@@ -63,13 +76,45 @@ public class InventoryManager {
                         HeadMeta.setDisplayName(pl.getName());
                         PlayerHead.setItemMeta(HeadMeta);
 
-                        HelpInv.addItem(PlayerHead);
+                        item.add(PlayerHead);
                     }
+                }else
+                    /*
+                    *  Staff = Only show players, that have the permission helpgui.staff
+                     */
+                if(Config().getString("Main.Mode").equalsIgnoreCase("staff")){
+                    if(pl.hasPermission("helpgui.staff")){
+
+                        // Make the playerhead and add it to the Inv.
+                        ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
+                        SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
+                        HeadMeta.setOwner(pl.getName());
+                        HeadMeta.setDisplayName(pl.getName());
+                        PlayerHead.setItemMeta(HeadMeta);
+
+                        item.add(PlayerHead);
+                    }
+                }else{
+                    /*
+                    *  If none of the modes above is set (Empty, typos, random text, ect.) default to blacklist
+                     */
+                    if(Config().getStringList("Main.DisabledPlayer").contains(pl.getName())){
+
+                        // Make the playerhead and add it to the Inv.
+                        ItemStack PlayerHead = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
+                        SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
+                        HeadMeta.setOwner(pl.getName());
+                        HeadMeta.setDisplayName(pl.getName());
+                        PlayerHead.setItemMeta(HeadMeta);
+
+                        item.add(PlayerHead);
+                    }
+
                 }
             }
         }
 
-        p.openInventory(HelpInv);
+        //ScrollerInventory(item, "", p);
     }
 
     // SearchInv for /help [Name/group:[Group]]
