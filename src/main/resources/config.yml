@@ -1,28 +1,43 @@
-#  _   _          _             _____            _  #
-# | | | |        | |           / ____)          (_) #
-# | |_| |   ___  | |   ____   | /  __   _    _   _  #
-# |_____|  / o \ | |  |  _ \  |_| (__| | |  | | | | #
-#  _   _  |  __/ | |_ | |_) |  ______  | \__/ | | | #
-# |_| |_|  \___) |__/ |  __/   \____/   \____/  |_| #
-#                     | |                           #
-#                     |_|                           #
-#
-# Spigot-Link: https://www.spigotmc.org/resources/helpgui.33245/
-# GitHub: https://github.com/Andre601/HelpGUI
+#   _   _          _             _____            _   #
+#  | | | |        | |           / ____)          (_)  #
+#  | |_| |   ___  | |   ____   | /  __   _    _   _   #
+#  |_____|  / o \ | |  |  _ \  |_| (__| | |  | | | |  #
+#   _   _  |  __/ | |_ | |_) |  ______  | \__/ | | |  #
+#  |_| |_|  \___) |__/ |  __/   \____/   \____/  |_|  #
+#                      | |                            #
+#                      |_|  By Andre_601              #
+#                                                     #
+# Spigot-Link:                                        #
+#   https://www.spigotmc.org/resources/helpgui.33245/ #
+#                                                     #
+# GitHub:                                             #
+#   https://github.com/Andre601/HelpGUI               #
+#                                                     #
+# Wiki:                                               #
+#   https://github.com/Andre601/HelpGUI/wiki          #
 
 Main:
   #
-  # Mode  ->  Mode of the plugin
+  # Mode: Mode of the plugin
   #
   # Modes:
-  #   blacklist  ->  Not showing players in the GUI, that are set in "DisabledPlayers"
+  #   blacklist  ->  NOT showing players in the GUI, that are set in "DisabledPlayers"
   #   whitelist  ->  ONLY show players in the GUI, that are set in "DisabledPlayers"
   #   staff      ->  Only show players in the GUI, that have the permission "helpgui.staff"
+  #
+  # HelpGUI will use blacklist as default mode, if a invalid mode was set.
+  #
   Mode: 'blacklist'
+  #
+  # Depending on the Mode above are only players visible that are (not) in this list.
+  #
   DisabledPlayers:
   - player1
   - player2
   - player3
+  #
+  # Set worlds here, in which /help shouldn't work.
+  #
   DisabledWorlds:
   - Example_World
   - Example_World_the_end
@@ -30,67 +45,85 @@ Main:
 Messages:
   HelpInv:
     #
-    # Title:       The title of the inventory
-    # Description: The Displayname of the Item (Book)
-    # Search:      The Displayname of the Search-item (Compass)
-    # NextPage:    Text for the "next page" item
-    # PevPage:     Text for the "previous page" item
+    # Title:     The title of the inventory
+    # NextPage:  Text for the "next page" item
+    # PevPage:   Text for the "previous page" item
+    #
     Title: '&8[&aHelp&2GUI&8] '
-    Description: '&7Click on a playerhead!'
-    Search: '&bSearch Player!'
     NextPage: '&bNext page >'
     PrevPage: '&b< Previous page'
   SearchInv:
     #
-    # Title:        The title of the inventory
-    # PlayersFound: Displayname of the Item (Book)
+    # Title:         The title of the inventory
+    # PlayersFound:  Displayname of the Item (Book)
     #
     # Placeholders:
-    # %count%    -> Will be replaced with the amount of players found
+    #   %count%  ->  Will be replaced with the amount of players found
     #
     InvTitle: '&8[&aPlayer&2Search&8]'
     PlayersFound: '&aFound &2%count% &aplayers!'
-  Messages:
+  Startup:
     #
-    # ConsolePluginLoadet: Message, that will be send on startup in the console (Colorcodes not supportet)
-    # ConsoleNoPlayer:     Message, that is used, if you use /help or /helpgui in the console (Colorcodes not supportet)
-    # ConsoleVaultEnabled: When Vault is found. (Colorcodes not supportet)
-    # HelpSend:            Message, that the player recieves, if a Help-request was send
-    # HelpRecieved:        Message, that the player recieves, that should get a help-request
-    # Disabled:            When the player has the permission helpgui.disablehelp
-    # NotOnline:           If the player is not online
-    # DisabledWorld:       If the player uses the command in a disabled world
-    # ReloadSuccess:       When the Reload of the files was successfull
-    # NoPlayersFpund:      If no player was found with /help [name]
-    # NoGroup:             If you only type /help group:
-    # NoGroupFound:        When there is no group
-    # PlayerSearch:        Description for /help [name]
+    # These messages appear at startup of the plugin.
+    # Colorcodes are NOT supported here!
     #
-    ConsolePluginLoadet: HelpGUI successfully enabled!
-    ConsoleNoPlayer: This command is only for players!
-    ConsoleVaultEnabled: Found Vault! Group-Support enabled.
-    HelpSend: '&7Help send to player &b%player%&7!'
-    HelpRecieved: '&b%player% &7needs your help!'
-    Disabled: '&cYou are not allowed to use this command'
+    # PluginLoaded:   Will be shown, if the plugin was successfully enabled.
+    # VaultFound:     If Vault is installed and the plugin successfully connected.
+    # VaultNotFound:  Opposite of "VaultFound".
+    #
+    PluginLoaded: 'HelpGUI successfully enabled!'
+    VaultFound: 'Found Vault! Enabled Group-Search option.'
+    VaultNotFound: 'Couldn''t find Vault. The group-search option only works with vault installed and enabled!'
+  Console:
+    #
+    # Console-messages.
+    # Colorcodes are NOT supported here!
+    #
+    # NoPlayer:  If you run /help in the console
+    #
+    NoPlayer: 'The command is only for players!'
+  HelpRequest:
+    #
+    # Messages for help send/recieved
+    #
+    # Sender:     Message for the sender of the help-request.
+    # Recipient:  Message for the recipient of the help-request.
+    #
+    # Placeholders:
+    #   %player%  ->  Sender:    Name of the recipient.
+    #                 Recipient: Name of the sender.
+    #
+    Sender: '&7Help-Request send to &b%player%&7!'
+    Recipient: '&b%player% &7 needs your help!'
+  Errors:
+    #
+    # Messages for different issues.
+    #
+    # CommandDisabled:  If the player has the permission helpgui.disablehelp
+    # NotOnline:        If the player is not online.
+    # DisabledWorld:    Shown, when a player uses the command in a world, that is in "DisabledWorlds"
+    # NoPlayersFound:   If /help [player] had no results.
+    # NoGroup:          If you didn't give a group after "group:"
+    # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed.
+    #
+    CommandDisabled: '&cYou are not allowed to use this command'
     NotOnline: '&cThis player is not online!'
     DisabledWorld: '&cYou cannot use HelpGUI in this world.'
-    ReloadSuccess: '&aFiles reloadet successfully!'
     NoPlayersFound: '&cNo players found. :,('
     NoGroup: '&cPlease add a groupname after group:'
     VaultNotEnabled: '&cVault is not enabled/installed!'
-    PlayerSearch: '&7Type &b/help [Player] &7to search for players.'
   Commands:
     #
-    # FewArgs:            If no arg is given after /helpgui
-    # UnknownArg:         If a invalid arg is used
-    # NoPerm:             No permission message
-    # CommandDescription: Description of /helgui help
+    # FewArgs:             If no arg is given after /helpgui
+    # UnknownArg:          If a invalid arg is used
+    # NoPerm:              No permission message
+    # CommandDescription:  Description of /helgui help
     #
-    # Placeholders:
-    # %CommandHelp%    -> /hgui help
-    # %CommandReload%  -> /hgui reload
+    # Placeholders (only in CommandDescription):
+    #   %CommandHelp%    ->  /hgui help
+    #   %CommandReload%  ->  /hgui reload
     #
-    # Use Colorcodes without any text, to make empty lines
+    # Hint: Use a single space, to make a empty line
     #
     FewArgs: '&7To few arguments. Type &b/hgui help &7for commands.'
     UnknownArg: '&7Unknown argument. Type &b/hgui help &7for commands.'
@@ -99,6 +132,6 @@ Messages:
       &m----------{&a Help&2GUI
       &b%CommandHelp%
       &7Shows all /hgui commands
-      &7
+
       &b%CommandReload%
       &7Reloads the files.

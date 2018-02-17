@@ -13,16 +13,26 @@ import java.util.*;
 
 public class ScrollerInventory {
 
+    /*
+     * This code isn't from me!
+     * It comes from
+     *
+     * Link:
+     *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
+     */
+
     public List<Inventory> pages = new ArrayList<Inventory>();
     public UUID id;
     public int currentPage = 0;
     public static Map<UUID, ScrollerInventory> users = new HashMap<UUID, ScrollerInventory>();
+
 
     public ScrollerInventory(ArrayList<ItemStack> items, String name, Player p){
         this.id = UUID.randomUUID();
 
         Inventory page = getBlankPage(name);
         for(int i = 0; i < items.size(); i++){
+            // Checks, if first empty slot is at pos 46
             if(page.firstEmpty() == 46){
                 pages.add(page);
                 page = getBlankPage(name);
@@ -36,11 +46,16 @@ public class ScrollerInventory {
         users.put(p.getUniqueId(), this);
     }
 
+    // Displayname for NextPage-Item
     public static final String nextPageName = ChatColor.translateAlternateColorCodes('&', HelpGUIMain.
-            getInstance().Config().getString("Messages.HelpInv.NextPage"));
+            Config().getString("Messages.HelpInv.NextPage"));
+
+    // Displayname for PrevPage-Item
     public static final String prevPageName = ChatColor.translateAlternateColorCodes('&', HelpGUIMain.
-            getInstance().Config().getString("Messages.HelpInv.PrevPage"));
+            Config().getString("Messages.HelpInv.PrevPage"));
     public static final String decoration = ChatColor.GRAY.toString();
+
+    // Function to create new empty page.
     private Inventory getBlankPage(String name){
 
         Inventory page = Bukkit.createInventory(null, 54, name);

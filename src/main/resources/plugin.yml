@@ -9,15 +9,29 @@ commands:
     description: Main HelpGUI-command
     usage: <command>
     aliases: [hgui]
+    permission: helpgui.admin
   help:
     description: Shows the Help-Inv
     usage: <command>
     aliases: [h]
 
 permissions:
+  helpgui.*:
+    description: permission for all HelpGUI-commands
+    default: op
+    children:
+      helpgui.help: true
+      helpgui.reload: true
+      helpgui.staff: true
   helpgui.disablehelp:
     description: Disables /help for a user/group
     default: false
-  helpgui.admin:
-    description: admin-permission for /helpgui
+  helpgui.help:
+    description: Let you use /hgui help
+    default: op
+  helpgui.reload:
+    description: Let you use /hgui reload
+    default: op
+  helpgui.staff:
+    description: Permission for the Staff-Mode option
     default: op
