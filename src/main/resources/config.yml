@@ -17,39 +17,62 @@
 #   https://github.com/Andre601/HelpGUI/wiki          #
 
 Main:
-  #
-  # Mode: Mode of the plugin
-  #
-  # Modes:
-  #   blacklist  ->  NOT showing players in the GUI, that are set in "DisabledPlayers"
-  #   whitelist  ->  ONLY show players in the GUI, that are set in "DisabledPlayers"
-  #   staff      ->  Only show players in the GUI, that have the permission "helpgui.staff"
-  #
-  # HelpGUI will use blacklist as default mode, if a invalid mode was set.
-  #
-  Mode: 'blacklist'
-  #
-  # Depending on the Mode above are only players visible that are (not) in this list.
-  #
   DisabledPlayers:
-  - player1
-  - player2
-  - player3
-  #
-  # Set worlds here, in which /help shouldn't work.
-  #
+    #
+    # How "Players" will act like
+    #
+    # Modes:
+    #   blacklist  ->  NOT showing players in the GUI, that are set in "DisabledPlayers"
+    #   whitelist  ->  ONLY show players in the GUI, that are set in "DisabledPlayers"
+    #   staff      ->  Only show players in the GUI, that have the permission "helpgui.staff"
+    #
+    # HelpGUI will use blacklist as default mode, if a invalid mode was set.
+    #
+    Mode: 'blacklist'
+    #
+    # Set players here, that should or should not be shown in the GUI
+    # This depends on what you've set in "Mode"
+    #
+    Players:
+    - player1
+    - player2
+    - player3
   DisabledWorlds:
-  - Example_World
-  - Example_World_the_end
-  - Example_World_nether
+    #
+    # How "Worlds" will act like
+    #
+    # Modes:
+    #   blacklist  ->  DISABLE the command /help for all worlds set in "Worlds"
+    #   whitelist  ->  ENABLE the command /help ONLY in the worlds set in "Worlds"
+    #
+    # HelpGUI will use blacklist as default mode, if a invalid mode was set.
+    #
+    Mode: 'blacklist'
+    #
+    # Set worlds here, in which /help should or should not work.
+    # This depends on what you've set in "Mode"
+    #
+    Worlds:
+    - Example_World
+    - Example_World_the_end
+    - Example_World_nether
 Messages:
   HelpInv:
     #
     # Title:     The title of the inventory
     # NextPage:  Text for the "next page" item
     # PevPage:   Text for the "previous page" item
+    # Info:      Title of the Book
+    # InfoDesc:  Description of the book (lore)
     #
     Title: '&8[&aHelp&2GUI&8] '
+    Info: '&7Click a playerhead!'
+    InfoDesc:
+    - ''
+    - '&7Click on a playerhead in'
+    - '&7the inventory, to send a'
+    - '&7help-request to that player!'
+    - ''
     NextPage: '&bNext page >'
     PrevPage: '&b< Previous page'
   SearchInv:
@@ -60,7 +83,7 @@ Messages:
     # Placeholders:
     #   %count%  ->  Will be replaced with the amount of players found
     #
-    InvTitle: '&8[&aPlayer&2Search&8]'
+    Title: '&8[&aPlayer&2Search&8]'
     PlayersFound: '&aFound &2%count% &aplayers!'
   Startup:
     #
@@ -128,10 +151,10 @@ Messages:
     FewArgs: '&7To few arguments. Type &b/hgui help &7for commands.'
     UnknownArg: '&7Unknown argument. Type &b/hgui help &7for commands.'
     NoPerm: '&cSry. No Permission for that!'
-    CommandDescription: |-
-      &m----------{&a Help&2GUI
-      &b%CommandHelp%
-      &7Shows all /hgui commands
-
-      &b%CommandReload%
-      &7Reloads the files.
+    CommandDescription:
+    - '&m----------{&a Help&2GUI'
+    - '&b%CommandHelp%'
+    - '&7Shows all /hgui commands'
+    - ''
+    - '&b%CommandReload%'
+    - '&7Reloads the files.'
