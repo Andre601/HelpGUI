@@ -7,7 +7,7 @@ about: Found a bug? Use this template ro report it!
 [download]: https://www.spigotmc.org/resources/helpgui.33245/
 [wiki]: https://github.com/Andre601/HelpGUI/wiki
 [hastebin]: https://hastebin.com
-[gist] https://gist.github.com
+[gist]: https://gist.github.com
 
 # Note
 Before creating a issue, make sure, that you checked the following things:
@@ -26,8 +26,8 @@ You can add images, if that helps to show the issue in more detail.
 Please use [hastebin] or [Github's gists][gist] to share error's or code.
 Issues that contain the plain error, will be closed and ignored!
 
-# Description
+## Description
 
-# Expected behaviour
+## Expected behaviour
 
-# Actual behaviour
+## Actual behaviour
