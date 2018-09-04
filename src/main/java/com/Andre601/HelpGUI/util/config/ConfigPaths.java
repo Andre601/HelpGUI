@@ -1,4 +1,4 @@
-package net.Andre601.util.config;
+package com.Andre601.HelpGUI.util.config;
 
 public final class ConfigPaths {
 

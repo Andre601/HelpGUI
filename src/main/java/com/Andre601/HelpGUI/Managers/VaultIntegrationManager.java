@@ -1,6 +1,6 @@
-package net.Andre601.Managers;
+package com.Andre601.HelpGUI.Managers;
 
-import net.Andre601.HelpGUIMain;
+import com.Andre601.HelpGUI.HelpGUIMain;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;

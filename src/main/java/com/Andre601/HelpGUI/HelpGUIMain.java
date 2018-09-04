@@ -1,8 +1,8 @@
-package net.Andre601;
-import net.Andre601.util.ConfigUtil;
+package com.Andre601.HelpGUI;
+import com.Andre601.HelpGUI.util.ConfigUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.Andre601.Managers.VaultIntegrationManager;
+import com.Andre601.HelpGUI.Managers.VaultIntegrationManager;
 
 public class HelpGUIMain extends JavaPlugin {
 

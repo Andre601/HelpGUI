@@ -1,6 +1,7 @@
-package net.Andre601.Managers;
+package com.Andre601.HelpGUI.Managers;
 
-import net.Andre601.HelpGUIMain;
+import com.Andre601.HelpGUI.util.ConfigUtil;
+import com.Andre601.HelpGUI.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,10 +22,10 @@ public class ScrollerInventory {
      *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
      */
 
-    public List<Inventory> pages = new ArrayList<Inventory>();
+    public List<Inventory> pages = new ArrayList<>();
     public UUID id;
     public int currentPage = 0;
-    public static Map<UUID, ScrollerInventory> users = new HashMap<UUID, ScrollerInventory>();
+    public static Map<UUID, ScrollerInventory> users = new HashMap<>();
 
 
     public ScrollerInventory(ArrayList<ItemStack> items, String name, Player p){
@@ -47,12 +48,10 @@ public class ScrollerInventory {
     }
 
     // Displayname for NextPage-Item
-    public static final String nextPageName = ChatColor.translateAlternateColorCodes('&', HelpGUIMain.
-            Config().getString("Messages.HelpInv.NextPage"));
+    public static final String nextPageName = ConfigUtil.color(ConfigUtil.config().getString(ConfigPaths.MSG_NEXT_PAGE));
 
     // Displayname for PrevPage-Item
-    public static final String prevPageName = ChatColor.translateAlternateColorCodes('&', HelpGUIMain.
-            Config().getString("Messages.HelpInv.PrevPage"));
+    public static final String prevPageName = ConfigUtil.color(ConfigUtil.config().getString(ConfigPaths.MSG_PREV_PAGE));
     public static final String decoration = ChatColor.GRAY.toString();
 
     // Function to create new empty page.
@@ -70,11 +69,12 @@ public class ScrollerInventory {
         meta.setDisplayName(prevPageName);
         prevPage.setItemMeta(meta);
 
-        ItemStack deco = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)15);
+        ItemStack deco = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1, (byte)15);
         meta = deco.getItemMeta();
         meta.setDisplayName(decoration);
+        deco.setItemMeta(meta);
 
-        page.setItem(0, nextPage);
+        page.setItem(0, prevPage);
         page.setItem(1, deco);
         page.setItem(2, deco);
         page.setItem(3, deco);
@@ -82,7 +82,7 @@ public class ScrollerInventory {
         page.setItem(5, deco);
         page.setItem(6, deco);
         page.setItem(7, deco);
-        page.setItem(8, prevPage);
+        page.setItem(8, nextPage);
         return page;
     }
 

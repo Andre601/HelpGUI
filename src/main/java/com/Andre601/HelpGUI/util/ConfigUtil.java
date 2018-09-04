@@ -1,7 +1,7 @@
-package net.Andre601.util;
+package com.Andre601.HelpGUI.util;
 
+import com.Andre601.HelpGUI.HelpGUIMain;
 import com.google.common.io.ByteStreams;
-import net.Andre601.HelpGUIMain;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 

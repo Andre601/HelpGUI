@@ -1,9 +1,8 @@
-package net.Andre601.Managers;
+package com.Andre601.HelpGUI.Managers;
 
-import net.Andre601.HelpGUIMain;
-import net.Andre601.util.config.ConfigPaths;
+import com.Andre601.HelpGUI.HelpGUIMain;
+import com.Andre601.HelpGUI.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -14,11 +13,12 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.Andre601.util.ConfigUtil.*;
+import static com.Andre601.HelpGUI.util.ConfigUtil.*;
 
 public class InventoryManager {
 
     List<ItemStack> item = new ArrayList<>();
+    private static List<ItemStack> players = new ArrayList<>();
 
     // The two inventories, that will be used.
     private Inventory HelpInv = null;
@@ -26,6 +26,30 @@ public class InventoryManager {
 
     private VaultIntegrationManager vault;
     private HelpGUIMain main;
+
+    private static ItemStack getPlayerhead(Player player){
+        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
+        headMeta.setOwningPlayer(player);
+        playerHead.setItemMeta(headMeta);
+
+        return playerHead;
+
+    }
+
+    public static List<ItemStack> getPlayers(String name){
+        for(Player player : Bukkit.getOnlinePlayers()){
+            if(name == null){
+                players.add(getPlayerhead(player));
+            }else{
+                if(player.getName().startsWith(name)){
+                    players.add(getPlayerhead(player));
+                }
+            }
+        }
+
+        return players;
+    }
 
     // HelpInv for /help
     public void CreateHelpInv(Player p){

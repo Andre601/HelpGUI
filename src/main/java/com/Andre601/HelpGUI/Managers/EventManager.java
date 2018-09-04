@@ -1,4 +1,4 @@
-package net.Andre601.Managers;
+package com.Andre601.HelpGUI.Managers;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

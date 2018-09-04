@@ -19,7 +19,7 @@
 Main:
   DisabledPlayers:
     #
-    # How "Players" will act like
+    # Changes how players are displayed in the GUI
     #
     # Modes:
     #   blacklist  ->  NOT showing players in the GUI, that are set in "DisabledPlayers"
@@ -39,7 +39,7 @@ Main:
     - player3
   DisabledWorlds:
     #
-    # How "Worlds" will act like
+    # Changes, how HelpGUI handles the command in the different worlds
     #
     # Modes:
     #   blacklist  ->  DISABLE the command /help for all worlds set in "Worlds"
