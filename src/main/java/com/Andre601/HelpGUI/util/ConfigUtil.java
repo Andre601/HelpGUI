@@ -1,6 +1,7 @@
-package com.Andre601.HelpGUI.util;
+package com.andre601.helpgui.util;
 
-import com.Andre601.HelpGUI.HelpGUIMain;
+import com.andre601.helpgui.HelpGUIMain;
+import com.andre601.helpgui.util.logging.LogUtil;
 import com.google.common.io.ByteStreams;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,6 +25,7 @@ public class ConfigUtil {
         //  If the file doesn't exist, start to create one. Else: Do nothing.
         if(!cfg.exists()){
             try{
+                LogUtil.INFO("Config not found. Try creating one...");
 
                 // Creating new file and adding the default stuff to it.
                 cfg.createNewFile();
@@ -55,11 +57,5 @@ public class ConfigUtil {
 
     public static String color(String string){
         return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
-    public static String getMultiLineString(String path){
-        StringBuilder sb = new StringBuilder();
-        getList(path).forEach(string -> sb.append(string).append("\n"));
-        return color(sb.toString());
     }
 }

@@ -1,6 +1,6 @@
-package com.Andre601.HelpGUI.Managers;
+package com.andre601.helpgui.manager;
 
-import com.Andre601.HelpGUI.HelpGUIMain;
+import com.andre601.helpgui.HelpGUIMain;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -20,7 +20,7 @@ public class VaultIntegrationManager {
     }
 
     // Get the primary group of the player
-    public static String getGroup(Player player){
+    public static String getPrimaryGroup(Player player){
         return perms.getPrimaryGroup(player);
     }
 

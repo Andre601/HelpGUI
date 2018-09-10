@@ -1,7 +1,7 @@
-package com.Andre601.HelpGUI.Managers;
+package com.andre601.helpgui.manager;
 
-import com.Andre601.HelpGUI.util.ConfigUtil;
-import com.Andre601.HelpGUI.util.config.ConfigPaths;
+import com.andre601.helpgui.util.ConfigUtil;
+import com.andre601.helpgui.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

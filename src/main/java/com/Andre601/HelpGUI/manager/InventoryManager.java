@@ -1,7 +1,7 @@
-package com.Andre601.HelpGUI.Managers;
+package com.andre601.helpgui.manager;
 
-import com.Andre601.HelpGUI.HelpGUIMain;
-import com.Andre601.HelpGUI.util.config.ConfigPaths;
+import com.andre601.helpgui.HelpGUIMain;
+import com.andre601.helpgui.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,21 +13,18 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.Andre601.HelpGUI.util.ConfigUtil.*;
+import static com.andre601.helpgui.util.ConfigUtil.*;
 
 public class InventoryManager {
 
     List<ItemStack> item = new ArrayList<>();
-    private static List<ItemStack> players = new ArrayList<>();
 
     // The two inventories, that will be used.
     private Inventory HelpInv = null;
     private Inventory SearchInv = null;
-
-    private VaultIntegrationManager vault;
     private HelpGUIMain main;
 
-    private static ItemStack getPlayerhead(Player player){
+    public static ItemStack getPlayerhead(Player player){
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
         headMeta.setOwningPlayer(player);
@@ -35,20 +32,6 @@ public class InventoryManager {
 
         return playerHead;
 
-    }
-
-    public static List<ItemStack> getPlayers(String name){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            if(name == null){
-                players.add(getPlayerhead(player));
-            }else{
-                if(player.getName().startsWith(name)){
-                    players.add(getPlayerhead(player));
-                }
-            }
-        }
-
-        return players;
     }
 
     // HelpInv for /help
@@ -142,68 +125,6 @@ public class InventoryManager {
         }
 
         //ScrollerInventory(item, "", p);
-    }
-
-    // SearchInv for /help [Name/group:[Group]]
-    public void CreateSearchInv(Player p, String args){
-
-        SearchInv = p.getPlayer().getServer().createInventory(null, 54, "SearchInv");
-
-        // Creating the deco-Item (Black stained Glasspane)
-        ItemStack Deco = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta DecoMeta = Deco.getItemMeta();
-        DecoMeta.setDisplayName("§8");
-        Deco.setItemMeta(DecoMeta);
-
-        //Creating the Info-Item (Book)
-        ItemStack Info = new ItemStack(Material.BOOK);
-        ItemMeta InfoMeta = Info.getItemMeta();
-        InfoMeta.setDisplayName("Click on a playerhead");
-        Info.setItemMeta(InfoMeta);
-
-        SearchInv.setItem(4, Info);
-
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                // Checking, if the arg starts with "group:"
-                if(args.startsWith("group:")){
-                    /*
-                    * Get the actual group of the player.
-                    * If the group equals the searched group: Create playerhead
-                     */
-                    if(main.getVaultStatus()){
-                        if(vault.getGroup(pl).equalsIgnoreCase(args.replace("group:", ""))){
-                            ItemStack PlayerHead = new ItemStack(Material.PLAYER_HEAD);
-                            SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
-                            HeadMeta.setOwningPlayer(pl.getPlayer());
-                            HeadMeta.setDisplayName(pl.getName());
-                            PlayerHead.setItemMeta(HeadMeta);
-
-                            HelpInv.addItem(PlayerHead);
-                        }
-                    }else{
-                        p.sendMessage(config().getString(color(ConfigPaths.ERR_VAULT_NOT_ENABLED)));
-                    }
-                }else{
-                    /*
-                    * If the playername starts with the provided argument: Create playerhead
-                    * That way, players only need to type "/help And" to search for Andre_601.
-                    * Good for complicated names.
-                     */
-                    if(pl.getName().startsWith(args)){
-                        // Make the playerhead and add it to the Inv.
-                        ItemStack PlayerHead = new ItemStack(Material.PLAYER_HEAD);
-                        SkullMeta HeadMeta = (SkullMeta)PlayerHead.getItemMeta();
-                        HeadMeta.setOwningPlayer(pl.getPlayer());
-                        HeadMeta.setDisplayName(pl.getName());
-                        PlayerHead.setItemMeta(HeadMeta);
-
-                        HelpInv.addItem(PlayerHead);
-                    }
-                }
-            }
-        }
-        p.openInventory(SearchInv);
     }
 }
 
