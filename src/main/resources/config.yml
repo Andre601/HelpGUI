@@ -7,7 +7,7 @@
 #                      | |                            #
 #                      |_|  By Andre_601              #
 #                                                     #
-# Spigot-Link:                                        #
+# Spigot Resource:                                    #
 #   https://www.spigotmc.org/resources/helpgui.33245/ #
 #                                                     #
 # GitHub:                                             #
@@ -19,19 +19,14 @@
 Main:
   DisabledPlayers:
     #
-    # Changes how players are displayed in the GUI
+    # Choose which player heads are shown in the GUI
     #
     # Modes:
-    #   blacklist  ->  NOT showing players in the GUI, that are set in "DisabledPlayers"
-    #   whitelist  ->  ONLY show players in the GUI, that are set in "DisabledPlayers"
-    #   staff      ->  Only show players in the GUI, that have the permission "helpgui.staff"
-    #
-    # HelpGUI will use blacklist as default mode, if a invalid mode was set.
+    #   blacklist  ->  Players listed below will *NOT* be shown in the GUI (Default Option)
+    #   whitelist  ->  Players listed below *WILL ONLY* be shown in the GUI
+    #   staff      ->  Only players with the "helpgui.staff" permission node will be shown in the GUI
     #
     Mode: 'blacklist'
-    #
-    # Set players here, that should or should not be shown in the GUI
-    # This depends on what you've set in "Mode"
     #
     Players:
     - player1
@@ -39,18 +34,13 @@ Main:
     - player3
   DisabledWorlds:
     #
-    # Changes, how HelpGUI handles the command in the different worlds
+    # Choose which worlds the /help command works in
     #
     # Modes:
-    #   blacklist  ->  DISABLE the command /help for all worlds set in "Worlds"
-    #   whitelist  ->  ENABLE the command /help ONLY in the worlds set in "Worlds"
-    #
-    # HelpGUI will use blacklist as default mode, if a invalid mode was set.
+    #   blacklist  ->  Worlds listed below will *NOT* have /help functioning (Default Option)
+    #   whitelist  ->  Worlds listed below *WILL ONLY* have /help functioning
     #
     Mode: 'blacklist'
-    #
-    # Set worlds here, in which /help should or should not work.
-    # This depends on what you've set in "Mode"
     #
     Worlds:
     - Example_World
@@ -87,49 +77,49 @@ Messages:
     PlayersFound: '&aFound &2%count% &aplayers!'
   Startup:
     #
-    # These messages appear at startup of the plugin.
-    # Colorcodes are NOT supported here!
+    # These messages appear at startup of the plugin
+    # Color codes are *NOT* supported here
     #
-    # PluginLoaded:   Will be shown, if the plugin was successfully enabled.
-    # VaultFound:     If Vault is installed and the plugin successfully connected.
-    # VaultNotFound:  Opposite of "VaultFound".
+    # PluginLoaded:   Will be shown if the plugin is successfully enabled
+    # VaultFound:     Will be shown if Vault is found and connected to successfully
+    # VaultNotFound:  Will be shown if Vault isn't found
     #
     PluginLoaded: 'HelpGUI successfully enabled!'
     VaultFound: 'Found Vault! Enabled Group-Search option.'
-    VaultNotFound: 'Couldn''t find Vault. The group-search option only works with vault installed and enabled!'
+    VaultNotFound: 'Couldn''t find Vault. The group-search option only works with Vault installed and enabled!'
   Console:
     #
-    # Console-messages.
-    # Colorcodes are NOT supported here!
+    # Console Messages
+    # Color codes are NOT supported here!
     #
-    # NoPlayer:  If you run /help in the console
+    # NoPlayer: Will be shown if a command is run in the console
     #
-    NoPlayer: 'The command is only for players!'
+    NoPlayer: 'This command is only for players!'
   HelpRequest:
     #
     # Messages for help send/recieved
     #
-    # Sender:     Message for the sender of the help-request.
-    # Recipient:  Message for the recipient of the help-request.
+    # Sender:     Message sent to the sender of the request
+    # Recipient:  Message sent to the recipient of the request
     #
     # Placeholders:
     #   %player%  ->  Sender:    Name of the recipient.
     #                 Recipient: Name of the sender.
     #
-    Sender: '&7Help-Request send to &b%player%&7!'
+    Sender: '&7Help-Request sent to &b%player%&7!'
     Recipient: '&b%player% &7 needs your help!'
   Errors:
     #
     # Messages for different issues.
     #
     # CommandDisabled:  If the player has the permission helpgui.disablehelp
-    # NotOnline:        If the player is not online.
-    # DisabledWorld:    Shown, when a player uses the command in a world, that is in "DisabledWorlds"
-    # NoPlayersFound:   If /help [player] had no results.
+    # NotOnline:        If the targeted player is offline
+    # DisabledWorld:    Shown when a player uses the command in a disabled world
+    # NoPlayersFound:   If /help [player] had no results
     # NoGroup:          If you didn't give a group after "group:"
-    # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed.
+    # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed
     #
-    CommandDisabled: '&cYou are not allowed to use this command'
+    CommandDisabled: '&cYou are not allowed to use this command.'
     NotOnline: '&cThis player is not online!'
     DisabledWorld: '&cYou cannot use HelpGUI in this world.'
     NoPlayersFound: '&cNo players found. :,('
@@ -137,8 +127,8 @@ Messages:
     VaultNotEnabled: '&cVault is not enabled/installed!'
   Commands:
     #
-    # FewArgs:             If no arg is given after /helpgui
-    # UnknownArg:          If a invalid arg is used
+    # FewArgs:             If no argument is given after /hgui
+    # UnknownArg:          If an invalid argument is used
     # NoPerm:              No permission message
     # CommandDescription:  Description of /helgui help
     #
@@ -146,9 +136,9 @@ Messages:
     #   %CommandHelp%    ->  /hgui help
     #   %CommandReload%  ->  /hgui reload
     #
-    # Hint: Use a single space, to make a empty line
+    # Hint: '' makes a blank line
     #
-    FewArgs: '&7To few arguments. Type &b/hgui help &7for commands.'
+    FewArgs: '&7Too few arguments. Type &b/hgui help &7for commands.'
     UnknownArg: '&7Unknown argument. Type &b/hgui help &7for commands.'
     NoPerm: '&cSry. No Permission for that!'
     CommandDescription:
