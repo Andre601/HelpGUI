@@ -1,6 +1,6 @@
 package com.andre601.helpgui.util;
 
-import com.andre601.helpgui.HelpGUIMain;
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.google.common.io.ByteStreams;
 import org.bukkit.ChatColor;
@@ -17,10 +17,10 @@ public class ConfigUtil {
     public static void setupFile(){
 
         //  Create Datafolder ("plugins/HelpGUI") if it doesn't exist.
-        if(!HelpGUIMain.getInstance().getDataFolder().exists())
-            HelpGUIMain.getInstance().getDataFolder().mkdir();
+        if(!HelpGUI.getInstance().getDataFolder().exists())
+            HelpGUI.getInstance().getDataFolder().mkdir();
 
-        File cfg = new File(HelpGUIMain.getInstance().getDataFolder(), "config.yml");
+        File cfg = new File(HelpGUI.getInstance().getDataFolder(), "config.yml");
 
         //  If the file doesn't exist, start to create one. Else: Do nothing.
         if(!cfg.exists()){
@@ -29,7 +29,7 @@ public class ConfigUtil {
 
                 // Creating new file and adding the default stuff to it.
                 cfg.createNewFile();
-                InputStream is = HelpGUIMain.getInstance().getClass().getResourceAsStream("config.yml");
+                InputStream is = HelpGUI.getInstance().getClass().getResourceAsStream("config.yml");
                 OutputStream os = new FileOutputStream(cfg);
 
                 ByteStreams.copy(is, os);
@@ -51,7 +51,7 @@ public class ConfigUtil {
     }
 
     public static FileConfiguration config() {
-        return HelpGUIMain.getInstance().getConfig();
+        return HelpGUI.getInstance().getConfig();
     }
 
 

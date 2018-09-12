@@ -1,6 +1,6 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.HelpGUIMain;
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -22,7 +22,7 @@ public class InventoryManager {
     // The two inventories, that will be used.
     private Inventory HelpInv = null;
     private Inventory SearchInv = null;
-    private HelpGUIMain main;
+    private HelpGUI main;
 
     public static ItemStack getPlayerhead(Player player){
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);

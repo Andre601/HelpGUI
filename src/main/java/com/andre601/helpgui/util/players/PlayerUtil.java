@@ -1,6 +1,6 @@
 package com.andre601.helpgui.util.players;
 
-import com.andre601.helpgui.HelpGUIMain;
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.manager.InventoryManager;
 import com.andre601.helpgui.manager.VaultIntegrationManager;
 import org.bukkit.Bukkit;
@@ -13,9 +13,9 @@ import java.util.List;
 public class PlayerUtil {
 
     private static ArrayList<ItemStack> players = new ArrayList<>();
-    private HelpGUIMain plugin;
+    private HelpGUI plugin;
 
-    public PlayerUtil(HelpGUIMain plugin){
+    public PlayerUtil(HelpGUI plugin){
         this.plugin = plugin;
     }
 
@@ -51,7 +51,7 @@ public class PlayerUtil {
     }
 
     private static List<ItemStack> searchByGroup(String group){
-        if(!HelpGUIMain.getVaultStatus()){
+        if(!HelpGUI.getVaultStatus()){
             return null;
         }
 

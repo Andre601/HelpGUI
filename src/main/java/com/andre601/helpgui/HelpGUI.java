@@ -13,10 +13,10 @@ import com.andre601.helpgui.manager.VaultIntegrationManager;
 
 import java.util.logging.Logger;
 
-public class HelpGUIMain extends JavaPlugin {
+public class HelpGUI extends JavaPlugin {
 
     private static boolean VaultEnabled;
-    public static HelpGUIMain instance;
+    public static HelpGUI instance;
     private static PluginLogger logger;
     BukkitCommandManager manager = new BukkitCommandManager(this);
 
@@ -59,7 +59,7 @@ public class HelpGUIMain extends JavaPlugin {
         manager.unregisterCommands();
     }
 
-    public static HelpGUIMain getInstance(){
+    public static HelpGUI getInstance(){
         return instance;
     }
 
