@@ -12,11 +12,11 @@ public class VaultIntegrationManager {
     public static boolean setupPermission() {
         if(HelpGUI.getInstance().getServer().getPluginManager().getPlugin("Vault") == null){
             // Returning null, if Vault isn't enabled/installed
-            return perms == null;
+            return false;
         }
         RegisteredServiceProvider<Permission> rsp = HelpGUI.getInstance().getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
-        return perms != null;
+        return true;
     }
 
     // Get the primary group of the player

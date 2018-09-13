@@ -65,36 +65,16 @@ Messages:
     - ''
     NextPage: '&bNext page >'
     PrevPage: '&b< Previous page'
-  SearchInv:
-    #
-    # Title:         The title of the inventory
-    # PlayersFound:  Displayname of the Item (Book)
-    #
-    # Placeholders:
-    #   %count%  ->  Will be replaced with the amount of players found
-    #
-    Title: '&8[&aPlayer&2Search&8]'
-    PlayersFound: '&aFound &2%count% &aplayers!'
   Startup:
     #
     # These messages appear at startup of the plugin
     # Color codes are *NOT* supported here
     #
-    # PluginLoaded:   Will be shown if the plugin is successfully enabled
     # VaultFound:     Will be shown if Vault is found and connected to successfully
     # VaultNotFound:  Will be shown if Vault isn't found
     #
-    PluginLoaded: 'HelpGUI successfully enabled!'
-    VaultFound: 'Found Vault! Enabled Group-Search option.'
-    VaultNotFound: 'Couldn''t find Vault. The group-search option only works with Vault installed and enabled!'
-  Console:
-    #
-    # Console Messages
-    # Color codes are NOT supported here!
-    #
-    # NoPlayer: Will be shown if a command is run in the console
-    #
-    NoPlayer: 'This command is only for players!'
+    VaultFound: '&aFound Vault! Enabled Group-Search option.'
+    VaultNotFound: '&cCouldn''t find Vault. The group-search option only works with Vault installed and enabled!'
   HelpRequest:
     #
     # Messages for help send/recieved
@@ -103,11 +83,11 @@ Messages:
     # Recipient:  Message sent to the recipient of the request
     #
     # Placeholders:
-    #   %player%  ->  Sender:    Name of the recipient.
-    #                 Recipient: Name of the sender.
+    #   %sender%     ->  Name of the sender. (Only in Recipient available!)
+    #   %recipient%  ->  Name of the recipient. (Only in Sender available!)
     #
-    Sender: '&7Help-Request sent to &b%player%&7!'
-    Recipient: '&b%player% &7 needs your help!'
+    Sender: '&7Help-Request sent to &b%recipient%&7!'
+    Recipient: '&b%sender% &7needs your help!'
   Errors:
     #
     # Messages for different issues.
@@ -116,35 +96,19 @@ Messages:
     # NotOnline:        If the targeted player is offline
     # DisabledWorld:    Shown when a player uses the command in a disabled world
     # NoPlayersFound:   If /help [player] had no results
-    # NoGroup:          If you didn't give a group after "group:"
     # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed
     #
     CommandDisabled: '&cYou are not allowed to use this command.'
     NotOnline: '&cThis player is not online!'
     DisabledWorld: '&cYou cannot use HelpGUI in this world.'
     NoPlayersFound: '&cNo players found. :,('
-    NoGroup: '&cPlease add a groupname after group:'
     VaultNotEnabled: '&cVault is not enabled/installed!'
-  Commands:
+  Config:
     #
-    # FewArgs:             If no argument is given after /hgui
-    # UnknownArg:          If an invalid argument is used
-    # NoPerm:              No permission message
-    # CommandDescription:  Description of /helgui help
+    # Messages for reloading the config.
     #
-    # Placeholders (only in CommandDescription):
-    #   %CommandHelp%    ->  /hgui help
-    #   %CommandReload%  ->  /hgui reload
+    # AttemptReload:  Message on start of reload.
+    # Reloaded:       When the plugin successfully reloaded the config.
     #
-    # Hint: '' makes a blank line
-    #
-    FewArgs: '&7Too few arguments. Type &b/hgui help &7for commands.'
-    UnknownArg: '&7Unknown argument. Type &b/hgui help &7for commands.'
-    NoPerm: '&cSry. No Permission for that!'
-    CommandDescription:
-    - '&m----------{&a Help&2GUI'
-    - '&b%CommandHelp%'
-    - '&7Shows all /hgui commands'
-    - ''
-    - '&b%CommandReload%'
-    - '&7Reloads the files.'
+    AttemptReload: '&7Reloading config.yml...'
+    Reloaded: '&aconfig.yml successfully reloaded!'

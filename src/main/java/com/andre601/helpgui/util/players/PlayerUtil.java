@@ -1,14 +1,20 @@
 package com.andre601.helpgui.util.players;
 
 import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.manager.InventoryManager;
 import com.andre601.helpgui.manager.VaultIntegrationManager;
+import com.andre601.helpgui.util.config.ConfigUtil;
+import com.andre601.helpgui.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.andre601.helpgui.util.config.ConfigUtil.color;
+import static com.andre601.helpgui.util.config.ConfigUtil.config;
 
 public class PlayerUtil {
 
@@ -19,49 +25,98 @@ public class PlayerUtil {
         this.plugin = plugin;
     }
 
-    public static List<ItemStack> search(String search){
+    public List<ItemStack> search(Player player, String search){
+        players.clear();
         if(search == null){
-            return searchAll();
+            return searchAll(player);
         }else
         if(search.startsWith("group:")){
-            return searchByGroup(search.substring(6));
+            if(!HelpGUI.getVaultStatus()){
+                player.sendMessage(color(ConfigPaths.ERR_VAULT_NOT_ENABLED));
+                return null;
+            }
+
+            if(search.substring(6).equals("")){
+                player.sendMessage(color(ConfigPaths.ERR_NO_GROUP));
+                return null;
+            }
+            return searchByGroup(player, search.substring(6));
         }else{
-            return searchByName(search);
+            return searchByName(player, search);
         }
     }
 
-    public static ArrayList<ItemStack> getPlayers(){
+    public ArrayList<ItemStack> getPlayers(){
         return players;
     }
 
-    private static List<ItemStack> searchAll(){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            players.add(InventoryManager.getPlayerhead(player));
+    private List<ItemStack> searchAll(Player requester){
+        switch (ConfigUtil.config().getString(ConfigPaths.DP_MODE).toUpperCase()){
+            case "WHITELIST":
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    if(player != requester) {
+                        if(ConfigUtil.config().getStringList(ConfigPaths.DISABLED_PLAYERS).contains(player.getName())){
+                            players.add(getPlayerhead(player));
+                        }
+                    }
+                }
+                break;
+
+            case "STAFF":
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    if(player != requester) {
+                        if(player.hasPermission("helpgui.staff")){
+                            players.add(getPlayerhead(player));
+                        }
+                    }
+                }
+                break;
+
+            case "BLACKLIST":
+            default:
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    if(player != requester){
+                        players.add(getPlayerhead(player));
+                    }
+                }
+                break;
         }
         return players;
     }
 
-    private static List<ItemStack> searchByName(String name){
+    private List<ItemStack> searchByName(Player requester, String name){
         for(Player player : Bukkit.getOnlinePlayers()){
             if(player.getName().startsWith(name)){
-                players.add(InventoryManager.getPlayerhead(player));
+                if(player != requester) {
+                    players.add(getPlayerhead(player));
+                }
             }
         }
         return players;
     }
 
-    private static List<ItemStack> searchByGroup(String group){
-        if(!HelpGUI.getVaultStatus()){
-            return null;
-        }
-
+    private List<ItemStack> searchByGroup(Player requester, String group){
         for(Player player : Bukkit.getOnlinePlayers()){
             if(VaultIntegrationManager.getPrimaryGroup(player).equalsIgnoreCase(group)){
-                players.add(InventoryManager.getPlayerhead(player));
+                if(player != requester) {
+                    players.add(getPlayerhead(player));
+                }
             }
         }
 
         return players;
     }
 
+
+
+    private ItemStack getPlayerhead(Player player){
+        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
+        headMeta.setOwningPlayer(player);
+        headMeta.setDisplayName(player.getName());
+        playerHead.setItemMeta(headMeta);
+
+        return playerHead;
+
+    }
 }

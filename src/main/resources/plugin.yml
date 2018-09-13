@@ -4,6 +4,8 @@ author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
 
+api-version: 1.13
+
 commands:
   HelpGUI:
     description: Main HelpGUI-command

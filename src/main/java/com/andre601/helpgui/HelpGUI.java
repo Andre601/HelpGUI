@@ -2,61 +2,50 @@ package com.andre601.helpgui;
 import co.aikar.commands.BukkitCommandManager;
 import com.andre601.helpgui.commands.CmdHelp;
 import com.andre601.helpgui.commands.CmdHelpGUI;
-import com.andre601.helpgui.util.ConfigUtil;
+import com.andre601.helpgui.manager.EventManager;
+import com.andre601.helpgui.util.config.ConfigUtil;
 import com.andre601.helpgui.util.config.ConfigPaths;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
-import org.bukkit.plugin.PluginLogger;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.andre601.helpgui.manager.VaultIntegrationManager;
 
-import java.util.logging.Logger;
+import static com.andre601.helpgui.util.config.ConfigUtil.color;
+import static com.andre601.helpgui.util.config.ConfigUtil.config;
 
 public class HelpGUI extends JavaPlugin {
 
-    private static boolean VaultEnabled;
+    private static boolean vaultEnabled;
     public static HelpGUI instance;
-    private static PluginLogger logger;
-    BukkitCommandManager manager = new BukkitCommandManager(this);
+    BukkitCommandManager manager;
 
     public void onEnable(){
 
-        VaultIntegrationManager.setupPermission();
-
-        //  Register the help-command (/help)
+        long startTime = System.currentTimeMillis();
 
         instance = this;
 
+        sendBanner();
+
         ConfigUtil.setupFile();
+        loadCommands();
 
-        LogUtil.INFO("Loading commands...");
-        manager.registerCommand(new CmdHelp());
-        manager.registerCommand(new CmdHelpGUI());
+        LogUtil.INFO("&7Register events...");
+        Bukkit.getPluginManager().registerEvents(new EventManager(), this);
+        LogUtil.INFO("&7Events successfully registered!");
 
-        manager.getCommandContexts().registerOptionalContext(PlayerUtil.class, c -> {
-            PlayerUtil playerUtil = new PlayerUtil(this);
-            playerUtil.search(c.getFirstArg() != null ? c.popFirstArg() : null);
-            return playerUtil;
-        });
-        LogUtil.INFO("Commands registered!");
+        LogUtil.INFO("&7Checking for Vault...");
+        checkVaultStatus();
 
-        LogUtil.INFO("Checking for Vault...");
-
-        // Checking, if the boolean in VaultIntegrationManager returns null or not.
-        if(VaultIntegrationManager.perms != null){
-            VaultEnabled = true;
-            LogUtil.INFO(ConfigPaths.MSG_VAULT_FOUND);
-        }else{
-            VaultEnabled = false;
-            LogUtil.INFO(ConfigPaths.MSG_VAULT_NOT_FOUND);
-        }
-
+        LogUtil.INFO("&7Plugin enabled in " + getTime(startTime) + "ms!");
     }
 
     public void onDisable(){
         //  Unregister all the commands
-        manager.unregisterCommands();
+        unloadCommands();
+        LogUtil.INFO("&7HelpGUI disabled! Good bye.");
     }
 
     public static HelpGUI getInstance(){
@@ -64,11 +53,61 @@ public class HelpGUI extends JavaPlugin {
     }
 
     public static boolean getVaultStatus(){
-        return VaultEnabled;
+        return vaultEnabled;
     }
 
-    public static Logger getLog(){
-        return getInstance().getLogger();
+    public void checkVaultStatus(){
+        if(VaultIntegrationManager.setupPermission()){
+            vaultEnabled = true;
+            LogUtil.INFO(config().getString(ConfigPaths.MSG_VAULT_FOUND));
+        }else{
+            vaultEnabled = false;
+            LogUtil.WARN(config().getString(ConfigPaths.MSG_VAULT_NOT_FOUND));
+        }
     }
 
+    private void loadCommands(){
+        manager = new BukkitCommandManager(this);
+
+        LogUtil.INFO("&7Register Command Contexts...");
+        manager.getCommandContexts().registerOptionalContext(PlayerUtil.class, c -> {
+            PlayerUtil playerUtil = new PlayerUtil(getInstance());
+            playerUtil.search(c.getPlayer(), c.getFirstArg() != null ? c.popFirstArg() : null);
+            return playerUtil;
+        });
+        LogUtil.INFO("&7Command Contexts successfully loaded!");
+
+        manager.enableUnstableAPI("help");
+
+        LogUtil.INFO("&7Registering commands...");
+        manager.registerCommand(new CmdHelp());
+        manager.registerCommand(new CmdHelpGUI());
+        LogUtil.INFO("&7Commands successfully loaded!");
+    }
+
+    private void unloadCommands(){
+        //  The manager is already registered, so we don't have to worry...
+        LogUtil.INFO("&7Unload Commands...");
+        manager.unregisterCommands();
+        LogUtil.INFO("&7Commands unloaded.");
+    }
+
+    private long getTime(long startTime){
+        return System.currentTimeMillis() - startTime;
+    }
+
+    private void sendBanner(){
+        LogUtil.INFO("");
+        LogUtil.INFO("&a _   _  &2  ____");
+        LogUtil.INFO("&a| | | | &2 / ___)");
+        LogUtil.INFO("&a| |_| | &2| /  _");
+        LogUtil.INFO("&a|_____| &2|_| (_|");
+        LogUtil.INFO("&a _   _  &2 _____");
+        LogUtil.INFO("&a|_| |_| &2 \\___/");
+        LogUtil.INFO("");
+    }
+
+    public String prefix(){
+        return color(ConfigPaths.MSG_INV_TITLE);
+    }
 }

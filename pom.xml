@@ -29,7 +29,7 @@
                     <relocations>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>com.Andre601.HelpGUI.acf</shadedPattern>
+                            <shadedPattern>com.andre601.helpgui.acf</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
