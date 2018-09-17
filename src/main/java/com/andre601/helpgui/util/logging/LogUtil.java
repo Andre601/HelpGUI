@@ -7,12 +7,8 @@ public final class LogUtil {
 
     public static String prefix = "&f[&aHelp&2GUI&f] ";
 
-    public static void INFO(String info){
+    public static void LOG(String info){
         HelpGUI.getInstance().getServer().getConsoleSender().sendMessage(ConfigUtil.transformCol(prefix + info));
-    }
-
-    public static void WARN(String warn){
-        HelpGUI.getInstance().getServer().getConsoleSender().sendMessage(ConfigUtil.transformCol(prefix + warn));
     }
 
 }

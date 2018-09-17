@@ -1,5 +1,5 @@
 name: HelpGUI
-version: 2.0.1-BETA
+version: 2.0.3
 author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
@@ -22,9 +22,15 @@ permissions:
     description: permission for all HelpGUI-commands
     default: op
     children:
+      helpgui.admin: true
+  helpgui.admin:
+    description: permission for all HelpGUI-commands
+    default: op
+    children:
       helpgui.help: true
       helpgui.reload: true
       helpgui.staff: true
+      helpgui.notify: true
   helpgui.disablehelp:
     description: Disables /help for a user/group
     default: false
@@ -36,4 +42,7 @@ permissions:
     default: op
   helpgui.staff:
     description: Permission for the Staff-Mode option
+    default: op
+  helpgui.notify:
+    description: Notifies players about config-reloads
     default: op

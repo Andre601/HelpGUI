@@ -1,5 +1,6 @@
 package com.andre601.helpgui.manager;
 
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigPaths;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,7 +38,10 @@ public class ScrollerInventory {
             if(page.firstEmpty() == 53){
                 page.addItem(items.get(i));
                 pages.add(page);
-                // Check for if the item is NOT the last one in the itemlist.
+                /*
+                * Had to add this weird "fix" because the plugin created a blank GUI, if the last item fills the last
+                * slot of the other inv...
+                */
                 if(i < (items.size() - 1))
                     page = getBlankPage(name);
             }else{

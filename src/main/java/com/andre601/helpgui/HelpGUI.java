@@ -26,26 +26,27 @@ public class HelpGUI extends JavaPlugin {
         long startTime = System.currentTimeMillis();
 
         instance = this;
-
-        sendBanner();
-
         ConfigUtil.setupFile();
+
+        if(ConfigUtil.config().getBoolean(ConfigPaths.SHOW_BANNER))
+            sendBanner();
+
         loadCommands();
 
-        LogUtil.INFO("&7Register events...");
+        LogUtil.LOG("&7Register events...");
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
-        LogUtil.INFO("&7Events successfully registered!");
+        LogUtil.LOG("&7Events successfully registered!");
 
-        LogUtil.INFO("&7Checking for Vault...");
+        LogUtil.LOG("&7Checking for Vault...");
         checkVaultStatus();
 
-        LogUtil.INFO("&7Plugin enabled in " + getTime(startTime) + "ms!");
+        LogUtil.LOG("&7Plugin enabled in " + getTime(startTime) + "ms!");
     }
 
     public void onDisable(){
         //  Unregister all the commands
         unloadCommands();
-        LogUtil.INFO("&7HelpGUI disabled! Good bye.");
+        LogUtil.LOG("&7HelpGUI disabled! Good bye.");
     }
 
     public static HelpGUI getInstance(){
@@ -59,37 +60,37 @@ public class HelpGUI extends JavaPlugin {
     public void checkVaultStatus(){
         if(VaultIntegrationManager.setupPermission()){
             vaultEnabled = true;
-            LogUtil.INFO(config().getString(ConfigPaths.MSG_VAULT_FOUND));
+            LogUtil.LOG(config().getString(ConfigPaths.MSG_VAULT_FOUND));
         }else{
             vaultEnabled = false;
-            LogUtil.WARN(config().getString(ConfigPaths.MSG_VAULT_NOT_FOUND));
+            LogUtil.LOG(config().getString(ConfigPaths.MSG_VAULT_NOT_FOUND));
         }
     }
 
     private void loadCommands(){
         manager = new BukkitCommandManager(this);
 
-        LogUtil.INFO("&7Register Command Contexts...");
+        LogUtil.LOG("&7Register Command Contexts...");
         manager.getCommandContexts().registerOptionalContext(PlayerUtil.class, c -> {
             PlayerUtil playerUtil = new PlayerUtil(getInstance());
             playerUtil.search(c.getPlayer(), c.getFirstArg() != null ? c.popFirstArg() : null);
             return playerUtil;
         });
-        LogUtil.INFO("&7Command Contexts successfully loaded!");
+        LogUtil.LOG("&7Command Contexts successfully loaded!");
 
         manager.enableUnstableAPI("help");
 
-        LogUtil.INFO("&7Registering commands...");
+        LogUtil.LOG("&7Registering commands...");
         manager.registerCommand(new CmdHelp());
         manager.registerCommand(new CmdHelpGUI());
-        LogUtil.INFO("&7Commands successfully loaded!");
+        LogUtil.LOG("&7Commands successfully loaded!");
     }
 
     private void unloadCommands(){
         //  The manager is already registered, so we don't have to worry...
-        LogUtil.INFO("&7Unload Commands...");
+        LogUtil.LOG("&7Unload Commands...");
         manager.unregisterCommands();
-        LogUtil.INFO("&7Commands unloaded.");
+        LogUtil.LOG("&7Commands unloaded.");
     }
 
     private long getTime(long startTime){
@@ -97,14 +98,14 @@ public class HelpGUI extends JavaPlugin {
     }
 
     private void sendBanner(){
-        LogUtil.INFO("");
-        LogUtil.INFO("&a _   _  &2  ____");
-        LogUtil.INFO("&a| | | | &2 / ___)");
-        LogUtil.INFO("&a| |_| | &2| /  _");
-        LogUtil.INFO("&a|_____| &2|_| (_|");
-        LogUtil.INFO("&a _   _  &2 _____");
-        LogUtil.INFO("&a|_| |_| &2 \\___/");
-        LogUtil.INFO("");
+        LogUtil.LOG("");
+        LogUtil.LOG("&a _   _  &2  ____");
+        LogUtil.LOG("&a| | | | &2 / ___)");
+        LogUtil.LOG("&a| |_| | &2| /  _");
+        LogUtil.LOG("&a|_____| &2|_| (_|");
+        LogUtil.LOG("&a _   _  &2 _____");
+        LogUtil.LOG("&a|_| |_| &2 \\___/");
+        LogUtil.LOG("");
     }
 
     public String prefix(){

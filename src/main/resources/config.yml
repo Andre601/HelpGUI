@@ -17,6 +17,10 @@
 #   https://github.com/Andre601/HelpGUI/wiki          #
 
 Main:
+  #
+  # Should the banner be visible on startup?
+  #
+  ShowBanner: true
   DisabledPlayers:
     #
     # Choose which player heads are shown in the GUI
@@ -103,12 +107,18 @@ Messages:
     DisabledWorld: '&cYou cannot use HelpGUI in this world.'
     NoPlayersFound: '&cNo players found. :,('
     VaultNotEnabled: '&cVault is not enabled/installed!'
+    NoPermission: '&cYou do not have permission for that!'
   Config:
     #
     # Messages for reloading the config.
     #
-    # AttemptReload:  Message on start of reload.
-    # Reloaded:       When the plugin successfully reloaded the config.
+    # AttemptReload:       Message on start of reload.
+    # Reloaded:            When the plugin successfully reloaded the config.
+    # ReloadNotifyPlayer:  Players with helpgui.notify receive this message.
+    #
+    # Placeholder:
+    #   %player%  ->  Name of the player, that reloaded the plugin.
     #
     AttemptReload: '&7Reloading config.yml...'
     Reloaded: '&aconfig.yml successfully reloaded!'
+    ReloadNotifyPlayer: '&b%player% &7reloaded the config!'
