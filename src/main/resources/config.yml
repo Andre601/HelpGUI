@@ -101,6 +101,7 @@ Messages:
     # DisabledWorld:    Shown when a player uses the command in a disabled world
     # NoPlayersFound:   If /help [player] had no results
     # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed
+    # NoPermission:     No permission message
     #
     CommandDisabled: '&cYou are not allowed to use this command.'
     NotOnline: '&cThis player is not online!'
@@ -117,7 +118,7 @@ Messages:
     # ReloadNotifyPlayer:  Players with helpgui.notify receive this message.
     #
     # Placeholder:
-    #   %player%  ->  Name of the player, that reloaded the plugin.
+    #   %player%  ->  Name of the player, that reloaded the plugin. (Only for ReloadNotifyPlayer)
     #
     AttemptReload: '&7Reloading config.yml...'
     Reloaded: '&aconfig.yml successfully reloaded!'
