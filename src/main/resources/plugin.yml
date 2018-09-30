@@ -1,8 +1,10 @@
 name: HelpGUI
-version: 2.0.3
+version: 2.1.0
 author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
+
+softdepend: [PlaceholderAPI]
 
 api-version: 1.13
 

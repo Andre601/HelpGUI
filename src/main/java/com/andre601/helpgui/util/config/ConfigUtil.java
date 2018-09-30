@@ -2,8 +2,10 @@ package com.andre601.helpgui.util.config;
 
 import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.logging.LogUtil;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,16 @@ public class ConfigUtil {
         List<String> colored = new ArrayList<>();
         for(String s : string){
             colored.add(transformCol(s));
+        }
+        return colored;
+    }
+    public static List<String> getColoredList(List<String> string, Player player){
+        List<String> colored = new ArrayList<>();
+        for(String s : string){
+            if(HelpGUI.getPlaceholderAPIStatus())
+                colored.add(transformCol(PlaceholderAPI.setPlaceholders(player, s)));
+            else
+                colored.add(transformCol(s));
         }
         return colored;
     }

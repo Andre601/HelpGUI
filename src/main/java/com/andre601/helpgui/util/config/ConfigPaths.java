@@ -14,8 +14,11 @@ public final class ConfigPaths {
     public static String MSG_INV_INFO_DESC            = "Messages.HelpInv.InfoDesc";
     public static String MSG_NEXT_PAGE                = "Messages.HelpInv.NextPage";
     public static String MSG_PREV_PAGE                = "Messages.HelpInv.PrevPage";
+    public static String MSG_PLAYER_LORE              = "Messages.HelpInv.PlayerLore";
     public static String MSG_VAULT_FOUND              = "Messages.Startup.VaultFound";
     public static String MSG_VAULT_NOT_FOUND          = "Messages.Startup.VaultNotFound";
+    public static String MSG_PAPI_FOUND               = "Messages.Startup.PlaceholderAPIFound";
+    public static String MSG_PAPI_NOT_FOUND           = "Messages.Startup.PlaceholderAPINotFound";
     public static String MSG_HELP_SEND                = "Messages.HelpRequest.Sender";
     public static String MSG_HELP_RECEIVED            = "Messages.HelpRequest.Recipient";
     public static String MSG_CONFIG_ATTEMPREL         = "Messages.Config.AttemptReload";

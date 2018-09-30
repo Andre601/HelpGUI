@@ -110,10 +110,12 @@ public class PlayerUtil {
 
 
     private ItemStack getPlayerhead(Player player){
+        List<String> lore = ConfigUtil.getStringList(ConfigPaths.MSG_PLAYER_LORE);
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
         headMeta.setOwningPlayer(player);
         headMeta.setDisplayName(player.getName());
+        headMeta.setLore(ConfigUtil.getColoredList(lore, player));
         playerHead.setItemMeta(headMeta);
 
         return playerHead;

@@ -8,6 +8,7 @@ import com.andre601.helpgui.util.config.ConfigPaths;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.andre601.helpgui.manager.VaultIntegrationManager;
@@ -18,8 +19,9 @@ import static com.andre601.helpgui.util.config.ConfigUtil.config;
 public class HelpGUI extends JavaPlugin {
 
     private static boolean vaultEnabled;
-    public static HelpGUI instance;
-    BukkitCommandManager manager;
+    private static boolean papiEnabled;
+    private static HelpGUI instance;
+    private BukkitCommandManager manager;
 
     public void onEnable(){
 
@@ -28,17 +30,28 @@ public class HelpGUI extends JavaPlugin {
         instance = this;
         ConfigUtil.setupFile();
 
+        PluginManager pluginManager = Bukkit.getPluginManager();
+
         if(ConfigUtil.config().getBoolean(ConfigPaths.SHOW_BANNER))
             sendBanner();
 
         loadCommands();
 
         LogUtil.LOG("&7Register events...");
-        Bukkit.getPluginManager().registerEvents(new EventManager(), this);
+        pluginManager.registerEvents(new EventManager(), this);
         LogUtil.LOG("&7Events successfully registered!");
 
         LogUtil.LOG("&7Checking for Vault...");
         checkVaultStatus();
+
+        LogUtil.LOG("&7Checking for PlaceholderAPI...");
+        if(pluginManager.getPlugin("PlaceholderAPI") != null){
+            papiEnabled = true;
+            LogUtil.LOG(config().getString(ConfigPaths.MSG_PAPI_FOUND));
+        }else{
+            papiEnabled = false;
+            LogUtil.LOG(config().getString(ConfigPaths.MSG_PAPI_NOT_FOUND));
+        }
 
         LogUtil.LOG("&7Plugin enabled in " + getTime(startTime) + "ms!");
     }
@@ -57,7 +70,7 @@ public class HelpGUI extends JavaPlugin {
         return vaultEnabled;
     }
 
-    public void checkVaultStatus(){
+    private void checkVaultStatus(){
         if(VaultIntegrationManager.setupPermission()){
             vaultEnabled = true;
             LogUtil.LOG(config().getString(ConfigPaths.MSG_VAULT_FOUND));
@@ -110,5 +123,9 @@ public class HelpGUI extends JavaPlugin {
 
     public String prefix(){
         return color(ConfigPaths.MSG_INV_TITLE);
+    }
+
+    public static boolean getPlaceholderAPIStatus(){
+        return papiEnabled;
     }
 }

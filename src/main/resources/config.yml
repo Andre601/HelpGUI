@@ -53,11 +53,12 @@ Main:
 Messages:
   HelpInv:
     #
-    # Title:     The title of the inventory
-    # NextPage:  Text for the "next page" item
-    # PevPage:   Text for the "previous page" item
-    # Info:      Title of the Book
-    # InfoDesc:  Description of the book (lore)
+    # Title:       The title of the inventory
+    # NextPage:    Text for the "next page" item
+    # PevPage:     Text for the "previous page" item
+    # Info:        Title of the Book
+    # InfoDesc:    Description of the book (lore)
+    # PlayerLore:  The lore of the playerhead. Supports PlaceholderAPI, if installed.
     #
     Title: '&8[&aHelp&2GUI&8] '
     Info: '&7Click a playerhead!'
@@ -69,16 +70,25 @@ Messages:
     - ''
     NextPage: '&bNext page >'
     PrevPage: '&b< Previous page'
+    PlayerLore:
+    - ''
+    - '&7Rank: &b%vault_rank%'
+    - '&Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
+    - ''
   Startup:
     #
     # These messages appear at startup of the plugin
     # Color codes are *NOT* supported here
     #
-    # VaultFound:     Will be shown if Vault is found and connected to successfully
-    # VaultNotFound:  Will be shown if Vault isn't found
+    # VaultFound:             Will be shown if Vault is found and connected to successfully
+    # VaultNotFound:          Will be shown if Vault isn't found
+    # PlaceholderAPIFound:    If PlaceholderAPI was found
+    # PlaceholderAPINotFound: If PlaceholderAPI wasn't found
     #
     VaultFound: '&aFound Vault! Enabled Group-Search option.'
     VaultNotFound: '&cCouldn''t find Vault. The group-search option only works with Vault installed and enabled!'
+    PlaceholderAPIFound: '&aFound PlaceholderAPI! Placeholders in lore supported!'
+    PlaceholderAPINotFound: '&cCouldn''t find PlaceholderAPI. Placeholders in lore won''t be supported!'
   HelpRequest:
     #
     # Messages for help send/recieved
