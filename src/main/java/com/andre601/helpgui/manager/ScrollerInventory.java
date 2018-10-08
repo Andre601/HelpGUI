@@ -1,7 +1,6 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.util.config.ConfigPaths;
+import com.andre601.helpgui.util.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,8 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
-
-import static com.andre601.helpgui.util.config.ConfigUtil.*;
 
 public class ScrollerInventory {
 
@@ -54,17 +51,15 @@ public class ScrollerInventory {
     }
 
     // Displayname for NextPage-Item
-    public static final String NEXT_PAGE_NAME = color(ConfigPaths.MSG_NEXT_PAGE);
+    public static final String NEXT_PAGE_NAME = Messages.MSG_NEXT_PAGE.getString(true);
 
     // Displayname for PrevPage-Item
-    public static final String PREV_PAGE_NAME = color(ConfigPaths.MSG_PREV_PAGE);
+    public static final String PREV_PAGE_NAME = Messages.MSG_PREV_PAGE.getString(true);
 
     // Displayname for the Info-Item
-    public static final String INFO = color(ConfigPaths.MSG_INV_INFO);
+    public static final String INFO = Messages.MSG_INV_INFO.getString(true);
 
     public static final String DECO = ChatColor.GRAY.toString();
-
-    private final List<String> LORE = getStringList(ConfigPaths.MSG_INV_INFO_DESC);
 
     // Function to create new empty page.
     private Inventory getBlankPage(String name){
@@ -89,7 +84,7 @@ public class ScrollerInventory {
         ItemStack info = new ItemStack(Material.BOOK);
         meta = info.getItemMeta();
         meta.setDisplayName(INFO);
-        meta.setLore(getColoredList(LORE));
+        meta.setLore(Messages.MSG_INV_INFO_DESC.getStringList(true));
         info.setItemMeta(meta);
 
 

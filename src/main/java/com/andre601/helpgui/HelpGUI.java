@@ -3,8 +3,7 @@ import co.aikar.commands.BukkitCommandManager;
 import com.andre601.helpgui.commands.CmdHelp;
 import com.andre601.helpgui.commands.CmdHelpGUI;
 import com.andre601.helpgui.manager.EventManager;
-import com.andre601.helpgui.util.config.ConfigUtil;
-import com.andre601.helpgui.util.config.ConfigPaths;
+import com.andre601.helpgui.util.config.Messages;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -12,9 +11,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.andre601.helpgui.manager.VaultIntegrationManager;
-
-import static com.andre601.helpgui.util.config.ConfigUtil.color;
-import static com.andre601.helpgui.util.config.ConfigUtil.config;
 
 public class HelpGUI extends JavaPlugin {
 
@@ -28,11 +24,13 @@ public class HelpGUI extends JavaPlugin {
         long startTime = System.currentTimeMillis();
 
         instance = this;
-        ConfigUtil.setupFile();
+        LogUtil.LOG("&7Loading config.yml...");
+        saveDefaultConfig();
+        LogUtil.LOG("&7Config successfully loaded!");
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        if(ConfigUtil.config().getBoolean(ConfigPaths.SHOW_BANNER))
+        if(Messages.SHOW_BANNER.getBoolean())
             sendBanner();
 
         loadCommands();
@@ -47,10 +45,10 @@ public class HelpGUI extends JavaPlugin {
         LogUtil.LOG("&7Checking for PlaceholderAPI...");
         if(pluginManager.getPlugin("PlaceholderAPI") != null){
             papiEnabled = true;
-            LogUtil.LOG(config().getString(ConfigPaths.MSG_PAPI_FOUND));
+            LogUtil.LOG(Messages.MSG_PAPI_FOUND.getString(true));
         }else{
             papiEnabled = false;
-            LogUtil.LOG(config().getString(ConfigPaths.MSG_PAPI_NOT_FOUND));
+            LogUtil.LOG(Messages.MSG_PAPI_NOT_FOUND.getString(true));
         }
 
         LogUtil.LOG("&7Plugin enabled in " + getTime(startTime) + "ms!");
@@ -73,10 +71,10 @@ public class HelpGUI extends JavaPlugin {
     private void checkVaultStatus(){
         if(VaultIntegrationManager.setupPermission()){
             vaultEnabled = true;
-            LogUtil.LOG(config().getString(ConfigPaths.MSG_VAULT_FOUND));
+            LogUtil.LOG(Messages.MSG_VAULT_FOUND.getString(true));
         }else{
             vaultEnabled = false;
-            LogUtil.LOG(config().getString(ConfigPaths.MSG_VAULT_NOT_FOUND));
+            LogUtil.LOG(Messages.MSG_VAULT_NOT_FOUND.getString(true));
         }
     }
 
@@ -119,10 +117,6 @@ public class HelpGUI extends JavaPlugin {
         LogUtil.LOG("&a _   _  &2 _____");
         LogUtil.LOG("&a|_| |_| &2 \\___/");
         LogUtil.LOG("");
-    }
-
-    public String prefix(){
-        return color(ConfigPaths.MSG_INV_TITLE);
     }
 
     public static boolean getPlaceholderAPIStatus(){

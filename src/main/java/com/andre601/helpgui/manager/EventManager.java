@@ -1,8 +1,6 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.util.config.ConfigUtil;
-import com.andre601.helpgui.util.config.ConfigPaths;
+import com.andre601.helpgui.util.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,7 +18,7 @@ public class EventManager implements Listener {
         if(!(e.getWhoClicked() instanceof Player)) return;
 
         Player p = (Player)e.getWhoClicked();
-        if(!(ScrollerInventory.users.containsKey(p.getUniqueId()))) return;
+        if(!ScrollerInventory.users.containsKey(p.getUniqueId())) return;
 
         ScrollerInventory inv = ScrollerInventory.users.get(p.getUniqueId());
         if(e.getCurrentItem() == null) return;
@@ -47,15 +45,15 @@ public class EventManager implements Listener {
             try{
                 Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getDisplayName()));
 
-                recipient.sendMessage(HelpGUI.getInstance().prefix() + ConfigUtil.color(ConfigPaths.MSG_HELP_RECEIVED)
+                recipient.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_HELP_RECEIVED.getString(true)
                         .replace("%sender%", p.getName()));
-                p.sendMessage(HelpGUI.getInstance().prefix() + ConfigUtil.color(ConfigPaths.MSG_HELP_SEND)
+                p.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_HELP_SEND.getString(true)
                         .replace("%recipient%", recipient.getName()));
 
                 p.closeInventory();
                 ScrollerInventory.users.remove(p.getUniqueId());
             }catch (Exception ex){
-                p.sendMessage(HelpGUI.getInstance().prefix() + ConfigUtil.color(ConfigPaths.ERR_NOT_ONLINE));
+                p.sendMessage(Messages.PREFIX.getString(true) + Messages.ERR_NOT_ONLINE.getString(true));
             }
 
         }else{

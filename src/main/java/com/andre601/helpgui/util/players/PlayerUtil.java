@@ -2,8 +2,7 @@ package com.andre601.helpgui.util.players;
 
 import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.manager.VaultIntegrationManager;
-import com.andre601.helpgui.util.config.ConfigUtil;
-import com.andre601.helpgui.util.config.ConfigPaths;
+import com.andre601.helpgui.util.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,9 +11,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.andre601.helpgui.util.config.ConfigUtil.color;
-import static com.andre601.helpgui.util.config.ConfigUtil.config;
 
 public class PlayerUtil {
 
@@ -32,12 +28,17 @@ public class PlayerUtil {
         }else
         if(search.startsWith("group:")){
             if(!HelpGUI.getVaultStatus()){
-                player.sendMessage(color(ConfigPaths.ERR_VAULT_NOT_ENABLED));
+                player.sendMessage(
+                        Messages.PREFIX.getString(true) +
+                        Messages.ERR_VAULT_NOT_ENABLED.getString(true)
+                );
                 return null;
             }
 
             if(search.substring(6).equals("")){
-                player.sendMessage(color(ConfigPaths.ERR_NO_GROUP));
+                player.sendMessage(
+                        Messages.PREFIX.getString(true) +
+                        Messages.ERR_NO_GROUP.getString(true));
                 return null;
             }
             return searchByGroup(player, search.substring(6));
@@ -51,11 +52,11 @@ public class PlayerUtil {
     }
 
     private List<ItemStack> searchAll(Player requester){
-        switch (ConfigUtil.config().getString(ConfigPaths.DP_MODE).toUpperCase()){
+        switch (Messages.DP_MODE.getString(false).toUpperCase()){
             case "WHITELIST":
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player != requester) {
-                        if(ConfigUtil.config().getStringList(ConfigPaths.DISABLED_PLAYERS).contains(player.getName())){
+                        if(Messages.DISABLED_PLAYERS.getStringList(false).contains(player.getName())){
                             players.add(getPlayerhead(player));
                         }
                     }
@@ -110,12 +111,11 @@ public class PlayerUtil {
 
 
     private ItemStack getPlayerhead(Player player){
-        List<String> lore = ConfigUtil.getStringList(ConfigPaths.MSG_PLAYER_LORE);
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
         headMeta.setOwningPlayer(player);
         headMeta.setDisplayName(player.getName());
-        headMeta.setLore(ConfigUtil.getColoredList(lore, player));
+        headMeta.setLore(Messages.MSG_PLAYER_LORE.getStringList(player));
         playerHead.setItemMeta(headMeta);
 
         return playerHead;
