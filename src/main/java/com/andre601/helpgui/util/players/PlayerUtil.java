@@ -1,8 +1,7 @@
 package com.andre601.helpgui.util.players;
 
 import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.manager.VaultIntegrationManager;
-import com.andre601.helpgui.util.config.Messages;
+import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,18 +26,18 @@ public class PlayerUtil {
             return searchAll(player);
         }else
         if(search.startsWith("group:")){
-            if(!HelpGUI.getVaultStatus()){
+            if(!plugin.getVaultStatus()){
                 player.sendMessage(
-                        Messages.PREFIX.getString(true) +
-                        Messages.ERR_VAULT_NOT_ENABLED.getString(true)
+                        ConfigKey.PREFIX.getString(true) +
+                        ConfigKey.ERR_VAULT_NOT_ENABLED.getString(true)
                 );
                 return null;
             }
 
             if(search.substring(6).equals("")){
                 player.sendMessage(
-                        Messages.PREFIX.getString(true) +
-                        Messages.ERR_NO_GROUP.getString(true));
+                        ConfigKey.PREFIX.getString(true) +
+                        ConfigKey.ERR_NO_GROUP.getString(true));
                 return null;
             }
             return searchByGroup(player, search.substring(6));
@@ -52,11 +51,11 @@ public class PlayerUtil {
     }
 
     private List<ItemStack> searchAll(Player requester){
-        switch (Messages.DP_MODE.getString(false).toUpperCase()){
+        switch (ConfigKey.DP_MODE.getString(false).toUpperCase()){
             case "WHITELIST":
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player != requester) {
-                        if(Messages.DISABLED_PLAYERS.getStringList(false).contains(player.getName())){
+                        if(ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())){
                             players.add(getPlayerhead(player));
                         }
                     }
@@ -98,7 +97,7 @@ public class PlayerUtil {
 
     private List<ItemStack> searchByGroup(Player requester, String group){
         for(Player player : Bukkit.getOnlinePlayers()){
-            if(VaultIntegrationManager.getPrimaryGroup(player).equalsIgnoreCase(group)){
+            if(HelpGUI.getInstance().getVaultIntegrationManager().getPrimaryGroup(player).equalsIgnoreCase(group)){
                 if(player != requester) {
                     players.add(getPlayerhead(player));
                 }
@@ -115,7 +114,7 @@ public class PlayerUtil {
         SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
         headMeta.setOwningPlayer(player);
         headMeta.setDisplayName(player.getName());
-        headMeta.setLore(Messages.MSG_PLAYER_LORE.getStringList(player));
+        headMeta.setLore(ConfigKey.MSG_PLAYER_LORE.getStringList(player));
         playerHead.setItemMeta(headMeta);
 
         return playerHead;

@@ -91,7 +91,7 @@ Messages:
     PlaceholderAPINotFound: '&cCouldn''t find PlaceholderAPI. Placeholders in lore won''t be supported!'
   HelpRequest:
     #
-    # Messages for help send/recieved
+    # ConfigKey for help send/recieved
     #
     # Sender:     Message sent to the sender of the request
     # Recipient:  Message sent to the recipient of the request
@@ -104,7 +104,7 @@ Messages:
     Recipient: '&b%sender% &7needs your help!'
   Errors:
     #
-    # Messages for different issues.
+    # ConfigKey for different issues.
     #
     # CommandDisabled:  If the player has the permission helpgui.disablehelp
     # NotOnline:        If the targeted player is offline
@@ -121,7 +121,7 @@ Messages:
     NoPermission: '&cYou do not have permission for that!'
   Config:
     #
-    # Messages for reloading the config.
+    # ConfigKey for reloading the config.
     #
     # AttemptReload:       Message on start of reload.
     # Reloaded:            When the plugin successfully reloaded the config.

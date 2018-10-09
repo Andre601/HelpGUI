@@ -5,9 +5,12 @@ import org.bukkit.ChatColor;
 
 public final class LogUtil {
 
-    public static String prefix = "&f[&aHelp&2GUI&f] ";
+    public LogUtil(){
+    }
 
-    public static void LOG(String info){
+    private static String prefix = "&f[&aHelp&2GUI&f] ";
+
+    public void LOG(String info){
         HelpGUI.getInstance().getServer().getConsoleSender().sendMessage(
                 ChatColor.translateAlternateColorCodes('&', prefix + info)
         );

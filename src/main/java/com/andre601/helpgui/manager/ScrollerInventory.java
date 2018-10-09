@@ -1,6 +1,7 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.util.config.Messages;
+import com.andre601.helpgui.HelpGUI;
+import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,11 +21,28 @@ public class ScrollerInventory {
      *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
      */
 
-    public List<Inventory> pages = new ArrayList<>();
-    public UUID id;
-    public int currentPage = 0;
-    public static Map<UUID, ScrollerInventory> users = new HashMap<>();
+    private HelpGUI plugin;
 
+    public ScrollerInventory(HelpGUI instance){
+        this.plugin = instance;
+    }
+
+    private List<Inventory> pages = new ArrayList<>();
+    private UUID id;
+    private int currentPage = 0;
+    private Map<UUID, ScrollerInventory> users = new HashMap<>();
+
+    public List<Inventory> getPages(){
+        return pages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public Map<UUID, ScrollerInventory> getUsers() {
+        return users;
+    }
 
     public ScrollerInventory(ArrayList<ItemStack> items, String name, Player p){
         this.id = UUID.randomUUID();
@@ -51,15 +69,15 @@ public class ScrollerInventory {
     }
 
     // Displayname for NextPage-Item
-    public static final String NEXT_PAGE_NAME = Messages.MSG_NEXT_PAGE.getString(true);
+    public final String NEXT_PAGE_NAME = ConfigKey.MSG_NEXT_PAGE.getString(true);
 
     // Displayname for PrevPage-Item
-    public static final String PREV_PAGE_NAME = Messages.MSG_PREV_PAGE.getString(true);
+    public final String PREV_PAGE_NAME = ConfigKey.MSG_PREV_PAGE.getString(true);
 
     // Displayname for the Info-Item
-    public static final String INFO = Messages.MSG_INV_INFO.getString(true);
+    public final String INFO = ConfigKey.MSG_INV_INFO.getString(true);
 
-    public static final String DECO = ChatColor.GRAY.toString();
+    public final String DECO = ChatColor.GRAY.toString();
 
     // Function to create new empty page.
     private Inventory getBlankPage(String name){
@@ -84,7 +102,7 @@ public class ScrollerInventory {
         ItemStack info = new ItemStack(Material.BOOK);
         meta = info.getItemMeta();
         meta.setDisplayName(INFO);
-        meta.setLore(Messages.MSG_INV_INFO_DESC.getStringList(true));
+        meta.setLore(ConfigKey.MSG_INV_INFO_DESC.getStringList(true));
         info.setItemMeta(meta);
 
 

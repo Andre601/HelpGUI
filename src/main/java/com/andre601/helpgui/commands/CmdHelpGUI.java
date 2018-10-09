@@ -4,7 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.util.config.Messages;
+import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,22 +17,22 @@ public class CmdHelpGUI extends BaseCommand {
     public void reloadConfig(Player player){
         if(!player.hasPermission("helpgui.reload")){
             player.sendMessage(
-                    Messages.PREFIX.getString(true) + Messages.ERR_NO_PERMISSION.getString(true)
+                    ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PERMISSION.getString(true)
             );
             return;
         }
 
-        LogUtil.LOG("&7Reloading config.yml...");
-        player.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_CONFIG_ATTEMPREL.getString(true));
+        HelpGUI.getInstance().getLogUtil().LOG("&7Reloading config.yml...");
+        player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_ATTEMPREL.getString(true));
         HelpGUI.getInstance().reloadConfig();
-        LogUtil.LOG("&7Reload complete!");
-        player.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_CONFIG_RELOADED.getString(true));
+        HelpGUI.getInstance().getLogUtil().LOG("&7Reload complete!");
+        player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_RELOADED.getString(true));
 
         for(Player p : Bukkit.getOnlinePlayers()){
             if(p.hasPermission("helpgui.notify"))
                 if(p != player)
-                    p.sendMessage(Messages.PREFIX.getString(true) +
-                            Messages.MSG_CONFIG_REL_NOTIFY_PLAYER.getString(true)
+                    p.sendMessage(ConfigKey.PREFIX.getString(true) +
+                            ConfigKey.MSG_CONFIG_REL_NOTIFY_PLAYER.getString(true)
                                     .replace("%player%", player.getName())
                     );
         }
@@ -43,7 +43,7 @@ public class CmdHelpGUI extends BaseCommand {
     @Description("Shows this help page.")
     public void onHelp(Player player, CommandHelp help){
         if(!player.hasPermission("helpgui.help")){
-            player.sendMessage(Messages.PREFIX.getString(true) + Messages.ERR_NO_PERMISSION.getString(true));
+            player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PERMISSION.getString(true));
             return;
         }
         help.showHelp();

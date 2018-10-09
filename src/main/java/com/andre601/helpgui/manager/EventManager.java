@@ -1,6 +1,7 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.util.config.Messages;
+import com.andre601.helpgui.HelpGUI;
+import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,32 +13,39 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class EventManager implements Listener {
 
+    ScrollerInventory inventory = HelpGUI.getInstance().getScrollerInventory();
+
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent e){
 
         if(!(e.getWhoClicked() instanceof Player)) return;
 
         Player p = (Player)e.getWhoClicked();
-        if(!ScrollerInventory.users.containsKey(p.getUniqueId())) return;
+        if(!inventory.getUsers().containsKey(p.getUniqueId())) return;
 
-        ScrollerInventory inv = ScrollerInventory.users.get(p.getUniqueId());
+        ScrollerInventory inv = inventory.getUsers().get(p.getUniqueId());
         if(e.getCurrentItem() == null) return;
         if(e.getCurrentItem().getItemMeta() == null) return;
         if(e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
 
-        if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ScrollerInventory.NEXT_PAGE_NAME)){
+        int currentPage = inv.getCurrentPage();
+        if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
+                HelpGUI.getInstance().getScrollerInventory().NEXT_PAGE_NAME
+        )){
             e.setCancelled(true);
-            if(inv.currentPage >= inv.pages.size()-1){
+            if(currentPage >= inv.getPages().size()-1){
                 return;
             }else{
-                inv.currentPage += 1;
-                p.openInventory(inv.pages.get(inv.currentPage));
+                currentPage += 1;
+                p.openInventory(inv.getPages().get(currentPage));
             }
-        }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ScrollerInventory.PREV_PAGE_NAME)){
+        }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
+                HelpGUI.getInstance().getScrollerInventory().PREV_PAGE_NAME
+        )){
             e.setCancelled(true);
-            if(inv.currentPage > 0){
-                inv.currentPage -= 1;
-                p.openInventory(inv.pages.get(inv.currentPage));
+            if(currentPage > 0){
+                currentPage -= 1;
+                p.openInventory(inv.getPages().get(currentPage));
             }
         }else if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
             e.setCancelled(true);
@@ -45,15 +53,15 @@ public class EventManager implements Listener {
             try{
                 Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getDisplayName()));
 
-                recipient.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_HELP_RECEIVED.getString(true)
+                recipient.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_HELP_RECEIVED.getString(true)
                         .replace("%sender%", p.getName()));
-                p.sendMessage(Messages.PREFIX.getString(true) + Messages.MSG_HELP_SEND.getString(true)
+                p.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_HELP_SEND.getString(true)
                         .replace("%recipient%", recipient.getName()));
 
                 p.closeInventory();
-                ScrollerInventory.users.remove(p.getUniqueId());
+                inventory.getUsers().remove(p.getUniqueId());
             }catch (Exception ex){
-                p.sendMessage(Messages.PREFIX.getString(true) + Messages.ERR_NOT_ONLINE.getString(true));
+                p.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NOT_ONLINE.getString(true));
             }
 
         }else{

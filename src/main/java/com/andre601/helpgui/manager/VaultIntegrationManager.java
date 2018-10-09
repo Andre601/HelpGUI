@@ -7,9 +7,12 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class VaultIntegrationManager {
 
-    public static Permission perms;
+    public VaultIntegrationManager(){
+    }
 
-    public static boolean setupPermission() {
+    private Permission perms;
+
+    public boolean setupPermission() {
         if(HelpGUI.getInstance().getServer().getPluginManager().getPlugin("Vault") == null){
             // Returning null, if Vault isn't enabled/installed
             return false;
@@ -20,7 +23,7 @@ public class VaultIntegrationManager {
     }
 
     // Get the primary group of the player
-    public static String getPrimaryGroup(Player player){
+    public String getPrimaryGroup(Player player){
         return perms.getPrimaryGroup(player);
     }
 
