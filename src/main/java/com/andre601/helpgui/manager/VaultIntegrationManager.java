@@ -7,17 +7,21 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class VaultIntegrationManager {
 
-    public VaultIntegrationManager(){
+    private HelpGUI plugin;
+
+    public VaultIntegrationManager(HelpGUI plugin){
+        this.plugin = plugin;
     }
 
     private Permission perms;
 
     public boolean setupPermission() {
-        if(HelpGUI.getInstance().getServer().getPluginManager().getPlugin("Vault") == null){
-            // Returning null, if Vault isn't enabled/installed
+        if(this.plugin.getServer().getPluginManager().getPlugin("Vault") == null){
+            // Returning false, if Vault isn't enabled/installed
             return false;
         }
-        RegisteredServiceProvider<Permission> rsp = HelpGUI.getInstance().getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp =
+                this.plugin.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return true;
     }

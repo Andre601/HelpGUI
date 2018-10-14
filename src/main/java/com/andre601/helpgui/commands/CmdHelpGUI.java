@@ -5,12 +5,17 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigKey;
-import com.andre601.helpgui.util.logging.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @CommandAlias("helpgui|hgui")
 public class CmdHelpGUI extends BaseCommand {
+
+    private HelpGUI plugin;
+
+    public CmdHelpGUI(HelpGUI plugin){
+        this.plugin = plugin;
+    }
 
     @Subcommand("reload")
     @Description("Reloads the config.yml")
@@ -22,10 +27,10 @@ public class CmdHelpGUI extends BaseCommand {
             return;
         }
 
-        HelpGUI.getInstance().getLogUtil().LOG("&7Reloading config.yml...");
+        this.plugin.getLogUtil().LOG("&7Reloading config.yml...");
         player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_ATTEMPREL.getString(true));
-        HelpGUI.getInstance().reloadConfig();
-        HelpGUI.getInstance().getLogUtil().LOG("&7Reload complete!");
+        this.plugin.reloadConfig();
+        this.plugin.getLogUtil().LOG("&7Reload complete!");
         player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_RELOADED.getString(true));
 
         for(Player p : Bukkit.getOnlinePlayers()){

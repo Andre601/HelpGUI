@@ -21,10 +21,7 @@ public class ScrollerInventory {
      *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
      */
 
-    private HelpGUI plugin;
-
-    public ScrollerInventory(HelpGUI instance){
-        this.plugin = instance;
+    public ScrollerInventory(){
     }
 
     private List<Inventory> pages = new ArrayList<>();

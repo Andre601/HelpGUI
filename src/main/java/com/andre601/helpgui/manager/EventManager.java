@@ -13,7 +13,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class EventManager implements Listener {
 
-    ScrollerInventory inventory = HelpGUI.getInstance().getScrollerInventory();
+    private HelpGUI plugin;
+
+    public EventManager(HelpGUI plugin){
+        this.plugin = plugin;
+    }
+
+    ScrollerInventory inventory = this.plugin.getScrollerInventory();
 
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent e){
@@ -30,7 +36,7 @@ public class EventManager implements Listener {
 
         int currentPage = inv.getCurrentPage();
         if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                HelpGUI.getInstance().getScrollerInventory().NEXT_PAGE_NAME
+                this.plugin.getScrollerInventory().NEXT_PAGE_NAME
         )){
             e.setCancelled(true);
             if(currentPage >= inv.getPages().size()-1){
@@ -40,7 +46,7 @@ public class EventManager implements Listener {
                 p.openInventory(inv.getPages().get(currentPage));
             }
         }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                HelpGUI.getInstance().getScrollerInventory().PREV_PAGE_NAME
+                this.plugin.getScrollerInventory().PREV_PAGE_NAME
         )){
             e.setCancelled(true);
             if(currentPage > 0){

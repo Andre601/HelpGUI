@@ -26,7 +26,7 @@ public class PlayerUtil {
             return searchAll(player);
         }else
         if(search.startsWith("group:")){
-            if(!plugin.getVaultStatus()){
+            if(!this.plugin.getVaultStatus()){
                 player.sendMessage(
                         ConfigKey.PREFIX.getString(true) +
                         ConfigKey.ERR_VAULT_NOT_ENABLED.getString(true)
@@ -97,7 +97,7 @@ public class PlayerUtil {
 
     private List<ItemStack> searchByGroup(Player requester, String group){
         for(Player player : Bukkit.getOnlinePlayers()){
-            if(HelpGUI.getInstance().getVaultIntegrationManager().getPrimaryGroup(player).equalsIgnoreCase(group)){
+            if(this.plugin.getVaultIntegrationManager().getPrimaryGroup(player).equalsIgnoreCase(group)){
                 if(player != requester) {
                     players.add(getPlayerhead(player));
                 }

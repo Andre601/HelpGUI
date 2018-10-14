@@ -20,10 +20,9 @@ public class HelpGUI extends JavaPlugin {
     private BukkitCommandManager manager;
 
     private static HelpGUI instance;
-    private LogUtil logUtil = new LogUtil();
+    private LogUtil logUtil;
     private ScrollerInventory scrollerInventory;
-    private VaultIntegrationManager vaultIntegrationManager = new VaultIntegrationManager();
-    private ConfigKey configKey;
+    private VaultIntegrationManager vaultIntegrationManager;
 
     public void onEnable(){
 
@@ -34,16 +33,19 @@ public class HelpGUI extends JavaPlugin {
         saveDefaultConfig();
         logUtil.LOG("&7Config successfully loaded!");
 
-        scrollerInventory = new ScrollerInventory(this);
+        logUtil = new LogUtil(this);
+        scrollerInventory = new ScrollerInventory();
+        vaultIntegrationManager = new VaultIntegrationManager(this);
+
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         if(ConfigKey.SHOW_BANNER.getBoolean())
             sendBanner();
 
-        loadCommands();
+        loadCommands(this);
 
         logUtil.LOG("&7Register events...");
-        pluginManager.registerEvents(new EventManager(), this);
+        pluginManager.registerEvents(new EventManager(this), this);
         logUtil.LOG("&7Events successfully registered!");
 
         logUtil.LOG("&7Checking for Vault...");
@@ -85,12 +87,12 @@ public class HelpGUI extends JavaPlugin {
         }
     }
 
-    private void loadCommands(){
+    private void loadCommands(HelpGUI plugin){
         manager = new BukkitCommandManager(this);
 
         logUtil.LOG("&7Register Command Contexts...");
         manager.getCommandContexts().registerOptionalContext(PlayerUtil.class, c -> {
-            PlayerUtil playerUtil = new PlayerUtil(getInstance());
+            PlayerUtil playerUtil = new PlayerUtil(this);
             playerUtil.search(c.getPlayer(), c.getFirstArg() != null ? c.popFirstArg() : null);
             return playerUtil;
         });
@@ -100,7 +102,7 @@ public class HelpGUI extends JavaPlugin {
 
         logUtil.LOG("&7Registering commands...");
         manager.registerCommand(new CmdHelp());
-        manager.registerCommand(new CmdHelpGUI());
+        manager.registerCommand(new CmdHelpGUI(plugin));
         logUtil.LOG("&7Commands successfully loaded!");
     }
 
@@ -140,9 +142,5 @@ public class HelpGUI extends JavaPlugin {
 
     public VaultIntegrationManager getVaultIntegrationManager(){
         return vaultIntegrationManager;
-    }
-
-    public ConfigKey getConfigKey(){
-        return configKey;
     }
 }
