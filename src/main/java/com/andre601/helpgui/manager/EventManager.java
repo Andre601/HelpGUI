@@ -14,12 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class EventManager implements Listener {
 
     private HelpGUI plugin;
+    private ScrollerInventory inventory;
 
     public EventManager(HelpGUI plugin){
         this.plugin = plugin;
+        inventory = this.plugin.getScrollerInventory();
     }
-
-    ScrollerInventory inventory = this.plugin.getScrollerInventory();
 
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent e){

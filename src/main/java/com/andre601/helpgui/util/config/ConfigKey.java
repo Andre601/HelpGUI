@@ -21,35 +21,36 @@ public enum ConfigKey {
     DISABLED_WORLDS("Main.DisabledWorlds.Worlds"),
 
     // Inv/Item text
-    MSG_INV_INFO("ConfigKey.HelpInv.Info"),
-    MSG_INV_INFO_DESC("ConfigKey.HelpInv.InfoDesc"),
-    MSG_NEXT_PAGE("ConfigKey.HelpInv.NextPage"),
-    MSG_PREV_PAGE("ConfigKey.HelpInv.PrevPage"),
-    MSG_PLAYER_LORE("ConfigKey.HelpInv.PlayerLore"),
+    MSG_INV_INFO("Messages.HelpInv.Info"),
+    MSG_INV_INFO_DESC("Messages.HelpInv.InfoDesc"),
+    MSG_NEXT_PAGE("Messages.HelpInv.NextPage"),
+    MSG_PREV_PAGE("Messages.HelpInv.PrevPage"),
+    MSG_PLAYER_LORE("Messages.HelpInv.PlayerLore"),
 
     // Startup messages
-    MSG_VAULT_FOUND("ConfigKey.Startup.VaultFound"),
-    MSG_VAULT_NOT_FOUND("ConfigKey.Startup.VaultNotFound"),
-    MSG_PAPI_FOUND("ConfigKey.Startup.PlaceholderAPIFound"),
-    MSG_PAPI_NOT_FOUND("ConfigKey.Startup.PlaceholderAPINotFound"),
+    MSG_VAULT_FOUND("Messages.Startup.VaultFound"),
+    MSG_VAULT_NOT_FOUND("Messages.Startup.VaultNotFound"),
+    MSG_PAPI_FOUND("Messages.Startup.PlaceholderAPIFound"),
+    MSG_PAPI_NOT_FOUND("Messages.Startup.PlaceholderAPINotFound"),
 
     // Help request
-    MSG_HELP_SEND("ConfigKey.HelpRequest.Send"),
-    MSG_HELP_RECEIVED("ConfigKey.HelpRequest.Receiver"),
+    MSG_HELP_SEND("Messages.HelpRequest.Send"),
+    MSG_HELP_RECEIVED("Messages.HelpRequest.Receiver"),
 
     // Errors
-    MSG_CONFIG_ATTEMPREL("ConfigKey.Config.AttemptReaload"),
-    MSG_CONFIG_RELOADED("ConfigKey.Config.Reloaded"),
-    MSG_CONFIG_REL_NOTIFY_PLAYER("ConfigKey.Config.ReloadNotifyPlayer"),
-    ERR_CMD_DISABLED("ConfigKey.Errors.CommandDisabled"),
-    ERR_NOT_ONLINE("ConfigKey.Errors.NotOnline"),
-    ERR_DISABLED_WORLD("ConfigKey.Errors.DisabledWorld"),
-    ERR_NO_PLAYERS_FOUND("ConfigKey.Errors.NoPlayersFound"),
-    ERR_NO_GROUP("ConfigKey.Errors.NoGroup"),
-    ERR_VAULT_NOT_ENABLED("ConfigKey.Errors.VaultNotEnabled"),
-    ERR_NO_PERMISSION("ConfigKey.Errors.NoPermission");
+    MSG_CONFIG_ATTEMPREL("Messages.Config.AttemptReaload"),
+    MSG_CONFIG_RELOADED("Messages.Config.Reloaded"),
+    MSG_CONFIG_REL_NOTIFY_PLAYER("Messages.Config.ReloadNotifyPlayer"),
+    ERR_CMD_DISABLED("Messages.Errors.CommandDisabled"),
+    ERR_NOT_ONLINE("Messages.Errors.NotOnline"),
+    ERR_DISABLED_WORLD("Messages.Errors.DisabledWorld"),
+    ERR_NO_PLAYERS_FOUND("Messages.Errors.NoPlayersFound"),
+    ERR_NO_GROUP("Messages.Errors.NoGroup"),
+    ERR_VAULT_NOT_ENABLED("Messages.Errors.VaultNotEnabled"),
+    ERR_NO_PERMISSION("Messages.Errors.NoPermission");
 
     public final String PATH;
+    public static HelpGUI plugin;
 
     ConfigKey(String path){
         this.PATH = path;
@@ -57,17 +58,17 @@ public enum ConfigKey {
 
     public String getString(boolean colored){
         if(colored)
-            return ChatColor.translateAlternateColorCodes('&', HelpGUI.getInstance().getConfig().getString(this.PATH));
+            return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(this.PATH));
 
-        return HelpGUI.getInstance().getConfig().getString(this.PATH);
+        return plugin.getConfig().getString(this.PATH);
     }
 
     public List<String> getStringList(boolean colored){
         if(!colored)
-            return HelpGUI.getInstance().getConfig().getStringList(this.PATH);
+            return plugin.getConfig().getStringList(this.PATH);
 
         List<String> color = new ArrayList<>();
-        for(String str : HelpGUI.getInstance().getConfig().getStringList(this.PATH)){
+        for(String str : plugin.getConfig().getStringList(this.PATH)){
             color.add(ChatColor.translateAlternateColorCodes('&', str));
         }
         return color;
@@ -75,8 +76,8 @@ public enum ConfigKey {
 
     public List<String> getStringList(Player player){
         List<String> colored = new ArrayList<>();
-        for(String str : HelpGUI.getInstance().getConfig().getStringList(this.PATH)){
-            if(HelpGUI.getInstance().getPlaceholderAPIStatus())
+        for(String str : plugin.getConfig().getStringList(this.PATH)){
+            if(plugin.getPlaceholderAPIStatus())
                 colored.add(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(
                         player, str
                 )));
@@ -87,6 +88,6 @@ public enum ConfigKey {
     }
 
     public boolean getBoolean(){
-        return HelpGUI.getInstance().getConfig().getBoolean(this.PATH);
+        return plugin.getConfig().getBoolean(this.PATH);
     }
 }

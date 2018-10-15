@@ -1,6 +1,5 @@
 package com.andre601.helpgui.manager;
 
-import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

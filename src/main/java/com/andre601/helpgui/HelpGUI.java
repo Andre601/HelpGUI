@@ -19,7 +19,6 @@ public class HelpGUI extends JavaPlugin {
     private boolean papiEnabled;
     private BukkitCommandManager manager;
 
-    private static HelpGUI instance;
     private LogUtil logUtil;
     private ScrollerInventory scrollerInventory;
     private VaultIntegrationManager vaultIntegrationManager;
@@ -28,14 +27,14 @@ public class HelpGUI extends JavaPlugin {
 
         long startTime = System.currentTimeMillis();
 
-        instance = this;
-        logUtil.LOG("&7Loading config.yml...");
-        saveDefaultConfig();
-        logUtil.LOG("&7Config successfully loaded!");
-
+        ConfigKey.plugin = this;
         logUtil = new LogUtil(this);
         scrollerInventory = new ScrollerInventory();
         vaultIntegrationManager = new VaultIntegrationManager(this);
+
+        logUtil.LOG("&7Loading config.yml...");
+        saveDefaultConfig();
+        logUtil.LOG("&7Config successfully loaded!");
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -67,10 +66,6 @@ public class HelpGUI extends JavaPlugin {
         //  Unregister all the commands
         unloadCommands();
         logUtil.LOG("&7HelpGUI disabled! Good bye.");
-    }
-
-    public static HelpGUI getInstance(){
-        return instance;
     }
 
     public boolean getVaultStatus(){
