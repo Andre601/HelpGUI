@@ -14,21 +14,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class EventManager implements Listener {
 
     private HelpGUI plugin;
-    private ScrollerInventory inventory;
 
     public EventManager(HelpGUI plugin){
         this.plugin = plugin;
-        inventory = this.plugin.getScrollerInventory();
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
 
+        System.out.println("ClickEvent fired");
+
         if(!(e.getWhoClicked() instanceof Player)) return;
+
+        ScrollerInventory inventory = plugin.getScrollerInventory();
 
         Player p = (Player)e.getWhoClicked();
         if(!inventory.getUsers().containsKey(p.getUniqueId())) return;
 
+        System.out.println("Inventory is a ScrollerInventory");
         ScrollerInventory inv = inventory.getUsers().get(p.getUniqueId());
         if(e.getCurrentItem() == null) return;
         if(e.getCurrentItem().getItemMeta() == null) return;
@@ -36,7 +39,7 @@ public class EventManager implements Listener {
 
         int currentPage = inv.getCurrentPage();
         if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                this.plugin.getScrollerInventory().NEXT_PAGE_NAME
+                ConfigKey.MSG_NEXT_PAGE.getString(true)
         )){
             e.setCancelled(true);
             if(currentPage >= inv.getPages().size()-1){
@@ -46,7 +49,7 @@ public class EventManager implements Listener {
                 p.openInventory(inv.getPages().get(currentPage));
             }
         }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                this.plugin.getScrollerInventory().PREV_PAGE_NAME
+                ConfigKey.MSG_PREV_PAGE.getString(true)
         )){
             e.setCancelled(true);
             if(currentPage > 0){

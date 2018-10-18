@@ -2,6 +2,7 @@ package com.andre601.helpgui.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.manager.ScrollerInventory;
 import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.players.PlayerUtil;
@@ -43,6 +44,7 @@ public class CmdHelp extends BaseCommand {
             player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PLAYERS_FOUND.getString(true));
             return;
         }
+
         new ScrollerInventory(items, ConfigKey.PREFIX.getString(true), player);
     }
 

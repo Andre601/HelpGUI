@@ -1,5 +1,6 @@
 package com.andre601.helpgui.manager;
 
+import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,16 +12,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
+/*
+ * This code was not made by me.
+ *
+ * Link:
+ *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
+ */
+
 public class ScrollerInventory {
 
-    /*
-     * This code was not made by me.
-     *
-     * Link:
-     *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
-     */
+    private HelpGUI plugin;
 
-    public ScrollerInventory(){
+    public ScrollerInventory(HelpGUI plugin){
+        this.plugin = plugin;
     }
 
     private List<Inventory> pages = new ArrayList<>();

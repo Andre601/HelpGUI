@@ -8,10 +8,14 @@ import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.andre601.helpgui.manager.VaultIntegrationManager;
+
+import java.util.ArrayList;
 
 public class HelpGUI extends JavaPlugin {
 
@@ -28,8 +32,8 @@ public class HelpGUI extends JavaPlugin {
         long startTime = System.currentTimeMillis();
 
         ConfigKey.plugin = this;
+        scrollerInventory = new ScrollerInventory(this);
         logUtil = new LogUtil(this);
-        scrollerInventory = new ScrollerInventory();
         vaultIntegrationManager = new VaultIntegrationManager(this);
 
         logUtil.LOG("&7Loading config.yml...");

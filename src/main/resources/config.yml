@@ -73,7 +73,7 @@ Messages:
     PlayerLore:
     - ''
     - '&7Rank: &b%vault_rank%'
-    - '&Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
+    - '&7Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
     - ''
   Startup:
     #

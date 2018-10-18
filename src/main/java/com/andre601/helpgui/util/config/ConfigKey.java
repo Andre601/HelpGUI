@@ -11,7 +11,7 @@ import java.util.List;
 public enum ConfigKey {
 
     // Prefix of the plugin
-    PREFIX("ConfigKey.HelpInv.Title"),
+    PREFIX("Messages.HelpInv.Title"),
 
     // Main settings
     SHOW_BANNER("Main.ShowBanner"),
@@ -37,10 +37,12 @@ public enum ConfigKey {
     MSG_HELP_SEND("Messages.HelpRequest.Send"),
     MSG_HELP_RECEIVED("Messages.HelpRequest.Receiver"),
 
-    // Errors
+    // Config
     MSG_CONFIG_ATTEMPREL("Messages.Config.AttemptReaload"),
     MSG_CONFIG_RELOADED("Messages.Config.Reloaded"),
     MSG_CONFIG_REL_NOTIFY_PLAYER("Messages.Config.ReloadNotifyPlayer"),
+
+    // Errors
     ERR_CMD_DISABLED("Messages.Errors.CommandDisabled"),
     ERR_NOT_ONLINE("Messages.Errors.NotOnline"),
     ERR_DISABLED_WORLD("Messages.Errors.DisabledWorld"),
