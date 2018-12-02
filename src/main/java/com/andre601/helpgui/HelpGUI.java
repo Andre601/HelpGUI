@@ -8,14 +8,11 @@ import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.andre601.helpgui.manager.VaultIntegrationManager;
 
-import java.util.ArrayList;
 
 public class HelpGUI extends JavaPlugin {
 
@@ -36,9 +33,10 @@ public class HelpGUI extends JavaPlugin {
         logUtil = new LogUtil(this);
         vaultIntegrationManager = new VaultIntegrationManager(this);
 
-        logUtil.LOG("&7Loading config.yml...");
+        logUtil.LOG("&7Enabling HelpGUI");
+
+        logUtil.LOG("&7Loading config...");
         saveDefaultConfig();
-        logUtil.LOG("&7Config successfully loaded!");
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -49,7 +47,6 @@ public class HelpGUI extends JavaPlugin {
 
         logUtil.LOG("&7Register events...");
         pluginManager.registerEvents(new EventManager(this), this);
-        logUtil.LOG("&7Events successfully registered!");
 
         logUtil.LOG("&7Checking for Vault...");
         checkVaultStatus();
@@ -95,14 +92,12 @@ public class HelpGUI extends JavaPlugin {
             playerUtil.search(c.getPlayer(), c.getFirstArg() != null ? c.popFirstArg() : null);
             return playerUtil;
         });
-        logUtil.LOG("&7Command Contexts successfully loaded!");
 
         manager.enableUnstableAPI("help");
 
         logUtil.LOG("&7Registering commands...");
         manager.registerCommand(new CmdHelp());
         manager.registerCommand(new CmdHelpGUI(plugin));
-        logUtil.LOG("&7Commands successfully loaded!");
     }
 
     private void unloadCommands(){

@@ -1,6 +1,7 @@
 package com.andre601.helpgui.util.players;
 
 import com.andre601.helpgui.HelpGUI;
+import com.andre601.helpgui.manager.HeadUtils;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,7 +57,7 @@ public class PlayerUtil {
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player != requester) {
                         if(ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())){
-                            players.add(getPlayerhead(player));
+                            players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
                         }
                     }
                 }
@@ -66,7 +67,7 @@ public class PlayerUtil {
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player != requester) {
                         if(player.hasPermission("helpgui.staff")){
-                            players.add(getPlayerhead(player));
+                            players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
                         }
                     }
                 }
@@ -76,7 +77,7 @@ public class PlayerUtil {
             default:
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player != requester){
-                        players.add(getPlayerhead(player));
+                        players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
                     }
                 }
                 break;
@@ -88,7 +89,7 @@ public class PlayerUtil {
         for(Player player : Bukkit.getOnlinePlayers()){
             if(player.getName().startsWith(name)){
                 if(player != requester) {
-                    players.add(getPlayerhead(player));
+                    players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
                 }
             }
         }
@@ -99,7 +100,7 @@ public class PlayerUtil {
         for(Player player : Bukkit.getOnlinePlayers()){
             if(this.plugin.getVaultIntegrationManager().getPrimaryGroup(player).equalsIgnoreCase(group)){
                 if(player != requester) {
-                    players.add(getPlayerhead(player));
+                    players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
                 }
             }
         }

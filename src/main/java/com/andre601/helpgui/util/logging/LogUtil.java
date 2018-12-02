@@ -11,11 +11,12 @@ public final class LogUtil {
         this.plugin = plugin;
     }
 
-    private static String prefix = "&f[&aHelp&2GUI&f] ";
 
     public void LOG(String info){
         this.plugin.getServer().getConsoleSender().sendMessage(
-                ChatColor.translateAlternateColorCodes('&', prefix + info)
+                ChatColor.translateAlternateColorCodes('&',
+                        "&f[&aHelp&2GUI&f] " + info
+                )
         );
     }
 

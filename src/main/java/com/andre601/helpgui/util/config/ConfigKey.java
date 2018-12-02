@@ -15,6 +15,7 @@ public enum ConfigKey {
 
     // Main settings
     SHOW_BANNER("Main.ShowBanner"),
+    DEFAULT_HEAD_TEXTURE("Main.DefaultTextureURL"),
     DP_MODE("Main.DisabledPlayers.Mode"),
     DISABLED_PLAYERS("Main.DisabledPlayers.Players"),
     DW_MODE("Main.DisabledWorlds.Mode"),

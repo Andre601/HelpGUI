@@ -14,9 +14,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class EventManager implements Listener {
 
     private HelpGUI plugin;
+    private ScrollerInventory scrollerInventory;
 
     public EventManager(HelpGUI plugin){
         this.plugin = plugin;
+        scrollerInventory = new ScrollerInventory(this.plugin);
     }
 
     @EventHandler
@@ -24,9 +26,7 @@ public class EventManager implements Listener {
 
         System.out.println("ClickEvent fired");
 
-        if(!(e.getWhoClicked() instanceof Player)) return;
-
-        ScrollerInventory inventory = plugin.getScrollerInventory();
+        ScrollerInventory inventory = scrollerInventory;
 
         Player p = (Player)e.getWhoClicked();
         if(!inventory.getUsers().containsKey(p.getUniqueId())) return;

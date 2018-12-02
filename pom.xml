@@ -46,13 +46,13 @@
     </build>
 
     <repositories>
+        <!-- Spigot -->
         <repository>
-            <!-- Spigot-Repo -->
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- Vault-Repo -->
+        <!-- Vault -->
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
@@ -68,6 +68,12 @@
         <repository>
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi</url>
+        </repository>
+
+        <!-- Mojang -->
+        <repository>
+            <id>mojang</id>
+            <url>https://libraries.minecraft.net/</url>
         </repository>
     </repositories>
 
@@ -100,6 +106,14 @@
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Mojang API -->
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
