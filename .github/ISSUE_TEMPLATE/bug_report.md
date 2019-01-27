@@ -22,9 +22,9 @@ Plugin-version: <!-- Example: 2.1.2 ("latest" doesn't count) -->
 Server-version and type: <!-- Example: Spigot 1.13.2-R0.1-SNAPSHOT ("latest" doesn't count) -->
 
 # Issue
-> Please describe your issue as detailed as possible!
-> You can add images, if that helps to show the issue in more detail.
-> Please use [hastebin] or [Github's gists][gist] to share error's or code.
+> Please describe your issue as detailed as possible!  
+> You can add images, if that helps to show the issue in more detail.  
+> Please use [hastebin] or [Github's gists][gist] to share error's or code.  
 > Issues that just contain the error will be ignored and closed.
 
 ## Description
