@@ -22,14 +22,11 @@ public class EventManager implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
 
-        System.out.println("ClickEvent fired");
-
         ScrollerInventory inventory = plugin.getScrollerInventory();
 
         Player p = (Player)e.getWhoClicked();
         if(!inventory.getUsers().containsKey(p.getUniqueId())) return;
 
-        System.out.println("Inventory is a ScrollerInventory");
         ScrollerInventory inv = inventory.getUsers().get(p.getUniqueId());
         if(e.getCurrentItem() == null) return;
         if(e.getCurrentItem().getItemMeta() == null) return;
