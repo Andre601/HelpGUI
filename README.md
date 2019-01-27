@@ -1,7 +1,7 @@
-licenseImg: https://img.shields.io/github/license/Andre601/HelpGUI.svg
-license: https://github.com/Andre601/HelpGUI/blob/master/LICENSE.md
-issuesImg: https://img.shields.io/github/issues-raw/Andre601/HelpGUI.svg
-issues: https://github.com/Andre601/HelpGUI/issues
+[licenseImg]: https://img.shields.io/github/license/Andre601/HelpGUI.svg  
+[license]: https://github.com/Andre601/HelpGUI/blob/master/LICENSE.md  
+[issuesImg]: https://img.shields.io/github/issues-raw/Andre601/HelpGUI.svg  
+[issues]: https://github.com/Andre601/HelpGUI/issues
 
 # HelpGUI
 [![licenseImg]][license] [![issuesImg]][issues]
@@ -11,19 +11,19 @@ HelpGUI is a simple, yet powerfull Help-request-plugin.
 To send a help-request, the player just need to type /help and click on the playerhead of the player, that he wants help.
 
 ## Feautures
-* **Easy to use**  
-You don't need to set permission, to let players use the plugin!  
-Just put it in your plugins-folder, restart the server and you're done.
-* **Configure almost everything!**  
-HelpGUI let you edit almost every message in the plugin.  
-Want your own language for the command-help? Just change it!
-* **Many feautures**  
-HelpGUI comes with a bunch of different feautures.  
-Let the GUI only show certain players, by configuring it.
-* **Player and Group-Search**  
-Players can search for players, by just adding text after the command (/help [Text]).  
-HelpGUI will then search for every player, that has a name, beginning with the text.  
-But you can also search for groups (You need Vault for that). Just type /help group:[group] and HelpGUI will search for every player, that has this group!
+##### Simple to use
+HelpGUI is stupidly simple.  
+You can just drag and drop the jar into your server, restart and it is ready to go.
+
+##### Highly configurable
+You can customize the plugin to your liking.  
+Only show certain players, hide certain players, use the commands in certain worlds only, etc.  
+The well documented config will help you changing stuff to your liking.
+
+##### Support almost everywhere
+You can ask for support on all kinds of places.  
+Discord, Spigot(-PM), GitHub-issue, etc.  
+The Dev (So me :P) will always try to help you with your problem.
 
 ## Want a feauture?
 Go to the [Issue-tab](https://github.com/Andre601/HelpGUI/issues) and ask there for a new feauture.  
