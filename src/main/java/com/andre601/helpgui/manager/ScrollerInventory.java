@@ -12,20 +12,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-/*
- * This code was not made by me.
- *
- * Link:
- *   https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
+/**
+ * Public class to create a multi-page Inventory system.
+ * <br>
+ * <br>Original author: https://www.spigotmc.org/threads/infinite-inventory-with-pages.178964/
  */
-
 public class ScrollerInventory {
-
-    private HelpGUI plugin;
-
-    public ScrollerInventory(HelpGUI plugin){
-        this.plugin = plugin;
-    }
 
     private List<Inventory> pages = new ArrayList<>();
     private UUID id;
@@ -105,8 +97,6 @@ public class ScrollerInventory {
         meta.setLore(ConfigKey.MSG_INV_INFO_DESC.getStringList(true));
         info.setItemMeta(meta);
 
-
-
         page.setItem(0, prevPage);
         page.setItem(1, deco);
         page.setItem(2, deco);
@@ -116,6 +106,7 @@ public class ScrollerInventory {
         page.setItem(6, deco);
         page.setItem(7, deco);
         page.setItem(8, nextPage);
+
         return page;
     }
 

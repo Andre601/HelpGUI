@@ -27,10 +27,10 @@ public class CmdHelpGUI extends BaseCommand {
             return;
         }
 
-        this.plugin.getLogUtil().LOG("&7Reloading config.yml...");
+        this.plugin.getLogUtil().info("&7Reloading config.yml...");
         player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_ATTEMPREL.getString(true));
         this.plugin.reloadConfig();
-        this.plugin.getLogUtil().LOG("&7Reload complete!");
+        this.plugin.getLogUtil().info("&7Reload complete!");
         player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_RELOADED.getString(true));
 
         for(Player p : Bukkit.getOnlinePlayers()){

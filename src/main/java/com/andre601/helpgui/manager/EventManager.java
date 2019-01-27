@@ -14,11 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class EventManager implements Listener {
 
     private HelpGUI plugin;
-    private ScrollerInventory scrollerInventory;
 
     public EventManager(HelpGUI plugin){
         this.plugin = plugin;
-        scrollerInventory = new ScrollerInventory(this.plugin);
     }
 
     @EventHandler
@@ -26,7 +24,7 @@ public class EventManager implements Listener {
 
         System.out.println("ClickEvent fired");
 
-        ScrollerInventory inventory = scrollerInventory;
+        ScrollerInventory inventory = plugin.getScrollerInventory();
 
         Player p = (Player)e.getWhoClicked();
         if(!inventory.getUsers().containsKey(p.getUniqueId())) return;
@@ -56,7 +54,8 @@ public class EventManager implements Listener {
                 currentPage -= 1;
                 p.openInventory(inv.getPages().get(currentPage));
             }
-        }else if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
+        }else
+        if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
             e.setCancelled(true);
             ItemMeta meta = e.getCurrentItem().getItemMeta();
             try{
@@ -70,6 +69,9 @@ public class EventManager implements Listener {
                 p.closeInventory();
                 inventory.getUsers().remove(p.getUniqueId());
             }catch (Exception ex){
+                plugin.getLogUtil().debug("There was an error with getting the player! Stacktrace below.");
+                if(plugin.isDebug()) ex.printStackTrace();
+
                 p.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NOT_ONLINE.getString(true));
             }
 

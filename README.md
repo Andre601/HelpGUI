@@ -1,4 +1,11 @@
+licenseImg: https://img.shields.io/github/license/Andre601/HelpGUI.svg
+license: https://github.com/Andre601/HelpGUI/blob/master/LICENSE.md
+issuesImg: https://img.shields.io/github/issues-raw/Andre601/HelpGUI.svg
+issues: https://github.com/Andre601/HelpGUI/issues
+
 # HelpGUI
+[![licenseImg]][license] [![issuesImg]][issues]
+
 ## What is HelpGUI?
 HelpGUI is a simple, yet powerfull Help-request-plugin.  
 To send a help-request, the player just need to type /help and click on the playerhead of the player, that he wants help.

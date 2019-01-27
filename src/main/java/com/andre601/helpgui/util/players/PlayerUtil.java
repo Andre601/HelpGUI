@@ -1,7 +1,6 @@
 package com.andre601.helpgui.util.players;
 
 import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.manager.HeadUtils;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -54,56 +53,39 @@ public class PlayerUtil {
     private List<ItemStack> searchAll(Player requester){
         switch (ConfigKey.DP_MODE.getString(false).toUpperCase()){
             case "WHITELIST":
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    if(player != requester) {
-                        if(ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())){
-                            players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
-                        }
-                    }
-                }
+                Bukkit.getOnlinePlayers().stream().filter(
+                        player -> ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())
+                ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
                 break;
 
             case "STAFF":
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    if(player != requester) {
-                        if(player.hasPermission("helpgui.staff")){
-                            players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
-                        }
-                    }
-                }
+                Bukkit.getOnlinePlayers().stream().filter(
+                        player -> player.hasPermission("helpgui.staff")
+                ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
                 break;
 
             case "BLACKLIST":
             default:
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    if(player != requester){
-                        players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
-                    }
-                }
-                break;
+                Bukkit.getOnlinePlayers().stream().filter(
+                        player -> !ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())
+                ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
         }
         return players;
     }
 
     private List<ItemStack> searchByName(Player requester, String name){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            if(player.getName().startsWith(name)){
-                if(player != requester) {
-                    players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
-                }
-            }
-        }
+        Bukkit.getOnlinePlayers().stream().filter(
+                player -> player.getName().startsWith(name)
+        ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
+
         return players;
     }
 
     private List<ItemStack> searchByGroup(Player requester, String group){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            if(this.plugin.getVaultIntegrationManager().getPrimaryGroup(player).equalsIgnoreCase(group)){
-                if(player != requester) {
-                    players.add(HeadUtils.getSkull(HeadUtils.getURL(player.getUniqueId())));
-                }
-            }
-        }
+
+        Bukkit.getOnlinePlayers().stream().filter(
+                player -> plugin.getVaultManager().getPrimaryGroup(player).equalsIgnoreCase(group)
+        ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
 
         return players;
     }

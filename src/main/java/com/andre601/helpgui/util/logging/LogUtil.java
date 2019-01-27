@@ -11,13 +11,14 @@ public final class LogUtil {
         this.plugin = plugin;
     }
 
+    public void info(String msg){
+        plugin.getLogger().info(msg);
+    }
 
-    public void LOG(String info){
-        this.plugin.getServer().getConsoleSender().sendMessage(
-                ChatColor.translateAlternateColorCodes('&',
-                        "&f[&aHelp&2GUI&f] " + info
-                )
-        );
+    public void debug(String msg){
+        if(!plugin.isDebug()) return;
+
+        plugin.getLogger().info("[DEBUG] " + msg);
     }
 
 }

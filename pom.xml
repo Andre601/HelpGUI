@@ -69,12 +69,6 @@
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi</url>
         </repository>
-
-        <!-- Mojang -->
-        <repository>
-            <id>mojang</id>
-            <url>https://libraries.minecraft.net/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -106,14 +100,6 @@
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>LATEST</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Mojang API -->
-        <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>authlib</artifactId>
-            <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -18,11 +18,11 @@
 
 Main:
   #
+  # Debug:      Enable/Disable debug mode. This will print stacktraces and other information prefixed with "[DEBUG]"
   # ShowBanner: Should the banner be shown in console, when the plugin gets enabled?
-  # DefaultTextureURL: A link to a skull-texture that is used, when no playerhead could be found/loaded.
   #
+  Debug: false
   ShowBanner: true
-  DefaultTextureURL: 'http://textures.minecraft.net/texture/d9e3e0f569ee0c6bdf734b8607398c283dc53a7bc3d3517e921699177a672dff'
   DisabledPlayers:
     #
     # Choose which player heads are shown in the GUI
@@ -87,13 +87,13 @@ Messages:
     # PlaceholderAPIFound:    If PlaceholderAPI was found
     # PlaceholderAPINotFound: If PlaceholderAPI wasn't found
     #
-    VaultFound: '&aFound Vault! Enabled Group-Search option.'
-    VaultNotFound: '&cCouldn''t find Vault. The group-search option only works with Vault installed and enabled!'
-    PlaceholderAPIFound: '&aFound PlaceholderAPI! Placeholders in lore supported!'
-    PlaceholderAPINotFound: '&cCouldn''t find PlaceholderAPI. Placeholders in lore won''t be supported!'
+    VaultFound: 'Hooked into Vault for group-search'
+    VaultNotFound: 'Vault wasn''t found! Group-search disabled.'
+    PlaceholderAPIFound: 'Hooked into PlaceholderAPI.'
+    PlaceholderAPINotFound: 'Couldn''t find PlaceholderAPI.'
   HelpRequest:
     #
-    # ConfigKey for help send/recieved
+    # Messages for help send/recieved
     #
     # Sender:     Message sent to the sender of the request
     # Recipient:  Message sent to the recipient of the request

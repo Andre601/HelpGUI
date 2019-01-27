@@ -14,8 +14,8 @@ public enum ConfigKey {
     PREFIX("Messages.HelpInv.Title"),
 
     // Main settings
+    DEBUG("Main.Debug"),
     SHOW_BANNER("Main.ShowBanner"),
-    DEFAULT_HEAD_TEXTURE("Main.DefaultTextureURL"),
     DP_MODE("Main.DisabledPlayers.Mode"),
     DISABLED_PLAYERS("Main.DisabledPlayers.Players"),
     DW_MODE("Main.DisabledWorlds.Mode"),
@@ -35,8 +35,8 @@ public enum ConfigKey {
     MSG_PAPI_NOT_FOUND("Messages.Startup.PlaceholderAPINotFound"),
 
     // Help request
-    MSG_HELP_SEND("Messages.HelpRequest.Send"),
-    MSG_HELP_RECEIVED("Messages.HelpRequest.Receiver"),
+    MSG_HELP_SEND("Messages.HelpRequest.Sender"),
+    MSG_HELP_RECEIVED("Messages.HelpRequest.Recipient"),
 
     // Config
     MSG_CONFIG_ATTEMPREL("Messages.Config.AttemptReaload"),

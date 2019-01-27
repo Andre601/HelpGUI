@@ -3,7 +3,6 @@ package com.andre601.helpgui.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.andre601.helpgui.HelpGUI;
-import com.andre601.helpgui.manager.ScrollerInventory;
 import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.players.PlayerUtil;
 import org.bukkit.entity.Player;
@@ -12,6 +11,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public class CmdHelp extends BaseCommand {
+
+    private HelpGUI plugin;
+
+    public CmdHelp(HelpGUI plugin){
+        this.plugin = plugin;
+    }
 
     @CommandAlias("help")
     @Description("Lists all online players or searches for certain one")
@@ -45,7 +50,7 @@ public class CmdHelp extends BaseCommand {
             return;
         }
 
-        new ScrollerInventory(items, ConfigKey.PREFIX.getString(true), player);
+        plugin.setScrollerInventory(items, ConfigKey.PREFIX.getString(true), player);
     }
 
 }
