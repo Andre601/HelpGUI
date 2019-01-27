@@ -16,9 +16,9 @@ about: Have an idea to improve HelpGUI? Use this template.
 - [ ] You checked the [wiki] or the issues for already existing suggestions/improvements
 
 # Suggestion
-> Please describe your idea as detailed as possible!
-> You can add images, if that helps to show the suggestion in more detail.
-> Please use [hastebin] or [Github's gists][gist] to share code-examples.
+> Please describe your idea as detailed as possible!  
+> You can add images, if that helps to show the suggestion in more detail.  
+> Please use [hastebin] or [Github's gists][gist] to share code-examples.  
 > Issues with just code will be ignored and closed.
 
 ## Description
