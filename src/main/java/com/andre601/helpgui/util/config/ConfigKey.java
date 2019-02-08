@@ -10,23 +10,40 @@ import java.util.List;
 
 public enum ConfigKey {
 
-    // Prefix of the plugin
-    PREFIX("Messages.HelpInv.Title"),
-
     // Main settings
-    DEBUG("Main.Debug"),
-    SHOW_BANNER("Main.ShowBanner"),
-    DP_MODE("Main.DisabledPlayers.Mode"),
-    DISABLED_PLAYERS("Main.DisabledPlayers.Players"),
-    DW_MODE("Main.DisabledWorlds.Mode"),
-    DISABLED_WORLDS("Main.DisabledWorlds.Worlds"),
+    DEBUG("Settings.Debug"),
+    SHOW_BANNER("Settings.ShowBanner"),
+    DP_MODE("Settings.DisabledPlayers.Mode"),
+    DISABLED_PLAYERS("Settings.DisabledPlayers.Players"),
+    DW_MODE("Settings.DisabledWorlds.Mode"),
+    DISABLED_WORLDS("Settings.DisabledWorlds.Worlds"),
 
-    // Inv/Item text
-    MSG_INV_INFO("Messages.HelpInv.Info"),
-    MSG_INV_INFO_DESC("Messages.HelpInv.InfoDesc"),
-    MSG_NEXT_PAGE("Messages.HelpInv.NextPage"),
-    MSG_PREV_PAGE("Messages.HelpInv.PrevPage"),
-    MSG_PLAYER_LORE("Messages.HelpInv.PlayerLore"),
+    // Inventory title
+    INV_TITLE("Settings.Inventory.Title"),
+
+    // Info item
+    INV_ITEM_INFO_MATERIAL("Settings.Inventory.Items.Info.Item"),
+    INV_ITEM_INFO_NAME("Settings.Inventory.Items.Info.Name"),
+    INV_ITEM_INFO_LORE("Settings.Inventory.Items.Info.Lore"),
+
+    // Next page item
+    INV_ITEM_NEXT_PAGE_MATERIAL("Settings.Inventory.Items.NextPage.Item"),
+    INV_ITEM_NEXT_PAGE_NAME("Settings.Inventory.Items.NextPage.Name"),
+    INV_ITEM_NEXT_PAGE_LORE("Settings.Inventory.Items.NextPage.Lore"),
+
+    // Previous page item
+    INV_ITEM_PREV_PAGE_MATERIAL("Settings.Inventory.Items.PrevPage.Item"),
+    INV_ITEM_PREV_PAGE_NAME("Settings.Inventory.Items.PrevPage.Name"),
+    INV_ITEM_PREV_PAGE_LORE("Settings.Inventory.Items.PrevPage.Lore"),
+
+    // Filler item
+    INV_ITEM_FILLER_MATERIAL("Settings.Inventory.Items.Filler.Item"),
+    INV_ITEM_FILLER_NAME("Settings.Inventory.Items.Filler.Name"),
+    INV_ITEM_FILLER_LORE("Settings.Inventory.Items.Filler.Lore"),
+
+    // Player item
+    INV_ITEM_PLAYER_NAME("Settings.Inventory.Items.Player.Name"),
+    INV_ITEM_PLAYER_LORE("Settings.Inventory.Items.Player.Lore"),
 
     // Startup messages
     MSG_VAULT_FOUND("Messages.Startup.VaultFound"),
@@ -39,7 +56,7 @@ public enum ConfigKey {
     MSG_HELP_RECEIVED("Messages.HelpRequest.Recipient"),
 
     // Config
-    MSG_CONFIG_ATTEMPREL("Messages.Config.AttemptReaload"),
+    MSG_CONFIG_ATTEMPREL("Messages.Config.AttemptReload"),
     MSG_CONFIG_RELOADED("Messages.Config.Reloaded"),
     MSG_CONFIG_REL_NOTIFY_PLAYER("Messages.Config.ReloadNotifyPlayer"),
 
@@ -52,45 +69,14 @@ public enum ConfigKey {
     ERR_VAULT_NOT_ENABLED("Messages.Errors.VaultNotEnabled"),
     ERR_NO_PERMISSION("Messages.Errors.NoPermission");
 
-    public final String PATH;
+    public final String key;
     public static HelpGUI plugin;
 
-    ConfigKey(String path){
-        this.PATH = path;
+    ConfigKey(String key){
+        this.key = key;
     }
 
-    public String getString(boolean colored){
-        if(colored)
-            return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(this.PATH));
-
-        return plugin.getConfig().getString(this.PATH);
-    }
-
-    public List<String> getStringList(boolean colored){
-        if(!colored)
-            return plugin.getConfig().getStringList(this.PATH);
-
-        List<String> color = new ArrayList<>();
-        for(String str : plugin.getConfig().getStringList(this.PATH)){
-            color.add(ChatColor.translateAlternateColorCodes('&', str));
-        }
-        return color;
-    }
-
-    public List<String> getStringList(Player player){
-        List<String> colored = new ArrayList<>();
-        for(String str : plugin.getConfig().getStringList(this.PATH)){
-            if(plugin.getPlaceholderAPIStatus())
-                colored.add(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(
-                        player, str
-                )));
-            else
-                colored.add(ChatColor.translateAlternateColorCodes('&', str));
-        }
-        return colored;
-    }
-
-    public boolean getBoolean(){
-        return plugin.getConfig().getBoolean(this.PATH);
+    public String getKey() {
+        return this.key;
     }
 }

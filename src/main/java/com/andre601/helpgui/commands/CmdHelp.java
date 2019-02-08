@@ -24,17 +24,27 @@ public class CmdHelp extends BaseCommand {
     @Syntax("/help [name|group:<group>]")
     public void onDefault(Player player, @Optional PlayerUtil search){
         if(player.hasPermission("helpgui.disablehelp")){
-            player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_CMD_DISABLED.getString(true));
+            plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                    ConfigKey.ERR_CMD_DISABLED.getKey()
+            ));
             return;
         }
-        if(ConfigKey.DW_MODE.getString(false).equalsIgnoreCase("whitelist")){
-            if(!ConfigKey.DISABLED_WORLDS.getStringList(false).contains(player.getWorld().getName())){
-                player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_DISABLED_WORLD.getString(true));
+        if(plugin.getConfig().getString(ConfigKey.DW_MODE.getKey()).equalsIgnoreCase("whitelist")){
+            if(!plugin.getConfig().getStringList(
+                    ConfigKey.DISABLED_WORLDS.getKey()).contains(player.getWorld().getName()
+            )){
+                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                        ConfigKey.ERR_DISABLED_WORLD.getKey()
+                ));
                 return;
             }
         }else{
-            if(ConfigKey.DISABLED_WORLDS.getStringList(false).contains(player.getWorld().getName())){
-                player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_DISABLED_WORLD.getString(true));
+            if(plugin.getConfig().getStringList(
+                    ConfigKey.DISABLED_WORLDS.getKey()).contains(player.getWorld().getName()
+            )){
+                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                        ConfigKey.ERR_DISABLED_WORLD.getKey()
+                ));
                 return;
             }
         }
@@ -46,11 +56,15 @@ public class CmdHelp extends BaseCommand {
         ArrayList<ItemStack> items = search.getPlayers();
 
         if(items.size() == 0){
-            player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PLAYERS_FOUND.getString(true));
+            plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                    ConfigKey.ERR_NO_PLAYERS_FOUND.getKey()
+            ));
             return;
         }
 
-        plugin.setScrollerInventory(items, ConfigKey.PREFIX.getString(true), player);
+        plugin.setScrollerInventory(items, plugin.getFormatUtil().formatText(
+                plugin.getConfig().getString(ConfigKey.INV_TITLE.getKey())
+        ), player);
     }
 
 }

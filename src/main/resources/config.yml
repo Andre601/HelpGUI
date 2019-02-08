@@ -16,7 +16,7 @@
 # Wiki:                                               #
 #   https://github.com/Andre601/HelpGUI/wiki          #
 
-Main:
+Settings:
   #
   # Debug:      Enable/Disable debug mode. This will print stacktraces and other information prefixed with "[DEBUG]"
   # ShowBanner: Should the banner be shown in console, when the plugin gets enabled?
@@ -52,31 +52,56 @@ Main:
     - Example_World
     - Example_World_the_end
     - Example_World_nether
+  #
+  #
+  #
+  Inventory:
+    #
+    # The title of the inventory. You can't have more than 32 characters, including color codes.
+    # This is also used as the prefix for messages.
+    #
+    Title: '&7[&aHelp&2GUI&7] '
+    #
+    # Define the items here for the info, the next/previous pages and the filler.
+    # Colorcodes and placeholders from PlaceholderAPI are supported in both Display name and lore.
+    # Placeholders won't be changed, if PlaceholderAPI isn't installed.
+    # Only placeholder that will be changed is %player% for the Player-item (Name only).
+    #
+    # 1.13 Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+    #
+    Items:
+      Info:
+        Item: 'BOOK'
+        Name: '&7Click on a player head!'
+        Lore:
+        - ''
+        - '&7Click on a playerhead in'
+        - '&7the inventory, to send a'
+        - '&7help-request to that player!'
+        - ''
+      NextPage:
+        Item: 'SIGN'
+        Name: '&bNext page >'
+        Lore:
+        - ''
+      PrevPage:
+        Item: 'SIGN'
+        Name: '&b< Previous page'
+        Lore:
+        - ''
+      Filler:
+        Item: 'BLACK_STAINED_GLASS_PANE'
+        Name: '&7'
+        Lore:
+        - ''
+      Player:
+        Name: '&7%player%'
+        Lore:
+        - ''
+        - '&7Rank: &b%vault_rank%'
+        - '&7Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
+        - ''
 Messages:
-  HelpInv:
-    #
-    # Title:       The title of the inventory
-    # NextPage:    Text for the "next page" item
-    # PevPage:     Text for the "previous page" item
-    # Info:        Title of the Book
-    # InfoDesc:    Description of the book (lore)
-    # PlayerLore:  The lore of the playerhead. Supports PlaceholderAPI, if installed.
-    #
-    Title: '&8[&aHelp&2GUI&8] '
-    Info: '&7Click a playerhead!'
-    InfoDesc:
-    - ''
-    - '&7Click on a playerhead in'
-    - '&7the inventory, to send a'
-    - '&7help-request to that player!'
-    - ''
-    NextPage: '&bNext page >'
-    PrevPage: '&b< Previous page'
-    PlayerLore:
-    - ''
-    - '&7Rank: &b%vault_rank%'
-    - '&7Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
-    - ''
   Startup:
     #
     # These messages appear at startup of the plugin
@@ -102,11 +127,15 @@ Messages:
     #   %sender%     ->  Name of the sender. (Only in Recipient available!)
     #   %recipient%  ->  Name of the recipient. (Only in Sender available!)
     #
+    #   You can use placeholders from PlaceholderAPI.
+    #   The placeholders will contain values from either the sender, or recipient, depending on which message it is.
+    #   Example: %player_name% turns into the name of the Sender in "Sender".
+    #
     Sender: '&7Help-Request sent to &b%recipient%&7!'
     Recipient: '&b%sender% &7needs your help!'
   Errors:
     #
-    # ConfigKey for different issues.
+    # Messages for different errors/issues.
     #
     # CommandDisabled:  If the player has the permission helpgui.disablehelp
     # NotOnline:        If the targeted player is offline
@@ -121,6 +150,7 @@ Messages:
     NoPlayersFound: '&cNo players found. :,('
     VaultNotEnabled: '&cVault is not enabled/installed!'
     NoPermission: '&cYou do not have permission for that!'
+    NoGroup: '&cYou need to provide a group after &4group:'
   Config:
     #
     # ConfigKey for reloading the config.

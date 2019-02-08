@@ -21,26 +21,28 @@ public class CmdHelpGUI extends BaseCommand {
     @Description("Reloads the config.yml")
     public void reloadConfig(Player player){
         if(!player.hasPermission("helpgui.reload")){
-            player.sendMessage(
-                    ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PERMISSION.getString(true)
-            );
+            plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                    ConfigKey.ERR_NO_PERMISSION.getKey()
+            ));
             return;
         }
 
-        this.plugin.getLogUtil().info("&7Reloading config.yml...");
-        player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_ATTEMPREL.getString(true));
+        this.plugin.getLogUtil().info("Reloading config.yml...");
+        plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                ConfigKey.MSG_CONFIG_ATTEMPREL.getKey()
+        ));
         this.plugin.reloadConfig();
-        this.plugin.getLogUtil().info("&7Reload complete!");
-        player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_CONFIG_RELOADED.getString(true));
+        this.plugin.getLogUtil().info("Reload complete!");
+        plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                ConfigKey.MSG_CONFIG_RELOADED.getKey()
+        ));
 
-        for(Player p : Bukkit.getOnlinePlayers()){
-            if(p.hasPermission("helpgui.notify"))
-                if(p != player)
-                    p.sendMessage(ConfigKey.PREFIX.getString(true) +
-                            ConfigKey.MSG_CONFIG_REL_NOTIFY_PLAYER.getString(true)
-                                    .replace("%player%", player.getName())
-                    );
-        }
+        Bukkit.getOnlinePlayers().stream()
+                .filter(pl -> pl.hasPermission(""))
+                .filter(pl -> pl != player)
+                .forEach(pl -> plugin.getFormatUtil().sendMessage(pl, plugin.getConfig().getString(
+                        ConfigKey.MSG_CONFIG_REL_NOTIFY_PLAYER.getKey().replace("%player%", player.getName())
+                )));
     }
 
     @Default
@@ -48,7 +50,9 @@ public class CmdHelpGUI extends BaseCommand {
     @Description("Shows this help page.")
     public void onHelp(Player player, CommandHelp help){
         if(!player.hasPermission("helpgui.help")){
-            player.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NO_PERMISSION.getString(true));
+            plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                    ConfigKey.ERR_NO_PERMISSION.getKey()
+            ));
             return;
         }
         help.showHelp();

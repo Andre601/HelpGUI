@@ -3,8 +3,6 @@ package com.andre601.helpgui.manager;
 import com.andre601.helpgui.HelpGUI;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,9 +18,9 @@ import java.util.*;
 public class ScrollerInventory {
 
     private List<Inventory> pages = new ArrayList<>();
-    private UUID id;
     private int currentPage = 0;
     private Map<UUID, ScrollerInventory> users = new HashMap<>();
+    private HelpGUI plugin;
 
     public List<Inventory> getPages(){
         return pages;
@@ -36,12 +34,12 @@ public class ScrollerInventory {
         return users;
     }
 
-    public ScrollerInventory(ArrayList<ItemStack> items, String name, Player p){
-        this.id = UUID.randomUUID();
+    public ScrollerInventory(HelpGUI plugin, ArrayList<ItemStack> items, String name, Player player){
+        this.plugin = plugin;
 
-        Inventory page = getBlankPage(name);
+        Inventory page = getBlankPage(player, name);
         for(int i = 0; i < items.size(); i++){
-            // Checks, if first empty slot is at pos 46
+            // Checks, if first empty slot is at pos 54
             if(page.firstEmpty() == 53){
                 page.addItem(items.get(i));
                 pages.add(page);
@@ -50,51 +48,64 @@ public class ScrollerInventory {
                 * slot of the other inv...
                 */
                 if(i < (items.size() - 1))
-                    page = getBlankPage(name);
+                    page = getBlankPage(player, name);
             }else{
                 page.addItem(items.get(i));
             }
         }
         pages.add(page);
-        p.openInventory(pages.get(currentPage));
-        users.put(p.getUniqueId(), this);
+        player.openInventory(pages.get(currentPage));
+        users.put(player.getUniqueId(), this);
     }
 
-    // Displayname for NextPage-Item
-    public final String NEXT_PAGE_NAME = ConfigKey.MSG_NEXT_PAGE.getString(true);
-
-    // Displayname for PrevPage-Item
-    public final String PREV_PAGE_NAME = ConfigKey.MSG_PREV_PAGE.getString(true);
-
-    // Displayname for the Info-Item
-    public final String INFO = ConfigKey.MSG_INV_INFO.getString(true);
-
-    public final String DECO = ChatColor.GRAY.toString();
-
     // Function to create new empty page.
-    private Inventory getBlankPage(String name){
+    private Inventory getBlankPage(Player player, String name){
 
         Inventory page = Bukkit.createInventory(null, 54, name);
+        ItemMeta meta;
 
-        ItemStack nextPage = new ItemStack(Material.SIGN);
-        ItemMeta meta = nextPage.getItemMeta();
-        meta.setDisplayName(NEXT_PAGE_NAME);
+        /*
+         * Item for next page
+         */
+        ItemStack nextPage = new ItemStack(plugin.getFormatUtil().getItem(
+                ConfigKey.INV_ITEM_NEXT_PAGE_MATERIAL.getKey()
+        ));
+        meta = nextPage.getItemMeta();
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getKey()));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_NEXT_PAGE_LORE.getKey()));
         nextPage.setItemMeta(meta);
 
-        ItemStack prevPage = new ItemStack(Material.SIGN);
+        /*
+         * Item for previous page
+         */
+        ItemStack prevPage = new ItemStack(plugin.getFormatUtil().getItem(
+                ConfigKey.INV_ITEM_PREV_PAGE_MATERIAL.getKey()
+        ));
         meta = prevPage.getItemMeta();
-        meta.setDisplayName(PREV_PAGE_NAME);
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME.getKey()));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PREV_PAGE_LORE.getKey()));
         prevPage.setItemMeta(meta);
 
-        ItemStack deco = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        /*
+         * Item for filling empty slots
+         */
+        ItemStack deco = new ItemStack(plugin.getFormatUtil().getItem(
+                ConfigKey.INV_ITEM_FILLER_MATERIAL.getKey()
+        ));
         meta = deco.getItemMeta();
-        meta.setDisplayName(DECO);
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_FILLER_NAME.getKey()));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_FILLER_LORE.getKey()));
         deco.setItemMeta(meta);
 
-        ItemStack info = new ItemStack(Material.BOOK);
+        /*
+         * Item for the info
+         */
+        ItemStack info = new ItemStack(plugin.getFormatUtil().getItem(
+                ConfigKey.INV_ITEM_INFO_MATERIAL.getKey()
+        ));
         meta = info.getItemMeta();
-        meta.setDisplayName(INFO);
-        meta.setLore(ConfigKey.MSG_INV_INFO_DESC.getStringList(true));
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_INFO_NAME.getKey()));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_INFO_LORE.getKey()));
         info.setItemMeta(meta);
 
         page.setItem(0, prevPage);

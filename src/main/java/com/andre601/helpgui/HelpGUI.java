@@ -4,6 +4,7 @@ import com.andre601.helpgui.commands.CmdHelp;
 import com.andre601.helpgui.commands.CmdHelpGUI;
 import com.andre601.helpgui.manager.EventManager;
 import com.andre601.helpgui.manager.ScrollerInventory;
+import com.andre601.helpgui.util.FormatUtil;
 import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
@@ -21,13 +22,14 @@ import java.util.ArrayList;
 public class HelpGUI extends JavaPlugin {
 
     private boolean vaultEnabled;
-    private boolean papiEnabled;
+    private boolean placheholderAPIEnabled;
     private boolean debug;
     private BukkitCommandManager manager;
 
     private LogUtil logUtil;
     private ScrollerInventory scrollerInventory;
     private VaultManager vaultManager;
+    private FormatUtil formatUtil;
 
     public void onEnable(){
 
@@ -36,14 +38,15 @@ public class HelpGUI extends JavaPlugin {
         ConfigKey.plugin = this;
         logUtil = new LogUtil(this);
         vaultManager = new VaultManager(this);
+        formatUtil = new FormatUtil(this);
 
         saveDefaultConfig();
 
-        debug = ConfigKey.DEBUG.getBoolean();
+        debug = getConfig().getBoolean(ConfigKey.DEBUG.getKey(), false);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        if(ConfigKey.SHOW_BANNER.getBoolean())
+        if(getConfig().getBoolean(ConfigKey.SHOW_BANNER.getKey(), true))
             sendBanner();
 
         loadCommands(this);
@@ -56,11 +59,11 @@ public class HelpGUI extends JavaPlugin {
 
         logUtil.info("Checking for PlaceholderAPI...");
         if(pluginManager.getPlugin("PlaceholderAPI") != null){
-            papiEnabled = true;
-            logUtil.info(ConfigKey.MSG_PAPI_FOUND.getString(true));
+            placheholderAPIEnabled = true;
+            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_FOUND.getKey()));
         }else{
-            papiEnabled = false;
-            logUtil.info(ConfigKey.MSG_PAPI_NOT_FOUND.getString(true));
+            placheholderAPIEnabled = false;
+            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_NOT_FOUND.getKey()));
         }
 
         logUtil.info("Plugin enabled in " + getTime(startTime) + "ms!");
@@ -79,10 +82,10 @@ public class HelpGUI extends JavaPlugin {
     private void checkVaultStatus(){
         if(vaultManager.setupPermission()){
             vaultEnabled = true;
-            logUtil.info(ConfigKey.MSG_VAULT_FOUND.getString(true));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_FOUND.getKey()));
         }else{
             vaultEnabled = false;
-            logUtil.info(ConfigKey.MSG_VAULT_NOT_FOUND.getString(true));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_NOT_FOUND.getKey()));
         }
     }
 
@@ -115,18 +118,18 @@ public class HelpGUI extends JavaPlugin {
     }
 
     private void sendBanner(){
-        System.out.println("");
+        System.out.println("§7");
         System.out.println("§a _   _  §2  ____");
         System.out.println("§a| | | | §2 / ___)");
         System.out.println("§a| |_| | §2| /  _");
         System.out.println("§a|_____| §2|_| (_|");
         System.out.println("§a _   _  §2 _____");
         System.out.println("§a|_| |_| §2 \\___/");
-        System.out.println("");
+        System.out.println("§7");
     }
 
-    public boolean getPlaceholderAPIStatus(){
-        return papiEnabled;
+    public boolean isPlaceholderAPIEnabled(){
+        return placheholderAPIEnabled;
     }
 
     public LogUtil getLogUtil(){
@@ -134,7 +137,7 @@ public class HelpGUI extends JavaPlugin {
     }
 
     public void setScrollerInventory(ArrayList<ItemStack> items, String title, Player player){
-        scrollerInventory = new ScrollerInventory(items, title, player);
+        scrollerInventory = new ScrollerInventory(this, items, title, player);
     }
 
     public ScrollerInventory getScrollerInventory(){
@@ -143,6 +146,10 @@ public class HelpGUI extends JavaPlugin {
 
     public VaultManager getVaultManager(){
         return vaultManager;
+    }
+
+    public FormatUtil getFormatUtil(){
+        return formatUtil;
     }
 
     public boolean isDebug() {

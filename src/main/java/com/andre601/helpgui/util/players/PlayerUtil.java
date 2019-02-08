@@ -27,17 +27,16 @@ public class PlayerUtil {
         }else
         if(search.startsWith("group:")){
             if(!this.plugin.getVaultStatus()){
-                player.sendMessage(
-                        ConfigKey.PREFIX.getString(true) +
-                        ConfigKey.ERR_VAULT_NOT_ENABLED.getString(true)
-                );
+                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                        ConfigKey.ERR_VAULT_NOT_ENABLED.getKey()
+                ));
                 return null;
             }
 
             if(search.substring(6).equals("")){
-                player.sendMessage(
-                        ConfigKey.PREFIX.getString(true) +
-                        ConfigKey.ERR_NO_GROUP.getString(true));
+                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                        ConfigKey.ERR_NO_GROUP.getKey()
+                ));
                 return null;
             }
             return searchByGroup(player, search.substring(6));
@@ -51,10 +50,12 @@ public class PlayerUtil {
     }
 
     private List<ItemStack> searchAll(Player requester){
-        switch (ConfigKey.DP_MODE.getString(false).toUpperCase()){
+        switch (plugin.getConfig().getString(ConfigKey.DP_MODE.getKey()).toUpperCase()){
             case "WHITELIST":
                 Bukkit.getOnlinePlayers().stream().filter(
-                        player -> ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())
+                        player -> plugin.getConfig().getStringList(
+                                ConfigKey.DISABLED_PLAYERS.getKey()
+                        ).contains(player.getName())
                 ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
                 break;
 
@@ -67,7 +68,9 @@ public class PlayerUtil {
             case "BLACKLIST":
             default:
                 Bukkit.getOnlinePlayers().stream().filter(
-                        player -> !ConfigKey.DISABLED_PLAYERS.getStringList(false).contains(player.getName())
+                        player -> !plugin.getConfig().getStringList(
+                                ConfigKey.DISABLED_PLAYERS.getKey()
+                        ).contains(player.getName())
                 ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
         }
         return players;
@@ -93,11 +96,19 @@ public class PlayerUtil {
 
 
     private ItemStack getPlayerhead(Player player){
+
+        String name = plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PLAYER_NAME.getKey());
+        List<String> lore = plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PLAYER_LORE.getKey());
+
+        name = name.replace("%player%", player.getName());
+
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
+
         headMeta.setOwningPlayer(player);
-        headMeta.setDisplayName(player.getName());
-        headMeta.setLore(ConfigKey.MSG_PLAYER_LORE.getStringList(player));
+        headMeta.setDisplayName(name);
+        headMeta.setLore(lore);
+        
         playerHead.setItemMeta(headMeta);
 
         return playerHead;

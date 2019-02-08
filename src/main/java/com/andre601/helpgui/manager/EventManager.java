@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class EventManager implements Listener {
@@ -24,32 +25,36 @@ public class EventManager implements Listener {
 
         ScrollerInventory inventory = plugin.getScrollerInventory();
 
-        Player p = (Player)e.getWhoClicked();
-        if(!inventory.getUsers().containsKey(p.getUniqueId())) return;
+        Player player = (Player)e.getWhoClicked();
+        if(!inventory.getUsers().containsKey(player.getUniqueId())) return;
 
-        ScrollerInventory inv = inventory.getUsers().get(p.getUniqueId());
+        ScrollerInventory inv = inventory.getUsers().get(player.getUniqueId());
         if(e.getCurrentItem() == null) return;
         if(e.getCurrentItem().getItemMeta() == null) return;
         if(e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
 
         int currentPage = inv.getCurrentPage();
         if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                ConfigKey.MSG_NEXT_PAGE.getString(true)
+                plugin.getFormatUtil().formatText(plugin.getConfig().getString(
+                        ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getKey()
+                ))
         )){
             e.setCancelled(true);
             if(currentPage >= inv.getPages().size()-1){
                 return;
             }else{
                 currentPage += 1;
-                p.openInventory(inv.getPages().get(currentPage));
+                player.openInventory(inv.getPages().get(currentPage));
             }
         }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                ConfigKey.MSG_PREV_PAGE.getString(true)
+                plugin.getFormatUtil().formatText(plugin.getConfig().getString(
+                        ConfigKey.INV_ITEM_PREV_PAGE_NAME.getKey()
+                ))
         )){
             e.setCancelled(true);
             if(currentPage > 0){
                 currentPage -= 1;
-                p.openInventory(inv.getPages().get(currentPage));
+                player.openInventory(inv.getPages().get(currentPage));
             }
         }else
         if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
@@ -58,24 +63,46 @@ public class EventManager implements Listener {
             try{
                 Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getDisplayName()));
 
-                recipient.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_HELP_RECEIVED.getString(true)
-                        .replace("%sender%", p.getName()));
-                p.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.MSG_HELP_SEND.getString(true)
-                        .replace("%recipient%", recipient.getName()));
+                plugin.getFormatUtil().sendMessage(recipient, plugin.getConfig().getString(
+                        ConfigKey.MSG_HELP_RECEIVED.getKey()
+                ).replace("%sender%", player.getName()));
 
-                p.closeInventory();
-                inventory.getUsers().remove(p.getUniqueId());
+                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
+                        ConfigKey.MSG_HELP_SEND.getKey().replace("%recipient%", recipient.getName())
+                ).replace("%recipient%", recipient.getName()));
+
+                plugin.getLogUtil().debug(String.format(
+                        "Help-request from %s was send to %s.",
+                        player.getName(),
+                        recipient.getName()
+                ));
+
+                player.closeInventory();
+                inventory.getUsers().remove(player.getUniqueId());
             }catch (Exception ex){
                 plugin.getLogUtil().debug("There was an error with getting the player! Stacktrace below.");
                 if(plugin.isDebug()) ex.printStackTrace();
 
-                p.sendMessage(ConfigKey.PREFIX.getString(true) + ConfigKey.ERR_NOT_ONLINE.getString(true));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.getConfig().getString(ConfigKey.INV_TITLE.getKey()) +
+                        plugin.getConfig().getString(ConfigKey.ERR_NOT_ONLINE.getKey())
+                ));
             }
 
         }else{
             e.setCancelled(true);
         }
 
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event){
+        Player player = (Player)event.getPlayer();
+        ScrollerInventory inventory = plugin.getScrollerInventory();
+
+        if(!inventory.getUsers().containsKey(player.getUniqueId())) return;
+
+        inventory.getUsers().remove(player.getUniqueId());
     }
 
 }
