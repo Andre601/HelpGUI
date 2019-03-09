@@ -8,7 +8,7 @@
 #                      |_|  By Andre_601              #
 #                                                     #
 # Spigot Resource:                                    #
-#   https://www.spigotmc.org/resources/helpgui.33245/ #
+#   https://www.spigotmc.org/resources/33245/         #
 #                                                     #
 # GitHub:                                             #
 #   https://github.com/Andre601/HelpGUI               #
@@ -25,33 +25,41 @@ Settings:
   ShowBanner: true
   DisabledPlayers:
     #
-    # Choose which player heads are shown in the GUI
+    # Choose which player heads are shown in the GUI.
+    #
+    # You can define one of three modes available (Listed below).
+    #
+    # The list (Players:) supports player names and UUIDs.
+    # You need to prefix UUIDs with uuid: (Case sensitive)
+    #
+    # For example:
+    # - 'uuid:286f8d0c-b571-4720-b7ab-f2929cb38120' # This is the UUID of the player Andre_601
     #
     # Modes:
-    #   blacklist  ->  Players listed below will *NOT* be shown in the GUI (Default Option)
-    #   whitelist  ->  Players listed below *WILL ONLY* be shown in the GUI
-    #   staff      ->  Only players with the "helpgui.staff" permission node will be shown in the GUI
+    #   blacklist  ->  Players listed below will *NOT* be shown in the GUI (Default Option).
+    #   whitelist  ->  Players listed below *WILL ONLY* be shown in the GUI.
+    #   staff      ->  Only players with the "helpgui.staff" permission node will be shown in the GUI.
     #
     Mode: 'blacklist'
     #
     Players:
-    - player1
-    - player2
-    - player3
+    - 'player1'
+    - 'player2'
+    - 'player3'
   DisabledWorlds:
     #
-    # Choose which worlds the /help command works in
+    # Choose which worlds the /help command works in.
     #
     # Modes:
-    #   blacklist  ->  Worlds listed below will *NOT* have /help functioning (Default Option)
-    #   whitelist  ->  Worlds listed below *WILL ONLY* have /help functioning
+    #   blacklist  ->  Worlds listed below will *NOT* have /help functioning (Default Option).
+    #   whitelist  ->  Worlds listed below *WILL ONLY* have /help functioning.
     #
     Mode: 'blacklist'
     #
     Worlds:
-    - Example_World
-    - Example_World_the_end
-    - Example_World_nether
+    - 'Example_World'
+    - 'Example_World_the_end'
+    - 'Example_World_nether'
   #
   #
   #
@@ -62,12 +70,16 @@ Settings:
     #
     Title: '&7[&aHelp&2GUI&7] '
     #
-    # Define the items here for the info, the next/previous pages and the filler.
-    # Colorcodes and placeholders from PlaceholderAPI are supported in both Display name and lore.
-    # Placeholders won't be changed, if PlaceholderAPI isn't installed.
-    # Only placeholder that will be changed is %player% for the Player-item (Name only).
+    # This section allows you to define the shown items, their display name and their lore.
+    # Colour codes and placeholders from PlaceholderAPI are supported for both "Name" and "Lore".
     #
-    # 1.13 Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+    # Placeholders won't be updated/changed, when PlaceholderAPI isn't installed.
+    # Exception is the %player% placeholder in "Name" for the Player-item.
+    #
+    # "Item" uses the 1.13 Item names from Spigot!
+    # IDs and the old (1.12 and older) item names aren't supported.
+    #
+    # Link: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
     #
     Items:
       Info:

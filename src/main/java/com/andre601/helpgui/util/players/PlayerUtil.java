@@ -50,13 +50,15 @@ public class PlayerUtil {
     }
 
     private List<ItemStack> searchAll(Player requester){
-        switch (plugin.getConfig().getString(ConfigKey.DP_MODE.getKey()).toUpperCase()){
+        switch(plugin.getConfig().getString(ConfigKey.DP_MODE.getKey()).toUpperCase()){
             case "WHITELIST":
-                Bukkit.getOnlinePlayers().stream().filter(
-                        player -> plugin.getConfig().getStringList(
+                Bukkit.getOnlinePlayers()
+                        .stream()
+                        .filter(player -> isInList(player, plugin.getConfig().getStringList(
                                 ConfigKey.DISABLED_PLAYERS.getKey()
-                        ).contains(player.getName())
-                ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
+                        )))
+                        .filter(player -> player != requester)
+                        .forEach(player -> players.add(getPlayerhead(player)));
                 break;
 
             case "STAFF":
@@ -67,11 +69,13 @@ public class PlayerUtil {
 
             case "BLACKLIST":
             default:
-                Bukkit.getOnlinePlayers().stream().filter(
-                        player -> !plugin.getConfig().getStringList(
+                Bukkit.getOnlinePlayers()
+                        .stream()
+                        .filter(player -> !isInList(player, plugin.getConfig().getStringList(
                                 ConfigKey.DISABLED_PLAYERS.getKey()
-                        ).contains(player.getName())
-                ).filter(player -> player != requester).forEach(player -> players.add(getPlayerhead(player)));
+                        )))
+                        .filter(player -> player != requester)
+                        .forEach(player -> players.add(getPlayerhead(player)));
         }
         return players;
     }
@@ -93,7 +97,15 @@ public class PlayerUtil {
         return players;
     }
 
-
+    private boolean isInList(Player player, List<String> names){
+        for(String name : names){
+            if(name.startsWith("uuid:") && player.getUniqueId().toString().equals(name.replace("uuid:", "")))
+                return true;
+            if(player.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
 
     private ItemStack getPlayerhead(Player player){
 
