@@ -36,7 +36,7 @@ public class EventManager implements Listener {
         int currentPage = inv.getCurrentPage();
         if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
                 plugin.getFormatUtil().formatText(plugin.getConfig().getString(
-                        ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getKey()
+                        ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getPath()
                 ))
         )){
             e.setCancelled(true);
@@ -48,7 +48,7 @@ public class EventManager implements Listener {
             }
         }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
                 plugin.getFormatUtil().formatText(plugin.getConfig().getString(
-                        ConfigKey.INV_ITEM_PREV_PAGE_NAME.getKey()
+                        ConfigKey.INV_ITEM_PREV_PAGE_NAME.getPath()
                 ))
         )){
             e.setCancelled(true);
@@ -64,11 +64,11 @@ public class EventManager implements Listener {
                 Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getDisplayName()));
 
                 plugin.getFormatUtil().sendMessage(recipient, plugin.getConfig().getString(
-                        ConfigKey.MSG_HELP_RECEIVED.getKey()
+                        ConfigKey.MSG_HELP_RECEIVED.getPath()
                 ).replace("%sender%", player.getName()));
 
                 plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                        ConfigKey.MSG_HELP_SEND.getKey().replace("%recipient%", recipient.getName())
+                        ConfigKey.MSG_HELP_SEND.getPath().replace("%recipient%", recipient.getName())
                 ).replace("%recipient%", recipient.getName()));
 
                 plugin.getLogUtil().debug(String.format(
@@ -84,8 +84,8 @@ public class EventManager implements Listener {
                 if(plugin.isDebug()) ex.printStackTrace();
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.getConfig().getString(ConfigKey.INV_TITLE.getKey()) +
-                        plugin.getConfig().getString(ConfigKey.ERR_NOT_ONLINE.getKey())
+                        plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()) +
+                        plugin.getConfig().getString(ConfigKey.ERR_NOT_ONLINE.getPath())
                 ));
             }
 

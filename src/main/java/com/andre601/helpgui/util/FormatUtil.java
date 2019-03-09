@@ -56,6 +56,6 @@ public class FormatUtil {
     public void sendMessage(Player player, String text){
         text = PlaceholderAPI.setPlaceholders(player, text);
 
-        player.sendMessage(formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getKey()) + text));
+        player.sendMessage(formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()) + text));
     }
 }

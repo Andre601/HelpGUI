@@ -22,26 +22,26 @@ public class CmdHelpGUI extends BaseCommand {
     public void reloadConfig(Player player){
         if(!player.hasPermission("helpgui.reload")){
             plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                    ConfigKey.ERR_NO_PERMISSION.getKey()
+                    ConfigKey.ERR_NO_PERMISSION.getPath()
             ));
             return;
         }
 
         this.plugin.getLogUtil().info("Reloading config.yml...");
         plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                ConfigKey.MSG_CONFIG_ATTEMPREL.getKey()
+                ConfigKey.MSG_CONFIG_ATTEMPREL.getPath()
         ));
         this.plugin.reloadConfig();
         this.plugin.getLogUtil().info("Reload complete!");
         plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                ConfigKey.MSG_CONFIG_RELOADED.getKey()
+                ConfigKey.MSG_CONFIG_RELOADED.getPath()
         ));
 
         Bukkit.getOnlinePlayers().stream()
                 .filter(pl -> pl.hasPermission(""))
                 .filter(pl -> pl != player)
                 .forEach(pl -> plugin.getFormatUtil().sendMessage(pl, plugin.getConfig().getString(
-                        ConfigKey.MSG_CONFIG_REL_NOTIFY_PLAYER.getKey().replace("%player%", player.getName())
+                        ConfigKey.MSG_CONFIG_REL_NOTIFY_PLAYER.getPath().replace("%player%", player.getName())
                 )));
     }
 
@@ -51,7 +51,7 @@ public class CmdHelpGUI extends BaseCommand {
     public void onHelp(Player player, CommandHelp help){
         if(!player.hasPermission("helpgui.help")){
             plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                    ConfigKey.ERR_NO_PERMISSION.getKey()
+                    ConfigKey.ERR_NO_PERMISSION.getPath()
             ));
             return;
         }

@@ -155,6 +155,8 @@ Messages:
     # NoPlayersFound:   If /help [player] had no results
     # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed
     # NoPermission:     No permission message
+    # NoGroup:          When the player only types "/help group:" without providing a groupname.
+    # NoUUID:           When the player only types "/help uuid:" without providing a UUID.
     #
     CommandDisabled: '&cYou are not allowed to use this command.'
     NotOnline: '&cThis player is not online!'
@@ -163,6 +165,7 @@ Messages:
     VaultNotEnabled: '&cVault is not enabled/installed!'
     NoPermission: '&cYou do not have permission for that!'
     NoGroup: '&cYou need to provide a group after &4group:'
+    NoUUID: '&cYou need to provide a valid UUID after &4uuid:'
   Config:
     #
     # ConfigKey for reloading the config.

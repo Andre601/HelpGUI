@@ -42,11 +42,11 @@ public class HelpGUI extends JavaPlugin {
 
         saveDefaultConfig();
 
-        debug = getConfig().getBoolean(ConfigKey.DEBUG.getKey(), false);
+        debug = getConfig().getBoolean(ConfigKey.DEBUG.getPath(), false);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        if(getConfig().getBoolean(ConfigKey.SHOW_BANNER.getKey(), true))
+        if(getConfig().getBoolean(ConfigKey.SHOW_BANNER.getPath(), true))
             sendBanner();
 
         loadCommands(this);
@@ -60,10 +60,10 @@ public class HelpGUI extends JavaPlugin {
         logUtil.info("Checking for PlaceholderAPI...");
         if(pluginManager.getPlugin("PlaceholderAPI") != null){
             placheholderAPIEnabled = true;
-            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_FOUND.getKey()));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_FOUND.getPath()));
         }else{
             placheholderAPIEnabled = false;
-            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_NOT_FOUND.getKey()));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_NOT_FOUND.getPath()));
         }
 
         logUtil.info("Plugin enabled in " + getTime(startTime) + "ms!");
@@ -75,17 +75,17 @@ public class HelpGUI extends JavaPlugin {
         logUtil.info("HelpGUI disabled! Good bye.");
     }
 
-    public boolean getVaultStatus(){
+    public boolean isVaultEnabled(){
         return vaultEnabled;
     }
 
     private void checkVaultStatus(){
         if(vaultManager.setupPermission()){
             vaultEnabled = true;
-            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_FOUND.getKey()));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_FOUND.getPath()));
         }else{
             vaultEnabled = false;
-            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_NOT_FOUND.getKey()));
+            logUtil.info(getConfig().getString(ConfigKey.MSG_VAULT_NOT_FOUND.getPath()));
         }
     }
 
