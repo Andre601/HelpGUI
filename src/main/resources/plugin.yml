@@ -4,19 +4,19 @@ author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
 
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, Vault]
 
 api-version: 1.13
 
 commands:
   HelpGUI:
     description: Main HelpGUI-command
-    usage: <command>
+    usage: <command> [help|reload]
     aliases: [hgui]
     permission: helpgui.admin
   help:
     description: Shows the Help-Inv
-    usage: <command>
+    usage: <command> [name|group:<group>|uuid:<uuid>]
     aliases: [h]
 
 permissions:
