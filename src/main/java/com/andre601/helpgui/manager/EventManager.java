@@ -74,9 +74,12 @@ public class EventManager implements Listener {
                         recipient.getName()
                 ));
 
-                player.closeInventory();
                 inventory.getUsers().remove(player.getUniqueId());
+                player.closeInventory();
             }catch (Exception ex){
+                inventory.getUsers().remove(player.getUniqueId());
+                player.closeInventory();
+
                 plugin.getLogUtil().debug("There was an error with getting the player! Stacktrace below.");
                 if(plugin.isDebug()) ex.printStackTrace();
 
@@ -94,6 +97,7 @@ public class EventManager implements Listener {
         Player player = (Player)event.getPlayer();
         ScrollerInventory inventory = plugin.getScrollerInventory();
 
+        if(inventory == null) return;
         if(!inventory.getUsers().containsKey(player.getUniqueId())) return;
 
         inventory.getUsers().remove(player.getUniqueId());
