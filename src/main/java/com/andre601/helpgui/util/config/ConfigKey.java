@@ -68,7 +68,8 @@ public enum ConfigKey {
     ERR_VAULT_NOT_ENABLED("Messages.Errors.VaultNotEnabled"),
     ERR_NO_PERMISSION    ("Messages.Errors.NoPermission"),
     ERR_NO_GROUP         ("Messages.Errors.NoGroup"),
-    ERR_NO_UUID          ("Messages.Errors.NoUUID");
+    ERR_NO_UUID          ("Messages.Errors.NoUUID"),
+    ERR_UNKNOWN_ERROR    ("Messages.Errors.UnknownError");
 
     public final String path;
     public static HelpGUI plugin;

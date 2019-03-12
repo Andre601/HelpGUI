@@ -30,19 +30,17 @@ public class PlayerUtil {
         }else
         if(search.startsWith("group:")){
             if(!this.plugin.isVaultEnabled()){
-                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                        ConfigKey.ERR_VAULT_NOT_ENABLED.getPath()
-                ));
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.ERR_VAULT_NOT_ENABLED);
                 searchSuccess = false;
                 return;
             }
 
             if(search.substring(6).isEmpty()){
-                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                        ConfigKey.ERR_NO_GROUP.getPath()
-                ));
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.ERR_NO_GROUP);
+
                 plugin.getLogUtil().debug("Didn't find any players through Search method \"group:\"");
                 plugin.getLogUtil().debug("Reason: No group was provided!");
+
                 searchSuccess = false;
                 return;
             }
@@ -51,11 +49,11 @@ public class PlayerUtil {
         }else
         if(search.startsWith("uuid:")) {
             if(search.substring(5).equals("")){
-                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                        ConfigKey.ERR_NO_UUID.getPath()
-                ));
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.ERR_NO_UUID);
+
                 plugin.getLogUtil().debug("Didn't find any players through Search method \"uuid:\"");
                 plugin.getLogUtil().debug("Reason: No UUID was provided!");
+
                 searchSuccess = false;
                 return;
             }
@@ -151,8 +149,8 @@ public class PlayerUtil {
 
     private ItemStack getPlayerhead(Player player){
 
-        String name = plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PLAYER_NAME.getPath());
-        List<String> lore = plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PLAYER_LORE.getPath());
+        String name = plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PLAYER_NAME);
+        List<String> lore = plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PLAYER_LORE);
 
         name = name.replace("%player%", player.getName());
 

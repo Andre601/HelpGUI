@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class EventManager implements Listener {
 
@@ -35,9 +35,7 @@ public class EventManager implements Listener {
 
         int currentPage = inv.getCurrentPage();
         if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                plugin.getFormatUtil().formatText(plugin.getConfig().getString(
-                        ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getPath()
-                ))
+                plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME)
         )){
             e.setCancelled(true);
             if(currentPage >= inv.getPages().size()-1){
@@ -47,9 +45,7 @@ public class EventManager implements Listener {
                 player.openInventory(inv.getPages().get(currentPage));
             }
         }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
-                plugin.getFormatUtil().formatText(plugin.getConfig().getString(
-                        ConfigKey.INV_ITEM_PREV_PAGE_NAME.getPath()
-                ))
+                plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME)
         )){
             e.setCancelled(true);
             if(currentPage > 0){
@@ -59,17 +55,18 @@ public class EventManager implements Listener {
         }else
         if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
             e.setCancelled(true);
-            ItemMeta meta = e.getCurrentItem().getItemMeta();
+            SkullMeta meta = (SkullMeta)e.getCurrentItem().getItemMeta();
+            Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getOwningPlayer().getName()));
+
+            if(recipient == null){
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.ERR_NOT_ONLINE);
+                return;
+            }
             try{
-                Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getDisplayName()));
 
-                plugin.getFormatUtil().sendMessage(recipient, plugin.getConfig().getString(
-                        ConfigKey.MSG_HELP_RECEIVED.getPath()
-                ).replace("%sender%", player.getName()));
+                plugin.getFormatUtil().sendMsg(recipient, ConfigKey.MSG_HELP_RECEIVED, "%sender%", player.getName());
 
-                plugin.getFormatUtil().sendMessage(player, plugin.getConfig().getString(
-                        ConfigKey.MSG_HELP_SEND.getPath().replace("%recipient%", recipient.getName())
-                ).replace("%recipient%", recipient.getName()));
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.MSG_HELP_SEND, "%recipient%", recipient.getName());
 
                 plugin.getLogUtil().debug(String.format(
                         "Help-request from %s was send to %s.",
@@ -83,10 +80,7 @@ public class EventManager implements Listener {
                 plugin.getLogUtil().debug("There was an error with getting the player! Stacktrace below.");
                 if(plugin.isDebug()) ex.printStackTrace();
 
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()) +
-                        plugin.getConfig().getString(ConfigKey.ERR_NOT_ONLINE.getPath())
-                ));
+                plugin.getFormatUtil().sendMsg(player, ConfigKey.ERR_UNKNOWN_ERROR);
             }
 
         }else{

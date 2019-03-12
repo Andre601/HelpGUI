@@ -157,6 +157,7 @@ Messages:
     # NoPermission:     No permission message
     # NoGroup:          When the player only types "/help group:" without providing a groupname.
     # NoUUID:           When the player only types "/help uuid:" without providing a UUID.
+    # UnknownError:     Send when a error happens.
     #
     CommandDisabled: '&cYou are not allowed to use this command.'
     NotOnline: '&cThis player is not online!'
@@ -166,6 +167,7 @@ Messages:
     NoPermission: '&cYou do not have permission for that!'
     NoGroup: '&cYou need to provide a group after &4group:'
     NoUUID: '&cYou need to provide a valid UUID after &4uuid:'
+    UnknownError: '&cThere was an unknown error while performing this action!'
   Config:
     #
     # ConfigKey for reloading the config.

@@ -34,28 +34,47 @@ public class FormatUtil {
         return new ItemStack(material);
     }
 
-    public List<String> formatLore(OfflinePlayer player, String path){
+    public List<String> formatLore(OfflinePlayer player, ConfigKey path){
         List<String> coloredLore = new ArrayList<>();
 
-        for(String line : plugin.getConfig().getStringList(path))
-            coloredLore.add(ChatColor.translateAlternateColorCodes('&', line));
+        for(String line : plugin.getConfig().getStringList(path.getPath()))
+            coloredLore.add(formatText(player, line));
 
-        return plugin.isPlaceholderAPIEnabled() ? PlaceholderAPI.setPlaceholders(player, coloredLore) : coloredLore;
+        return coloredLore;
     }
 
-    public String formatText(OfflinePlayer player, String path){
-        String text = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(path));
+    private String formatText(String text){
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
+    public String formatText(OfflinePlayer player, ConfigKey path){
+        String text = formatText(plugin.getConfig().getString(path.getPath()));
 
         return plugin.isPlaceholderAPIEnabled() ? PlaceholderAPI.setPlaceholders(player, text) : text;
     }
 
-    public String formatText(String text){
-        return ChatColor.translateAlternateColorCodes('&', text);
+    public String formatText(ConfigKey path){
+        return formatText(plugin.getConfig().getString(path.getPath()));
     }
 
-    public void sendMessage(Player player, String text){
-        text = PlaceholderAPI.setPlaceholders(player, text);
+    private String formatText(OfflinePlayer player, String text){
+        text = formatText(text);
 
-        player.sendMessage(formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()) + text));
+        return plugin.isPlaceholderAPIEnabled() ? PlaceholderAPI.setPlaceholders(player, text) : text;
+    }
+
+    public void sendMsg(Player player, ConfigKey path){
+        sendMsg(player, plugin.getConfig().getString(path.getPath()));
+    }
+
+    public void sendMsg(Player player, ConfigKey path, String target, String replacement){
+        sendMsg(player, plugin.getConfig().getString(path.getPath()).replace(target, replacement));
+    }
+
+    private void sendMsg(Player player, String msg){
+        String prefix = formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()));
+        msg = formatText(player, msg);
+
+        player.sendMessage(prefix + msg);
     }
 }

@@ -22,15 +22,15 @@ public class ScrollerInventory {
     private Map<UUID, ScrollerInventory> users = new HashMap<>();
     private HelpGUI plugin;
 
-    public List<Inventory> getPages(){
+    List<Inventory> getPages(){
         return pages;
     }
 
-    public int getCurrentPage() {
+    int getCurrentPage() {
         return currentPage;
     }
 
-    public Map<UUID, ScrollerInventory> getUsers() {
+    Map<UUID, ScrollerInventory> getUsers() {
         return users;
     }
 
@@ -71,8 +71,8 @@ public class ScrollerInventory {
                 ConfigKey.INV_ITEM_NEXT_PAGE_MATERIAL.getPath()
         ));
         meta = nextPage.getItemMeta();
-        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME.getPath()));
-        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_NEXT_PAGE_LORE.getPath()));
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_NEXT_PAGE_LORE));
         nextPage.setItemMeta(meta);
 
         /*
@@ -82,8 +82,8 @@ public class ScrollerInventory {
                 ConfigKey.INV_ITEM_PREV_PAGE_MATERIAL.getPath()
         ));
         meta = prevPage.getItemMeta();
-        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME.getPath()));
-        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PREV_PAGE_LORE.getPath()));
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PREV_PAGE_LORE));
         prevPage.setItemMeta(meta);
 
         /*
@@ -93,8 +93,8 @@ public class ScrollerInventory {
                 ConfigKey.INV_ITEM_FILLER_MATERIAL.getPath()
         ));
         meta = deco.getItemMeta();
-        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_FILLER_NAME.getPath()));
-        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_FILLER_LORE.getPath()));
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_FILLER_NAME));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_FILLER_LORE));
         deco.setItemMeta(meta);
 
         /*
@@ -104,8 +104,8 @@ public class ScrollerInventory {
                 ConfigKey.INV_ITEM_INFO_MATERIAL.getPath()
         ));
         meta = info.getItemMeta();
-        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_INFO_NAME.getPath()));
-        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_INFO_LORE.getPath()));
+        meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_INFO_NAME));
+        meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_INFO_LORE));
         info.setItemMeta(meta);
 
         page.setItem(0, prevPage);
