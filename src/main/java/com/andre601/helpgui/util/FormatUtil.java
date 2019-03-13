@@ -20,14 +20,14 @@ public class FormatUtil {
         this.plugin = plugin;
     }
 
-    public ItemStack getItem(String path){
-        Material material = Material.matchMaterial(plugin.getConfig().getString(path));
+    public ItemStack getItem(ConfigKey path){
+        Material material = Material.matchMaterial(plugin.getConfig().getString(path.getPath()));
 
         if(material == null){
             material = Material.SIGN;
             plugin.getLogUtil().debug(String.format(
                     "A item-name was invalid! Path: %s",
-                    path
+                    path.path
             ));
         }
 

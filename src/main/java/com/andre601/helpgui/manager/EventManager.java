@@ -21,41 +21,43 @@ public class EventManager implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e){
+    public void onInventoryClick(InventoryClickEvent event){
 
         ScrollerInventory inventory = plugin.getScrollerInventory();
 
-        Player player = (Player)e.getWhoClicked();
+        Player player = (Player)event.getWhoClicked();
+
+        if(inventory == null) return;
         if(!inventory.getUsers().containsKey(player.getUniqueId())) return;
 
         ScrollerInventory inv = inventory.getUsers().get(player.getUniqueId());
-        if(e.getCurrentItem() == null) return;
-        if(e.getCurrentItem().getItemMeta() == null) return;
-        if(e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
+        if(event.getCurrentItem() == null) return;
+        if(event.getCurrentItem().getItemMeta() == null) return;
+        if(event.getCurrentItem().getItemMeta().getDisplayName() == null) return;
 
         int currentPage = inv.getCurrentPage();
-        if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
+        if(event.getCurrentItem().getItemMeta().getDisplayName().equals(
                 plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME)
         )){
-            e.setCancelled(true);
+            event.setCancelled(true);
             if(currentPage >= inv.getPages().size()-1){
                 return;
             }else{
                 currentPage += 1;
                 player.openInventory(inv.getPages().get(currentPage));
             }
-        }else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(
+        }else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(
                 plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME)
         )){
-            e.setCancelled(true);
+            event.setCancelled(true);
             if(currentPage > 0){
                 currentPage -= 1;
                 player.openInventory(inv.getPages().get(currentPage));
             }
         }else
-        if(e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
-            e.setCancelled(true);
-            SkullMeta meta = (SkullMeta)e.getCurrentItem().getItemMeta();
+        if(event.getCurrentItem().getType() == Material.PLAYER_HEAD) {
+            event.setCancelled(true);
+            SkullMeta meta = (SkullMeta)event.getCurrentItem().getItemMeta();
             Player recipient = Bukkit.getServer().getPlayer(ChatColor.stripColor(meta.getOwningPlayer().getName()));
 
             if(recipient == null){
@@ -87,7 +89,7 @@ public class EventManager implements Listener {
             }
 
         }else{
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
 
     }

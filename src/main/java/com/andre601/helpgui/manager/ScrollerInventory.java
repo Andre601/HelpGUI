@@ -67,9 +67,7 @@ public class ScrollerInventory {
         /*
          * Item for next page
          */
-        ItemStack nextPage = new ItemStack(plugin.getFormatUtil().getItem(
-                ConfigKey.INV_ITEM_NEXT_PAGE_MATERIAL.getPath()
-        ));
+        ItemStack nextPage = new ItemStack(plugin.getFormatUtil().getItem(ConfigKey.INV_ITEM_NEXT_PAGE_MATERIAL));
         meta = nextPage.getItemMeta();
         meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_NEXT_PAGE_NAME));
         meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_NEXT_PAGE_LORE));
@@ -78,9 +76,7 @@ public class ScrollerInventory {
         /*
          * Item for previous page
          */
-        ItemStack prevPage = new ItemStack(plugin.getFormatUtil().getItem(
-                ConfigKey.INV_ITEM_PREV_PAGE_MATERIAL.getPath()
-        ));
+        ItemStack prevPage = new ItemStack(plugin.getFormatUtil().getItem(ConfigKey.INV_ITEM_PREV_PAGE_MATERIAL));
         meta = prevPage.getItemMeta();
         meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_PREV_PAGE_NAME));
         meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_PREV_PAGE_LORE));
@@ -89,9 +85,7 @@ public class ScrollerInventory {
         /*
          * Item for filling empty slots
          */
-        ItemStack deco = new ItemStack(plugin.getFormatUtil().getItem(
-                ConfigKey.INV_ITEM_FILLER_MATERIAL.getPath()
-        ));
+        ItemStack deco = new ItemStack(plugin.getFormatUtil().getItem(ConfigKey.INV_ITEM_FILLER_MATERIAL));
         meta = deco.getItemMeta();
         meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_FILLER_NAME));
         meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_FILLER_LORE));
@@ -100,9 +94,7 @@ public class ScrollerInventory {
         /*
          * Item for the info
          */
-        ItemStack info = new ItemStack(plugin.getFormatUtil().getItem(
-                ConfigKey.INV_ITEM_INFO_MATERIAL.getPath()
-        ));
+        ItemStack info = new ItemStack(plugin.getFormatUtil().getItem(ConfigKey.INV_ITEM_INFO_MATERIAL));
         meta = info.getItemMeta();
         meta.setDisplayName(plugin.getFormatUtil().formatText(player, ConfigKey.INV_ITEM_INFO_NAME));
         meta.setLore(plugin.getFormatUtil().formatLore(player, ConfigKey.INV_ITEM_INFO_LORE));
