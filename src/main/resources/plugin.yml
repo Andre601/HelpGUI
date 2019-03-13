@@ -1,5 +1,7 @@
-name: HelpGUI
-version: 2.7.6
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+
 author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
