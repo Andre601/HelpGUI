@@ -66,9 +66,19 @@ public class EventManager implements Listener {
             }
             try{
 
-                plugin.getFormatUtil().sendMsg(recipient, ConfigKey.MSG_HELP_RECEIVED, "%sender%", player.getName());
+                plugin.getFormatUtil().sendMsg(
+                        recipient,
+                        ConfigKey.HELPREQ_MSG_RECIPIENT,
+                        "%sender%",
+                        player.getName()
+                );
 
-                plugin.getFormatUtil().sendMsg(player, ConfigKey.MSG_HELP_SEND, "%recipient%", recipient.getName());
+                plugin.getFormatUtil().sendMsg(
+                        player,
+                        ConfigKey.HELPREQ_MSG_SENDER,
+                        "%recipient%",
+                        recipient.getName()
+                );
 
                 plugin.getLogUtil().debug(String.format(
                         "Help-request from %s was send to %s.",

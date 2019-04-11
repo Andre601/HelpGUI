@@ -20,9 +20,11 @@ Settings:
   #
   # Debug:      Enable/Disable debug mode. This will print stacktraces and other information prefixed with "[DEBUG]"
   # ShowBanner: Should the banner be shown in console, when the plugin gets enabled?
+  # BStats:     Should statistics be send to BStats?
   #
   Debug: false
   ShowBanner: true
+  BStats: true
   DisabledPlayers:
     #
     # Choose which player heads are shown in the GUI.
@@ -61,7 +63,7 @@ Settings:
     - 'Example_World_the_end'
     - 'Example_World_nether'
   #
-  #
+  # Settings for the inventory and its items.
   #
   Inventory:
     #
@@ -113,6 +115,31 @@ Settings:
         - '&7Rank: &b%vault_rank%'
         - '&7Location: &b%player_world%, %player_x%, %player_y%, %player_z%'
         - ''
+  #
+  # Settings for help requests.
+  #
+  HelpRequest:
+    #
+    # The messages for recipient and sender.
+    #
+    Message:
+      #
+      # Sender:    The message that is send to the sender of a help request.
+      # Recipient: The message that the recipient of a help request recieves.
+      #
+      # Placeholders:
+      #   %sender%     -> Name of the sender of the help request (Only available for Recipient).
+      #   %recipient%  -> Name of the recipient of the help request (Only available for Sender).
+      #
+      #   Placeholders from PlaceholderAPI are supported in both messages.
+      #   Those will use values from either the sender or the recipient, depending on where you use them.
+      #
+      #   Examples:
+      #     Sender:    %player_name% -> Name of the sender of the help request.
+      #     Recipient: %player_name% -> Name of the recipient of the help request.
+      #
+      Sender: '&7Help request was sent to &b%recipient%&7!'
+      Recipient: '&b%sender% &7needs your help!'
 Messages:
   Startup:
     #
@@ -128,34 +155,17 @@ Messages:
     VaultNotFound: 'Vault wasn''t found! Group-search disabled.'
     PlaceholderAPIFound: 'Hooked into PlaceholderAPI.'
     PlaceholderAPINotFound: 'Couldn''t find PlaceholderAPI.'
-  HelpRequest:
-    #
-    # Messages for help send/recieved
-    #
-    # Sender:     Message sent to the sender of the request
-    # Recipient:  Message sent to the recipient of the request
-    #
-    # Placeholders:
-    #   %sender%     ->  Name of the sender. (Only in Recipient available!)
-    #   %recipient%  ->  Name of the recipient. (Only in Sender available!)
-    #
-    #   You can use placeholders from PlaceholderAPI.
-    #   The placeholders will contain values from either the sender, or recipient, depending on which message it is.
-    #   Example: %player_name% turns into the name of the Sender in "Sender".
-    #
-    Sender: '&7Help-Request sent to &b%recipient%&7!'
-    Recipient: '&b%sender% &7needs your help!'
   Errors:
     #
     # Messages for different errors/issues.
     #
     # CommandDisabled:  If the player has the permission helpgui.disablehelp
-    # NotOnline:        If the targeted player is offline
-    # DisabledWorld:    Shown when a player uses the command in a disabled world
-    # NoPlayersFound:   If /help [player] had no results
-    # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed
-    # NoPermission:     No permission message
-    # NoGroup:          When the player only types "/help group:" without providing a groupname.
+    # NotOnline:        If the targeted player is offline.
+    # DisabledWorld:    Shown when a player uses the command in a disabled world.
+    # NoPlayersFound:   If /help [player] had no results.
+    # VaultNotEnabled:  If you use /help group:[group] but Vault isn't enabled/installed.
+    # NoPermission:     No permission message.
+    # NoGroup:          When the player only types "/help group:" without providing a group name.
     # NoUUID:           When the player only types "/help uuid:" without providing a UUID.
     # UnknownError:     Send when a error happens.
     #

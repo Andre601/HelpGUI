@@ -11,10 +11,15 @@ import java.util.List;
 public enum ConfigKey {
 
     // Main settings
-    DEBUG           ("Settings.Debug"),
-    SHOW_BANNER     ("Settings.ShowBanner"),
+    DEBUG      ("Settings.Debug"),
+    SHOW_BANNER("Settings.ShowBanner"),
+    BSTATS     ("Settings.BStats"),
+
+    // Disabled players section
     DP_MODE         ("Settings.DisabledPlayers.Mode"),
     DISABLED_PLAYERS("Settings.DisabledPlayers.Players"),
+
+    // Disabled worlds section
     DW_MODE         ("Settings.DisabledWorlds.Mode"),
     DISABLED_WORLDS ("Settings.DisabledWorlds.Worlds"),
 
@@ -45,15 +50,14 @@ public enum ConfigKey {
     INV_ITEM_PLAYER_NAME("Settings.Inventory.Items.Player.Name"),
     INV_ITEM_PLAYER_LORE("Settings.Inventory.Items.Player.Lore"),
 
+    HELPREQ_MSG_SENDER   ("Settings.HelpRequest.Message.Sender"),
+    HELPREQ_MSG_RECIPIENT("Settings.HelpRequest.Message.Recipient"),
+
     // Startup messages
     MSG_VAULT_FOUND    ("Messages.Startup.VaultFound"),
     MSG_VAULT_NOT_FOUND("Messages.Startup.VaultNotFound"),
     MSG_PAPI_FOUND     ("Messages.Startup.PlaceholderAPIFound"),
     MSG_PAPI_NOT_FOUND ("Messages.Startup.PlaceholderAPINotFound"),
-
-    // Help request
-    MSG_HELP_SEND    ("Messages.HelpRequest.Sender"),
-    MSG_HELP_RECEIVED("Messages.HelpRequest.Recipient"),
 
     // Config
     MSG_CONFIG_ATTEMPREL        ("Messages.Config.AttemptReload"),

@@ -8,6 +8,7 @@ import com.andre601.helpgui.util.FormatUtil;
 import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,6 +44,12 @@ public class HelpGUI extends JavaPlugin {
         saveDefaultConfig();
 
         debug = getConfig().getBoolean(ConfigKey.DEBUG.getPath(), false);
+
+        if(this.getConfig().getBoolean(ConfigKey.BSTATS.getPath(), false)){
+            Metrics metrics = new Metrics(this);
+
+            sendStats(metrics);
+        }
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -126,6 +133,16 @@ public class HelpGUI extends JavaPlugin {
         System.out.println("§a _   _  §2 _____");
         System.out.println("§a|_| |_| §2 \\___/");
         System.out.println("§7");
+    }
+
+    private void sendStats(Metrics metrics){
+        metrics.addCustomChart(new Metrics.SimplePie("disabled_players", () ->
+                this.getConfig().getString(ConfigKey.DP_MODE.getPath()).toLowerCase()
+        ));
+
+        metrics.addCustomChart(new Metrics.SimplePie("disabled_worlds", () ->
+                this.getConfig().getString(ConfigKey.DW_MODE.getPath()).toLowerCase()
+        ));
     }
 
     public boolean isPlaceholderAPIEnabled(){
