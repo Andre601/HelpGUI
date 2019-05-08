@@ -18,13 +18,13 @@
 
 Settings:
   #
-  # Debug:      Enable/Disable debug mode. This will print stacktraces and other information prefixed with "[DEBUG]"
-  # ShowBanner: Should the banner be shown in console, when the plugin gets enabled?
-  # BStats:     Should statistics be send to BStats?
+  # Debug:        Enable/Disable debug mode. This will print stacktraces and other information prefixed with "[DEBUG]"
+  # ShowBanner:   Should the banner be shown in console, when the plugin gets enabled?
+  # CheckUpdates: Should HelpGUI check for updates on startup? You can still manually check with /helpgui about
   #
   Debug: false
   ShowBanner: true
-  BStats: true
+  CheckUpdates: true
   DisabledPlayers:
     #
     # Choose which player heads are shown in the GUI.
@@ -187,8 +187,39 @@ Messages:
     # ReloadNotifyPlayer:  Players with helpgui.notify receive this message.
     #
     # Placeholder:
-    #   %player%  ->  Name of the player, that reloaded the plugin. (Only for ReloadNotifyPlayer)
+    #   %player% -> Name of the player, that reloaded the plugin. (Only for ReloadNotifyPlayer)
     #
     AttemptReload: '&7Reloading config.yml...'
     Reloaded: '&aconfig.yml successfully reloaded!'
     ReloadNotifyPlayer: '&b%player% &7reloaded the config!'
+  UpdateCheck:
+    #
+    # Messages related to the Update-check of HelpGUI
+    # HelpGUI checks for a new version on Server startup and when running /helpgui about
+    #
+    # Info:       Info shown when running /helpgui about
+    # Check:      Shown when HelpGUI checks for a new version.
+    # NewVersion: When there is a new version available.
+    # UpToDate:   When HelpGUI is up to date.
+    # DevVersion: In case when you're running a newer version than available.
+    #
+    # Placeholders:
+    #   %new%     -> The new version available (Only in NewVersion)
+    #   %version% -> The current version of HelpGUI (Only in Check and NewVersion)
+    #
+    Info: '&7This server runs &aHelp&2GUI &7v%version% by Andre_601!'
+    Check: '&7Checking version. Please wait...'
+    NewVersion: '&6There is a new version of HelpGUI! The new version is &e%new%&6! You run &e%version%&6!'
+    UpToDate: '&aHelpGUI is up to date!'
+    DevVersion: '&7This version of HelpGUI is newer than the one on Spigot. Is it a dev-version?'
+    Errors:
+      #
+      # Different kinds of error messages for the Update check.
+      #
+      # NoConnection: When HelpGUI isn't able to connect to the Spiget-API.
+      # Unauthorized: When Spiget returns a 401 (Unauthorized) error.
+      # InvalidJSON:  When the received JSON from Spiget is invalid/malformed.
+      #
+      NoConnection: '&cCouldn''t connect to the Spiget-API!'
+      Unauthorized: '&cThe Spiget-API returned a 401 error!'
+      InvalidJSON: '&cThe received JSON was invalid or malformed.'

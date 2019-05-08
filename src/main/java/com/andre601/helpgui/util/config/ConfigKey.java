@@ -11,9 +11,9 @@ import java.util.List;
 public enum ConfigKey {
 
     // Main settings
-    DEBUG      ("Settings.Debug"),
-    SHOW_BANNER("Settings.ShowBanner"),
-    BSTATS     ("Settings.BStats"),
+    DEBUG        ("Settings.Debug"),
+    SHOW_BANNER  ("Settings.ShowBanner"),
+    CHECK_UPDATES("Settings.CheckUpdates"),
 
     // Disabled players section
     DP_MODE         ("Settings.DisabledPlayers.Mode"),
@@ -73,10 +73,18 @@ public enum ConfigKey {
     ERR_NO_PERMISSION    ("Messages.Errors.NoPermission"),
     ERR_NO_GROUP         ("Messages.Errors.NoGroup"),
     ERR_NO_UUID          ("Messages.Errors.NoUUID"),
-    ERR_UNKNOWN_ERROR    ("Messages.Errors.UnknownError");
+    ERR_UNKNOWN_ERROR    ("Messages.Errors.UnknownError"),
+
+    UPDATE_INFO        ("Messages.UpdateCheck.Info"),
+    UPDATE_CHECK       ("Messages.UpdateCheck.Check"),
+    UPDATE_NEW_VERSION ("Messages.UpdateCheck.NewVersion"),
+    UPDATE_UP_TO_DATE  ("Messages.UpdateCheck.UpToDate"),
+    UPDATE_DEV_VERSION ("Messages.UpdateCheck.DevVersion"),
+    UPDATE_ERR_NO_CONN ("Messages.UpdateCheck.Errors.NoConnection"),
+    UPDATE_ERR_UNAUTH  ("Messages.UpdateCheck.Errors.Unauthorized"),
+    UPDATE_ERR_INV_JSON("Messages.UpdateCheck.Errors.InvalidJSON");
 
     public final String path;
-    public static HelpGUI plugin;
 
     ConfigKey(String path){
         this.path = path;

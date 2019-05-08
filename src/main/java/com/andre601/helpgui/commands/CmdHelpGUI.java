@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.andre601.helpgui.HelpGUI;
+import com.andre601.helpgui.util.UpdateCheck;
 import com.andre601.helpgui.util.config.ConfigKey;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -83,6 +84,91 @@ public class CmdHelpGUI extends BaseCommand {
             }
         }
         help.showHelp();
+    }
+
+    @Subcommand("about")
+    @Description("Provides information about the plugin and also checks the version.")
+    public void onAbout(CommandSender sender){
+        String version = plugin.getDescription().getVersion();
+
+        if(sender instanceof Player){
+            Player player = (Player)sender;
+
+            plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_INFO, "%version%", version);
+            plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_CHECK);
+
+            UpdateCheck.get().requestUpdateCheck().whenComplete((result, e) -> {
+                switch(result.getReason()){
+                    case NEW_UPDATE:
+                        plugin.getFormatUtil().sendMsg(
+                                player,
+                                ConfigKey.UPDATE_NEW_VERSION,
+                                "%new%",
+                                result.getNewestVersion(),
+                                "%version%",
+                                version
+                        );
+                        break;
+
+                    case UNRELEASED_VERSION:
+                        plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_DEV_VERSION);
+                        break;
+
+                    case UP_TO_DATE:
+                        plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_UP_TO_DATE);
+                        break;
+
+                    case UNAUTHORIZED_QUERRY:
+                        plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_ERR_UNAUTH);
+                        break;
+
+                    case INVALID_JSON:
+                        plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_ERR_INV_JSON);
+                        break;
+
+                    case COULD_NOT_CONNECT:
+                        plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_ERR_NO_CONN);
+                }
+            });
+
+        }else{
+            sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_INFO, "%version%", version));
+            sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_CHECK));
+
+            UpdateCheck.get().requestUpdateCheck().whenComplete((result, e) -> {
+                switch(result.getReason()){
+                    case NEW_UPDATE:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(
+                                ConfigKey.UPDATE_NEW_VERSION,
+                                "%new%",
+                                result.getNewestVersion(),
+                                "%version%",
+                                version
+                        ));
+                        break;
+
+                    case UNRELEASED_VERSION:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_DEV_VERSION));
+                        break;
+
+                    case UP_TO_DATE:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_UP_TO_DATE));
+                        break;
+
+                    case UNAUTHORIZED_QUERRY:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_UNAUTH));
+                        break;
+
+                    case INVALID_JSON:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_INV_JSON));
+                        break;
+
+                    case COULD_NOT_CONNECT:
+                        sender.sendMessage(plugin.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_NO_CONN));
+                        break;
+                }
+            });
+        }
     }
 
     private boolean reloadConfig(){

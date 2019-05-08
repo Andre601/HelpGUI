@@ -1,7 +1,6 @@
 package com.andre601.helpgui.util.logging;
 
 import com.andre601.helpgui.HelpGUI;
-import org.bukkit.ChatColor;
 
 public final class LogUtil {
 

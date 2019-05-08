@@ -5,10 +5,10 @@ import com.andre601.helpgui.commands.CmdHelpGUI;
 import com.andre601.helpgui.manager.EventManager;
 import com.andre601.helpgui.manager.ScrollerInventory;
 import com.andre601.helpgui.util.FormatUtil;
+import com.andre601.helpgui.util.UpdateCheck;
 import com.andre601.helpgui.util.config.ConfigKey;
 import com.andre601.helpgui.util.logging.LogUtil;
 import com.andre601.helpgui.util.players.PlayerUtil;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,11 +32,10 @@ public class HelpGUI extends JavaPlugin {
     private VaultManager vaultManager;
     private FormatUtil formatUtil;
 
-    public void onEnable(){
+    public void onEnable() {
 
         long startTime = System.currentTimeMillis();
 
-        ConfigKey.plugin = this;
         logUtil = new LogUtil(this);
         vaultManager = new VaultManager(this);
         formatUtil = new FormatUtil(this);
@@ -45,15 +44,9 @@ public class HelpGUI extends JavaPlugin {
 
         debug = getConfig().getBoolean(ConfigKey.DEBUG.getPath(), false);
 
-        if(this.getConfig().getBoolean(ConfigKey.BSTATS.getPath(), false)){
-            Metrics metrics = new Metrics(this);
-
-            sendStats(metrics);
-        }
-
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        if(getConfig().getBoolean(ConfigKey.SHOW_BANNER.getPath(), true))
+        if (getConfig().getBoolean(ConfigKey.SHOW_BANNER.getPath(), true))
             sendBanner();
 
         loadCommands(this);
@@ -65,12 +58,48 @@ public class HelpGUI extends JavaPlugin {
         checkVaultStatus();
 
         logUtil.info("Checking for PlaceholderAPI...");
-        if(pluginManager.getPlugin("PlaceholderAPI") != null){
+        if (pluginManager.getPlugin("PlaceholderAPI") != null) {
             placheholderAPIEnabled = true;
             logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_FOUND.getPath()));
-        }else{
+        } else {
             placheholderAPIEnabled = false;
             logUtil.info(getConfig().getString(ConfigKey.MSG_PAPI_NOT_FOUND.getPath()));
+        }
+
+        if (getConfig().getBoolean(ConfigKey.CHECK_UPDATES.getPath())){
+            UpdateCheck.init(this, 33245).requestUpdateCheck().whenComplete((result, e) -> {
+                switch(result.getReason()){
+                    case NEW_UPDATE:
+                        logUtil.info(this.getFormatUtil().stripColor(
+                                ConfigKey.UPDATE_NEW_VERSION,
+                                "%new%",
+                                result.getNewestVersion(),
+                                "%version%",
+                                this.getDescription().getVersion()
+                        ));
+                        break;
+
+                    case UNRELEASED_VERSION:
+                        logUtil.info(this.getFormatUtil().stripColor(ConfigKey.UPDATE_DEV_VERSION));
+                        break;
+
+                    case UP_TO_DATE:
+                        logUtil.info(this.getFormatUtil().stripColor(ConfigKey.UPDATE_UP_TO_DATE));
+                        break;
+
+                    case UNAUTHORIZED_QUERRY:
+                        logUtil.info(this.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_UNAUTH));
+                        break;
+
+                    case INVALID_JSON:
+                        logUtil.info(this.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_INV_JSON));
+                        break;
+
+                    case COULD_NOT_CONNECT:
+                        logUtil.info(this.getFormatUtil().stripColor(ConfigKey.UPDATE_ERR_NO_CONN));
+                        break;
+                }
+            });
         }
 
         logUtil.info("Plugin enabled in " + getTime(startTime) + "ms!");
@@ -125,24 +154,14 @@ public class HelpGUI extends JavaPlugin {
     }
 
     private void sendBanner(){
-        System.out.println("§7");
-        System.out.println("§a _   _  §2  ____");
-        System.out.println("§a| | | | §2 / ___)");
-        System.out.println("§a| |_| | §2| /  _");
-        System.out.println("§a|_____| §2|_| (_|");
-        System.out.println("§a _   _  §2 _____");
-        System.out.println("§a|_| |_| §2 \\___/");
-        System.out.println("§7");
-    }
-
-    private void sendStats(Metrics metrics){
-        metrics.addCustomChart(new Metrics.SimplePie("disabled_players", () ->
-                this.getConfig().getString(ConfigKey.DP_MODE.getPath()).toLowerCase()
-        ));
-
-        metrics.addCustomChart(new Metrics.SimplePie("disabled_worlds", () ->
-                this.getConfig().getString(ConfigKey.DW_MODE.getPath()).toLowerCase()
-        ));
+        this.getServer().getConsoleSender().sendMessage(" ");
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a _   _  &2  ____"));
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a| | | | &2 / ___)"));
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a| |_| | &2| /  _"));
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a|_____| &2|_| (_|"));
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a _   _  &2 _____"));
+        this.getServer().getConsoleSender().sendMessage(getFormatUtil().color("&a|_| |_| &2 \\___/"));
+        this.getServer().getConsoleSender().sendMessage(" ");
     }
 
     public boolean isPlaceholderAPIEnabled(){

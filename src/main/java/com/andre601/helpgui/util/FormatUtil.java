@@ -11,10 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class FormatUtil {
 
     private HelpGUI plugin;
+    private final Pattern COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf("&") + "[0-9A-FK-OR]");
 
     public FormatUtil(HelpGUI plugin){
         this.plugin = plugin;
@@ -43,7 +45,7 @@ public class FormatUtil {
         return coloredLore;
     }
 
-    private String formatText(String text){
+    public String formatText(String text){
         return ChatColor.translateAlternateColorCodes('&', text);
     }
 
@@ -71,10 +73,43 @@ public class FormatUtil {
         sendMsg(player, plugin.getConfig().getString(path.getPath()).replace(target, replacement));
     }
 
+    public void sendMsg(Player player, ConfigKey path, String target1, String rep1, String target2, String rep2){
+        sendMsg(player, plugin.getConfig().getString(path.getPath()).replace(target1, rep1).replace(target2, rep2));
+    }
+
     private void sendMsg(Player player, String msg){
         String prefix = formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()));
         msg = formatText(player, msg);
 
         player.sendMessage(prefix + msg);
+    }
+
+    private String stripColor(String msg){
+        return COLOR_PATTERN.matcher(msg).replaceAll("");
+    }
+
+    public String stripColor(ConfigKey configKey){
+        return stripColor(plugin.getConfig().getString(configKey.getPath()));
+    }
+
+    public String stripColor(ConfigKey configKey, String tar1, String rep1){
+        return stripColor(plugin.getConfig().getString(configKey.getPath()).replace(tar1, rep1));
+    }
+
+    public String stripColor(ConfigKey configKey, String tar1, String rep1, String tar2, String rep2){
+        return stripColor(plugin.getConfig().getString(configKey.getPath()).replace(tar1, rep1).replace(tar2, rep2));
+    }
+
+    public String color(String msg){
+        char[] c = msg.toCharArray();
+
+        for(int i = 0; i < c.length; ++i){
+            if(c[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(c[i + 1]) > -1){
+                c[i] = 167;
+                c[i + 1] = Character.toLowerCase(c[i + 1]);
+            }
+        }
+
+        return new String(c);
     }
 }
