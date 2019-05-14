@@ -95,6 +95,9 @@ public class CmdHelpGUI extends BaseCommand {
             Player player = (Player)sender;
 
             plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_INFO, "%version%", version);
+
+            if(!player.hasPermission("helpgui.check")) return;
+
             plugin.getFormatUtil().sendMsg(player, ConfigKey.UPDATE_CHECK);
 
             UpdateCheck.get().requestUpdateCheck().whenComplete((result, e) -> {
@@ -104,9 +107,7 @@ public class CmdHelpGUI extends BaseCommand {
                                 player,
                                 ConfigKey.UPDATE_NEW_VERSION,
                                 "%new%",
-                                result.getNewestVersion(),
-                                "%version%",
-                                version
+                                result.getNewestVersion()
                         );
                         break;
 
@@ -141,9 +142,7 @@ public class CmdHelpGUI extends BaseCommand {
                         sender.sendMessage(plugin.getFormatUtil().stripColor(
                                 ConfigKey.UPDATE_NEW_VERSION,
                                 "%new%",
-                                result.getNewestVersion(),
-                                "%version%",
-                                version
+                                result.getNewestVersion()
                         ));
                         break;
 

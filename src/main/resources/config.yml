@@ -205,11 +205,11 @@ Messages:
     #
     # Placeholders:
     #   %new%     -> The new version available (Only in NewVersion)
-    #   %version% -> The current version of HelpGUI (Only in Check and NewVersion)
+    #   %version% -> The current version of HelpGUI (Only in Info)
     #
     Info: '&7This server runs &aHelp&2GUI &7v%version% by Andre_601!'
-    Check: '&7Checking version. Please wait...'
-    NewVersion: '&6There is a new version of HelpGUI! The new version is &e%new%&6! You run &e%version%&6!'
+    Check: '&7Checking for updates. Please wait...'
+    NewVersion: '&6There is a new version of HelpGUI! The new version is &e%new%&6!'
     UpToDate: '&aHelpGUI is up to date!'
     DevVersion: '&7This version of HelpGUI is newer than the one on Spigot. Is it a dev-version?'
     Errors:

@@ -73,9 +73,7 @@ public class HelpGUI extends JavaPlugin {
                         logUtil.info(this.getFormatUtil().stripColor(
                                 ConfigKey.UPDATE_NEW_VERSION,
                                 "%new%",
-                                result.getNewestVersion(),
-                                "%version%",
-                                this.getDescription().getVersion()
+                                result.getNewestVersion()
                         ));
                         break;
 

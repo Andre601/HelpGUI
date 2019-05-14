@@ -73,10 +73,6 @@ public class FormatUtil {
         sendMsg(player, plugin.getConfig().getString(path.getPath()).replace(target, replacement));
     }
 
-    public void sendMsg(Player player, ConfigKey path, String target1, String rep1, String target2, String rep2){
-        sendMsg(player, plugin.getConfig().getString(path.getPath()).replace(target1, rep1).replace(target2, rep2));
-    }
-
     private void sendMsg(Player player, String msg){
         String prefix = formatText(plugin.getConfig().getString(ConfigKey.INV_TITLE.getPath()));
         msg = formatText(player, msg);
@@ -92,12 +88,8 @@ public class FormatUtil {
         return stripColor(plugin.getConfig().getString(configKey.getPath()));
     }
 
-    public String stripColor(ConfigKey configKey, String tar1, String rep1){
-        return stripColor(plugin.getConfig().getString(configKey.getPath()).replace(tar1, rep1));
-    }
-
-    public String stripColor(ConfigKey configKey, String tar1, String rep1, String tar2, String rep2){
-        return stripColor(plugin.getConfig().getString(configKey.getPath()).replace(tar1, rep1).replace(tar2, rep2));
+    public String stripColor(ConfigKey configKey, String target, String replacement){
+        return stripColor(plugin.getConfig().getString(configKey.getPath()).replace(target, replacement));
     }
 
     public String color(String msg){

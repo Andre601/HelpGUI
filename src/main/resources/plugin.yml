@@ -1,7 +1,6 @@
 name: ${project.name}
 version: ${project.version}
 description: ${project.description}
-
 author: Andre_601
 
 main: com.andre601.helpgui.HelpGUI
@@ -31,22 +30,26 @@ permissions:
     description: permission for all HelpGUI-commands
     default: op
     children:
+      helpgui.check: true
       helpgui.help: true
+      helpgui.notify: true
       helpgui.reload: true
       helpgui.staff: true
-      helpgui.notify: true
+  helpgui.check:
+    description: Allows to check for a new version with /helpgui about
+    default: op
   helpgui.disablehelp:
     description: Disables /help for a user/group
     default: false
   helpgui.help:
     description: Let you use /hgui help
     default: op
+  helpgui.notify:
+    description: Notifies players about config-reloads
+    default: op
   helpgui.reload:
     description: Let you use /hgui reload
     default: op
   helpgui.staff:
     description: Permission for the Staff-Mode option
-    default: op
-  helpgui.notify:
-    description: Notifies players about config-reloads
     default: op
